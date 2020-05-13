@@ -26,7 +26,7 @@ const FormSignIn = props => {
       <TouchableOpacity>
         <Text style={styles.textForgot}>Forgot password?</Text>
       </TouchableOpacity>
-      <Button label="Login" action={() => {}} />
+      <Button label="Login" action={() => navigation.navigate('Drawer')} />
       <View style={styles.styleLink}>
         <Link
           label="New user? Register"
