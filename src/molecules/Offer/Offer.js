@@ -13,8 +13,8 @@ const Offer = (props) => {
       <View style={styles.center}>
         <Text>payment</Text>
         <Text style={styles.textSecond}>countriy</Text>
-        <Text style={[styles.textSecond, { fontSize: 14}]}>username Maker</Text>
-        <Text style={{...styles.textSecond}}>{`date UTC`}</Text>
+        <Text style={{...styles.textSecond,  fontSize: 14}}>username Maker</Text>
+        <Text style={styles.textSecond}>{`date UTC`}</Text>
       </View>
       <View style={styles.left}>
         <Text style={styles.textAmount}>

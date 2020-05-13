@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, SafeAreaView } from 'react-native';
 import { Offer } from '../../molecules/Offer'
-import HomeLayout from '../HomeLayout'
+import {HomeLayout} from '../index'
 
 const  OfferList = () => {
 
