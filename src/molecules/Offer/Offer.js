@@ -1,18 +1,20 @@
 import React from 'react';
-import {View, StyleSheet, Text, Image} from 'react-native';
+import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Offer = (props) => {
-
-
+  const navigation = useNavigation();
   return (
+    <TouchableOpacity onPress={()=> navigation.navigate('DetailsOffer')}>
+
     <View style={styles.container}>
       <View style={styles.right}>
         
       </View>
       <View style={styles.center}>
         <Text>payment</Text>
-        <Text style={styles.textSecond}>countriy</Text>
+        <Text style={styles.textSecond}>country</Text>
         <Text style={{...styles.textSecond,  fontSize: 14}}>username Maker</Text>
         <Text style={styles.textSecond}>{`date UTC`}</Text>
       </View>
@@ -23,23 +25,24 @@ const Offer = (props) => {
         <Text style={styles.text_status}>Status</Text>
       </View>
     </View>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    
-   
+    flexDirection: 'row',
     borderRadius: 20,
     marginHorizontal: 8,
     backgroundColor: 'white',
     resizeMode: 'contain',
-    padding: 15,
+    paddingVertical: 5,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 1.5,
     elevation: 3,
+    
   },
   right: {
     flex: 0.7,

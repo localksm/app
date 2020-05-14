@@ -1,5 +1,5 @@
 import  React from 'react';
-import { Header, Left, Body, Button, Icon } from 'native-base';
+import { Header, Left, Body, Button, Icon, Right } from 'native-base';
 import { StatusBar, View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
