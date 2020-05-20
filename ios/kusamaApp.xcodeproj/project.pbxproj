@@ -319,7 +319,7 @@
 			sourceTree = "<group>";
 		};
 		1A5814BCBD5348E49AFAFFA9 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				47180F358595478C997647CA /* AntDesign.ttf */,
 				0383A64C6648436BA6027081 /* Entypo.ttf */,
@@ -342,8 +342,71 @@
 				444A4856C0C246C6B2446127 /* Zocial.ttf */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
 			path = "";
+			sourceTree = "<group>";
+		};
+		1E63E4DE1972BEB8BC5D7E44 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				14CEF0D850543DE29E4684C5 /* Pods-kusamaApp.debug.xcconfig */,
+				CB65356CEF1712D74F44ECB9 /* Pods-kusamaApp.release.xcconfig */,
+				4616A9DDE194D46CC7B79DB2 /* Pods-kusamaApp-kusamaAppTests.debug.xcconfig */,
+				B5648678E923D011C6C87F50 /* Pods-kusamaApp-kusamaAppTests.release.xcconfig */,
+				5CB9B7B1E0ECB195BE197626 /* Pods-kusamaApp-tvOS.debug.xcconfig */,
+				C3184BB4A7E19E5C7D8B56A2 /* Pods-kusamaApp-tvOS.release.xcconfig */,
+				7C55E535FA8FC91AB1826231 /* Pods-kusamaApp-tvOSTests.debug.xcconfig */,
+				AD90D15707515EC7F12313CB /* Pods-kusamaApp-tvOSTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
+				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
+				0282F1987624DF5B0FCA6EA9 /* libPods-kusamaApp.a */,
+				9823814C98BC39402F8DAB68 /* libPods-kusamaApp-kusamaAppTests.a */,
+				6C7C62E347D8BFA7AFD76A08 /* libPods-kusamaApp-tvOS.a */,
+				C1B73ABC4662EFE188CFD325 /* libPods-kusamaApp-tvOSTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		83CBB9F61A601CBA00E9B192 = {
+			isa = PBXGroup;
+			children = (
+				13B07FAE1A68108700A75B9A /* kusamaApp */,
+				832341AE1AAA6A7D00B99B32 /* Libraries */,
+				00E356EF1AD99517003FC87E /* kusamaAppTests */,
+				83CBBA001A601CBA00E9B192 /* Products */,
+				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				1A5814BCBD5348E49AFAFFA9 /* Resources */,
+				1E63E4DE1972BEB8BC5D7E44 /* Pods */,
+			);
+			indentWidth = 2;
+			sourceTree = "<group>";
+			tabWidth = 2;
+			usesTabs = 0;
+		};
+		83CBBA001A601CBA00E9B192 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				13B07F961A680F5B00A75B9A /* kusamaApp.app */,
+				00E356EE1AD99517003FC87E /* kusamaAppTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* kusamaApp-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* kusamaApp-tvOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
