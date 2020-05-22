@@ -44,6 +44,14 @@ const styles = StyleSheet.create({
     paddingBottom: '10%',
     backgroundColor: 'white',
   },
+  offerList: {
+    borderTopRightRadius: 50,
+    borderTopLeftRadius: 50,
+    justifyContent: 'center',
+    paddingTop: '1%',
+    paddingBottom: '10%',
+    backgroundColor: 'white',
+  },
 });
 
 export default OfferList;
