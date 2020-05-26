@@ -1,0 +1,30 @@
+export const demo = {
+    id: 1,
+    hash: 'qwerty',
+    status: 'accepted',
+    count: 2,
+    localCurrency: 'MXN',
+    body: {
+      paymentData: {
+        country: 'Mexico',
+        email: 'kusama@app.com',
+        userId: 2,
+        proposalId: 3,
+        name: 'kusama App',
+        lastName: 'app',
+        address: 'Mexico',
+        phone: 5555555555,
+        bankData: 'Bank Center',
+        accountNumber:'000000000',
+        type: 'Bank',
+      },
+      operationType: 'addFunds',
+      offerAsset: 30,
+      requestAsset: 30,
+      offerAmount: 30,
+      requestAmount: 30,
+      paymentMethod: 'Bank',
+      usernameMaker: 'Tom',
+      usernameTaker: 'Ricky',
+    }
+}
