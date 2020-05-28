@@ -19,3 +19,4 @@ export { default as ReportAProblem } from './ReportAProblem';
 export { default as Mediation } from './Mediation';
 export { default as WonMediation } from './WonMediation'; 
 export { default as MyOffers} from './MyOffers';
+export { default as Filter } from './Filter';

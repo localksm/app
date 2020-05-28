@@ -12,6 +12,7 @@
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-community/slider": "^3.0.0",
     "@react-navigation/compat": "^5.1.18",
     "@react-navigation/drawer": "^5.7.2",
     "@react-navigation/native": "^5.3.0",

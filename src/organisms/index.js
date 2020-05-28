@@ -16,3 +16,4 @@ export { default as Report } from './Report';
 export { default as MediationView} from './MediationView';
 export { default as MediationResult } from './MediationResult';
 export { default as MyOffer} from './MyOffer';
+export { default as RangeSlider } from './RangeSlider'; 

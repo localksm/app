@@ -7,7 +7,7 @@ class ApolloState {
     this.client = client;
   }
 
-  mutate = async (payload, type = null) => {
+  mutation = async (payload, type = null) => {
     // Defautl saves
     this.cache.writeData({
       data: payload,

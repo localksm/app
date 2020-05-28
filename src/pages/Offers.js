@@ -3,11 +3,11 @@ import { View } from 'react-native';
 import { OfferList, HomeLayout } from '../organisms';
 import { styleBackground } from '../utils/styles';
 
-const Offers = () => {
+const Offers = (props) => {
   return (
     <HomeLayout>
       <View style={styleBackground.container}>
-        <OfferList />
+        <OfferList {...props} />
       </View>
     </HomeLayout>
   );

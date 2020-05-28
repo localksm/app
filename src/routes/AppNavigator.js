@@ -18,12 +18,13 @@ import {
    AcceptedBuy, 
    AcceptedSell,
    Disburse,
-  TransactionCompleted,
-  Wallet,
-  ReportAProblem,
-  Mediation,
-  WonMediation,
-  MyOffers
+   TransactionCompleted,
+   Wallet,
+   ReportAProblem,
+   Mediation,
+   WonMediation,
+   MyOffers, 
+   Filter,
   } from '../pages'
 
 
@@ -48,6 +49,7 @@ const OfferStack = () => {
       <Stack.Screen name='AcceptedSell' component={AcceptedSell} options={{headerShown: false}} />
       <Stack.Screen name='Disburse' component={Disburse} options={{headerShown: false}} />
       <Stack.Screen name='TransactionCompleted' component={TransactionCompleted} options={{headerShown: false}} />
+      <Stack.Screen name='Filter' component={Filter} options={{headerShown: false}} />
       <Stack.Screen name='ReportAProblem' component={ReportAProblemStack} options={{headerShown: false}} />
     </Stack.Navigator>
   )
