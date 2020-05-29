@@ -2,15 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Offer } from '../molecules';
-import { Button } from 'react-native-paper';
+
+
 
 const OfferList = (props) => {
+  
   return (
     <View>
       <View style={styles.container}>
-        <View style={styles.buttonFilter}>
-          <Button label='Filter'  action={() => props.navigation.navigate('Filter')} />
-        </View>
         <Text style={{ ...styles.textBalance, paddingBottom: '5%' }}>
           Balance
         </Text>

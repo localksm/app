@@ -1,16 +1,38 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { OfferList, HomeLayout } from '../organisms';
 import { styleBackground } from '../utils/styles';
+import { Button } from '../atoms';
 
-const Offers = (props) => {
+const Offers = props => {
   return (
     <HomeLayout>
       <View style={styleBackground.container}>
+        <View style={styles.buttonFilter}>
+          <Button
+            label="Filter"
+            stylect={styles.button}
+            action={() => props.navigation.navigate('Filter')}
+          />
+        </View>
         <OfferList {...props} />
       </View>
     </HomeLayout>
   );
 };
+const styles = StyleSheet.create({
+  buttonFilter: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    paddingLeft: '70%',
+    paddingRight: '8%',
+  },
+  button: {
+    color: 'white',
+    borderWidth: 1,
+    borderColor: 'white',
+  },
+});
 
 export default Offers;

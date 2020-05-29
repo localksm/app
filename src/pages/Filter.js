@@ -1,14 +1,16 @@
 import React from 'react';
 import { View } from 'react-native';
-import {HeaderLayout, RangeFilter} from '../molecules';
+import {HomeLayout, Slider} from '../organisms';
+import { styleBackground } from '../utils/styles';
+
 
 const Filter = () => {
     return (
-        <HeaderLayout>
-            <View>
-                <RangeFilter />
+        <HomeLayout>
+            <View style={styleBackground.container}>
+                <Slider />
             </View>
-        </HeaderLayout>
+        </HomeLayout>
         
     );
 };

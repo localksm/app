@@ -1,0 +1,22 @@
+#!/bin/bash
+# Usage [unix systems]:
+# androidSH <arg> (google_dev | facebook_dev | facebook_prod | run_dev_react_native)
+google_dev() {
+    keytool -exportcert -keystore ./android/app/debug.keystore -list -v
+}
+google_prod() {
+    keytool -exportcert -list -v -alias my-key -keystore ./android/app/my-upload-key.keystore 
+}
+facebook_dev() {
+    keytool -exportcert -alias androiddebugkey -keystore ./android/app/debug.keystore | openssl sha1 -binary | openssl base64
+}
+build_android_release() {
+    cd android && ./gradlew clean && ./gradlew assembleRelease && cd .. && react-native run-android --variant Release
+}
+run () {
+  npx react-native run-android
+}
+link(){
+    react-native link
+}
+$1
