@@ -22,7 +22,6 @@ const Offers = props => {
 };
 const styles = StyleSheet.create({
   buttonFilter: {
-    flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-end',
     paddingLeft: '70%',
@@ -32,6 +31,8 @@ const styles = StyleSheet.create({
     color: 'white',
     borderWidth: 1,
     borderColor: 'white',
+    height: 30,
+    width: 90
   },
 });
 

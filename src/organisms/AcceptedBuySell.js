@@ -4,10 +4,8 @@ import { MultiView, FooterWhite } from '../molecules';
 import { Link, Button } from '../atoms';
 import { demo } from '../utils/demoQuery';
 
-const AcceptedBuySell = props => {
-  console.log(demo.body.usernameMaker);
 
- 
+const AcceptedBuySell = props => {
   const title = `Please wait until ${demo.body.usernameMaker} sends you`;
   const amountKSM = '00.30 KSM'
   const exchange = `$ ${demo.body.offerAmount} in USD \n ${amountKSM} Local Currency`;

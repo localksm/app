@@ -2,8 +2,10 @@ import React from 'react';
 import { View } from 'react-native';
 import { FormCreateOfferSell, HomeLayout } from '../organisms';
 import { styleBackground } from '../utils/styles';
+import { backHandlerControl } from '../utils/backHandlerControl';
 
-const CreateOfferSell = () => {
+const CreateOfferSell = (props) => {
+  backHandlerControl(props);
   return (
     <HomeLayout>
       <View style={styleBackground.container}>
