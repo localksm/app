@@ -17,3 +17,4 @@ export { default as MediationView} from './MediationView';
 export { default as MediationResult } from './MediationResult';
 export { default as MyOffer} from './MyOffer';
 export { default as Slider } from './Slider'; 
+export { default as Onboarding } from './Onboarding';

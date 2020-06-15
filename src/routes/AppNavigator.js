@@ -3,7 +3,7 @@ import  React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {CustomDrawerContent} from '../organisms'
+import {CustomDrawerContent, Onboarding} from '../organisms'
 import {
    Offers,
    DetailsOffer, 
@@ -36,6 +36,7 @@ const AuthStack = () => {
     <Stack.Navigator>
       <Stack.Screen name='SignIn' component={SignIn} options={{headerShown: false}} />
       <Stack.Screen name='SingUp' component={SignUp} options={{headerShown: false}} />
+      <Stack.Screen name='Onboarding' component={Onboarding} options={{headerShown: false}} />
     </Stack.Navigator>
   )
 }
