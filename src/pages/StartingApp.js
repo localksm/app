@@ -7,8 +7,7 @@ const  StartingApp = (props) => {
 
     useEffect(() => {        
         setTimeout(()=>{
-            props.navigation.navigate('Auth', { screen: 'Onboarding' })
-            //props.navigation.navigate('Onboarding')
+            props.navigation.navigate('Auth', { screen: 'Onboarding' })            
             
         },1000);
     },[]);

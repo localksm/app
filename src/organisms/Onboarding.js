@@ -59,10 +59,7 @@ const styles = StyleSheet.create({
       alignItems:'center',
       justifyContent: 'center'
     },
-    image: {
-      //width: 320,
-      //height: 320,
-      //marginVertical: 32,
+    image: {    
       resizeMode:'contain'
     },
     text: {
