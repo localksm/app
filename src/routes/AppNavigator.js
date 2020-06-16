@@ -141,6 +141,7 @@ export default function AppNavigator() {
         <Stack.Screen name='Starting' component={StartingApp} options={{headerShown: false}}  />
         <Stack.Screen name='Auth' component={AuthStack} options={{headerShown: false}}  />
         <Stack.Screen name='Drawer' component={MenuDrawer} options={{headerShown: false}} />
+        <Stack.Screen name='Onboarding' component={Onboarding} options={{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
