@@ -1,6 +1,6 @@
 import React from 'react';
 import { OnboardingImage } from '../organisms';
 
-const Onboarding = ( ) => (<OnboardingImage/>);
+const Onboarding = ( props ) => (<OnboardingImage  { ...props } />);
 
 export default Onboarding;

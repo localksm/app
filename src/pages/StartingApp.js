@@ -1,15 +1,16 @@
 import  React, {useEffect} from 'react';
 import { View, Image, StyleSheet, Text, StatusBar, ActivityIndicator } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 
 
+StartingApp = (props) => {
 
-const  StartingApp = (props) => {
-
-    useEffect(() => {
-        
-        setTimeout(()=>{            
-            props.navigation.navigate('Auth', { screen: 'Onboarding' })            
+    useEffect(() => {        
+        setTimeout(()=>{
+            //const navigation = useNavigation();
+            //navigation.navigate('Onboarding');
+            props.navigation.navigate('Auth', { screen: 'Onboarding' })
         },1000);
     },[]);
     
