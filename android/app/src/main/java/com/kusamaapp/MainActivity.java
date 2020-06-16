@@ -1,4 +1,4 @@
-package com.kusamaapp;
+package com.localksm.app;
 
 import com.facebook.react.ReactActivity;
 
