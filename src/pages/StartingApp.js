@@ -9,14 +9,19 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const navigateToOnboarding = () => {
-  const navigation = useNavigation();
-  navigation.navigate('Onboarding');
-};
-
 StartingApp = () => {
-    // React does NOT allow to use hooks inside timeouts, hook should be used only on pure functions.
-    navigateToOnboarding();
+  // React does NOT allow to use hooks inside function, hook should be used inside function component.
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    setTimeout(() => {
+      navigateToOnboarding();
+    }, 1000);
+  }, []);
+
+  const navigateToOnboarding = () => {
+    navigation.navigate('Onboarding');
+  };
 
   return (
     <View style={{ ...styles.container }}>
