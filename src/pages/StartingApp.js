@@ -3,12 +3,13 @@ import { View, Image, StyleSheet, Text, StatusBar, ActivityIndicator } from 'rea
 
 
 
+
 const  StartingApp = (props) => {
 
-    useEffect(() => {        
-        setTimeout(()=>{
+    useEffect(() => {
+        
+        setTimeout(()=>{            
             props.navigation.navigate('Auth', { screen: 'Onboarding' })            
-            
         },1000);
     },[]);
     

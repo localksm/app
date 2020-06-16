@@ -14,7 +14,7 @@ _renderItem = ({ item }) => {
     );
 }
 
-const Onboarding = props => {
+const OnboardingImage = props => {
 
     const [trader, setTrader] = useState(false);
     const _renderDoneButton =()=> ( <View><Text style={ styles.controls}>Done</Text></View> );
@@ -99,4 +99,4 @@ const styles = StyleSheet.create({
   });
 
 
-export default Onboarding;
+export default OnboardingImage;

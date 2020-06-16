@@ -3,7 +3,7 @@ import  React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {CustomDrawerContent, Onboarding} from '../organisms'
+import {CustomDrawerContent} from '../organisms'
 import {
    Offers,
    DetailsOffer, 
@@ -25,6 +25,7 @@ import {
    WonMediation,
    MyOffers, 
    Filter,
+   Onboarding
   } from '../pages'
 
 
