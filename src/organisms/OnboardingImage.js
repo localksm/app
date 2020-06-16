@@ -1,5 +1,6 @@
 import React,{ useState } from 'react';
 import { Text, View, StyleSheet, TouchableHighlight, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { traderData, UserData } from '../utils/constants';
 
@@ -14,6 +15,7 @@ _renderItem = ({ item }) => {
     );
 }
 
+
 const OnboardingImage = props => {
 
     const [trader, setTrader] = useState(false);
@@ -21,20 +23,22 @@ const OnboardingImage = props => {
     const _renderNextButton =()=> ( <View><Text style={ styles.controls} >Next</Text></View> );
     const _renderSkipButton =()=> ( <View><Text style={ styles.controls} >Skip</Text></View> );
 
-    const _onDone = async input => {
-        
-        props.navigation.navigate('SignIn')        
-    };
-
     const handlerSwitchUser = async () => setTrader(!trader);
 
+    // This MUST be called inside the function component, NOT inside a function inside the comppnent
+    const navigation = useNavigation();
+
+    const _onDone = input => {      
+      navigation.navigate('SignIn');
+    };
+    
 
     return(
         <View style={{ flex: 1, backgroundColor: 'white' }}>
             <AppIntroSlider 
                 renderItem={_renderItem} 
                 data={trader?traderData : UserData} 
-                onDone={()=> _onDone('done')}
+                onDone={_onDone}
                 onSkip={()=> _onDone('skip')}
                 renderDoneButton={_renderDoneButton}
                 renderNextButton={_renderNextButton}
