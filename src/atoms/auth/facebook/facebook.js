@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Platform } from 'react-native';
 import {AccessToken, LoginManager} from 'react-native-fbsdk';
-import Button from '../Button';
+import Button from '../../Button';
 
 
 validateEmail = async (email, name) => {
