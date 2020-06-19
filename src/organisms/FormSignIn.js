@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { InputText, Button, Link } from '../atoms';
+import FBLoginButton from '../atoms/facebook/facebook';
 
 const FormSignIn = props => {
   const [email, setEmail] = useState('');
@@ -46,12 +47,11 @@ const FormSignIn = props => {
           action={() => navigation.navigate('Drawer')}
         />
       </View>
-      <View style={styles.buttons}>
-        <Button
-          label="Login with Facebook"
-          stylect={{ backgroundColor: '#3A8DFA' }}
-          action={() => navigation.navigate('Drawer')}
-        />
+      <View style={styles.buttons}>       
+        <FBLoginButton  
+          actionLogin={ ()=> navigation.navigate('Drawer') } 
+          type={"signin"} 
+          /> 
       </View>
       <View style={styles.buttons}>
         <Button

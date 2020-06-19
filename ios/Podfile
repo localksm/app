@@ -79,6 +79,8 @@ target 'kusamaApp' do
 
   # pod 'react-native-slider', :path => '../node_modules/@react-native-community/slider' // Is this actually being used?
 
+  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
+
   target 'kusamaAppTests' do
     inherit! :complete
     # Pods for testing

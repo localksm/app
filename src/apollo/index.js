@@ -23,11 +23,11 @@ import ApolloState from './stateManager';
 
  /**
  * when you need to implement a mutation, it can be this way
- * import {
-      ADD_FUNDS
-    } from './mutations';
-
+ 
  */
+import {
+  LOGIN_FACEBOOK
+  } from './mutations';
 
 const httpLink = new HttpLink({
   uri: `${GRAPHQL_ENDPOINT}`,
@@ -109,7 +109,7 @@ export const QUERIES = {
 };
 
 export const MUTATIONS = {
-  
+  LOGIN_FACEBOOK
 };
 
 export const SUBSCRIPTIONS = {
