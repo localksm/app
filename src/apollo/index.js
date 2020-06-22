@@ -11,7 +11,6 @@ import {
 } from '../utils/config';
 import {ContextProvider, ContextConsumer, withContext} from './context';
 import ApolloState from './stateManager';
-import getNodeType from './nodeHandler';
 
 
 /**
