@@ -6,7 +6,6 @@ export const sessionModel = {
   id: null,
   photo: null,
   sessionType: null,
-  balance: null,
   __typename: null,
 };
 

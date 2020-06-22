@@ -13,17 +13,22 @@ import {ContextProvider, ContextConsumer, withContext} from './context';
 import ApolloState from './stateManager';
 import getNodeType from './nodeHandler';
 
-import { 
-  QUERY_PROPOSALS
-} from './queries';
 
-import {
-  ADD_FUNDS
-} from './mutations';
+/**
+ * when you need to implement a query, it can be this way
+ * import { 
+      QUERY_PROPOSALS
+    } from './queries';
 
-import {
-  PROPOSAL_ADDED,
-} from './subscriptions';
+ */
+
+ /**
+ * when you need to implement a mutation, it can be this way
+ * import {
+      ADD_FUNDS
+    } from './mutations';
+
+ */
 
 const httpLink = new HttpLink({
   uri: `${GRAPHQL_ENDPOINT}`,
@@ -106,15 +111,15 @@ export const client =  new ApolloClient({
 });
 
 export const QUERIES = {
-  QUERY_PROPOSALS
+  
 };
 
 export const MUTATIONS = {
-  ADD_FUNDS
+  
 };
 
 export const SUBSCRIPTIONS = {
-  PROPOSAL_ADDED
+  
 };
 
 
