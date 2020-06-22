@@ -8,7 +8,7 @@ import ls from 'react-native-local-storage';
 import { 
   GRAPHQL_ENDPOINT, 
   GRAPHQL_SUBSCRIPTIONS_ENDPOINT 
-} from '../utils/constants';
+} from '../utils/config';
 import {ContextProvider, ContextConsumer, withContext} from './context';
 import ApolloState from './stateManager';
 import getNodeType from './nodeHandler';
