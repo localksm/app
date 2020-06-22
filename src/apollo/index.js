@@ -129,4 +129,4 @@ const initialState = {
 };
 cache.writeData({data: initialState});
 
-export const state = new ApolloState();
+export const state =  ApolloState;

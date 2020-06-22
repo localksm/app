@@ -18,25 +18,19 @@ const QUERIES = {
   TOKEN,
 };
 
-class ApolloState {
-  constructor() {
-    this.client = client;
-    this.cache = cache;
-    this.queries = QUERIES;
-  }
+const mutation = async (payload, type = null) => {
+  // Defautl saves
+  await cache.writeData({
+          data: payload,
+        });
+};
 
-  navigation = null;
+const getData = async query => {
+  return cache.readQuery({query: QUERIES[query]});
+};
 
-  dispatch = async (payload, type = null) => {
-    // Defautl saves
-    this.cache.writeData({
-      data: payload,
-    });
-  };
+export default {
+  mutation,
+  getData
+};
 
-  getData = async query => {
-    return cache.readQuery({query: this.queries[query]});
-  };
-}
-
-export default ApolloState;
