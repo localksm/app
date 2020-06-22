@@ -53,10 +53,6 @@ export const removeSession = async () => {
 
 
 const authLink = setContext(async _ => {
-  
-  const operationType = _.query.definitions[0].operation;
-  const node =
-    operationType === 'mutation' ? getNodeType(_.operationName) : null;
 
   const data = await getSession();
   const {session} = data !== null && data;
@@ -64,8 +60,7 @@ const authLink = setContext(async _ => {
 
   return {
     headers: {
-      authorization: `Bearer ${jwt}`,
-      node
+      authorization: `Bearer ${jwt}`
     },
   };
 });
