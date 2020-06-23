@@ -1,1 +1,0 @@
-export {default as FBLoginButton} from './facebook';
