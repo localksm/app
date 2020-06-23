@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { InputText, Button, Link } from '../atoms';
-import {FBLoginButton} from '../atoms/auth/facebook';
+import { InputText, Button, Link, FBLoginButton } from '../atoms';
+
+
 
 const FormSignIn = props => {
   const [email, setEmail] = useState('');

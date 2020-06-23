@@ -14,19 +14,19 @@ import ApolloState from './stateManager';
 
 
 /**
- * when you need to implement a query, it can be this way
- * import { 
-      QUERY_PROPOSALS
-    } from './queries';
-
+ * when you need to implement a query, it can be this way 
  */
+
+import { 
+  QUERY_EMAIL
+} from './queries';
 
  /**
  * when you need to implement a mutation, it can be this way
- 
  */
 import {
-  LOGIN_FACEBOOK
+  LOGIN_FACEBOOK,
+  SIGNUP_FACEBOOK
   } from './mutations';
 
 const httpLink = new HttpLink({
@@ -105,11 +105,12 @@ export const client =  new ApolloClient({
 });
 
 export const QUERIES = {
-  
+  QUERY_EMAIL
 };
 
 export const MUTATIONS = {
-  LOGIN_FACEBOOK
+  LOGIN_FACEBOOK,
+  SIGNUP_FACEBOOK
 };
 
 export const SUBSCRIPTIONS = {
