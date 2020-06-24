@@ -11,6 +11,8 @@ import {
 } from '../utils/config';
 import {ContextProvider, ContextConsumer, withContext} from './context';
 import ApolloState from './stateManager';
+import {SIGNUP, LOGIN} from './mutations';
+import { VERIFY_USER } from './queries';
 
 
 /**

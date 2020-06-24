@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "kusamaApp-tvOS.app"
-               BlueprintName = "kusamaApp-tvOS"
-               ReferencedContainer = "container:kusamaApp.xcodeproj">
+               BuildableName = "com.localksm.app-tvOS.app"
+               BlueprintName = "com.localksm.app-tvOS"
+               ReferencedContainer = "container:com.localksm.app.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "kusamaApp-tvOSTests.xctest"
-               BlueprintName = "kusamaApp-tvOSTests"
-               ReferencedContainer = "container:kusamaApp.xcodeproj">
+               BuildableName = "com.localksm.app-tvOSTests.xctest"
+               BlueprintName = "com.localksm.app-tvOSTests"
+               ReferencedContainer = "container:com.localksm.app.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "kusamaApp-tvOS.app"
-            BlueprintName = "kusamaApp-tvOS"
-            ReferencedContainer = "container:kusamaApp.xcodeproj">
+            BuildableName = "com.localksm.app-tvOS.app"
+            BlueprintName = "com.localksm.app-tvOS"
+            ReferencedContainer = "container:com.localksm.app.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "kusamaApp-tvOS.app"
-            BlueprintName = "kusamaApp-tvOS"
-            ReferencedContainer = "container:kusamaApp.xcodeproj">
+            BuildableName = "com.localksm.app-tvOS.app"
+            BlueprintName = "com.localksm.app-tvOS"
+            ReferencedContainer = "container:com.localksm.app.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -44,8 +44,8 @@ def flipper_post_install(installer)
   end
 end
 
-target 'kusamaApp' do
-  # Pods for kusamaApp
+target 'com.localksm.app' do
+  # Pods for com.localksm.app
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -100,10 +100,10 @@ target 'kusamaApp' do
   end
 end
 
-target 'kusamaApp-tvOS' do
-  # Pods for kusamaApp-tvOS
+target 'com.localksm.app-tvOS' do
+  # Pods for com.localksm.app-tvOS
 
-  target 'kusamaApp-tvOSTests' do
+  target 'com.localksm.app-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

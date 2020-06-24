@@ -42,10 +42,10 @@ const FormSignIn = props => {
         />
       </View>
       <View style={styles.buttons}>
-        <Button
+        <GoogleButton
           label="Login with Google"
           stylect={{ backgroundColor: '#6BA3FA' }}
-          action={() => navigation.navigate('Drawer')}
+          actionLogin={() => navigation.navigate('Drawer')}
         />
       </View>
       <View style={styles.buttons}>       

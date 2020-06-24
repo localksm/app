@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "kusamaApp.app"
-               BlueprintName = "kusamaApp"
-               ReferencedContainer = "container:kusamaApp.xcodeproj">
+               BuildableName = "com.localksm.app.app"
+               BlueprintName = "com.localksm.app"
+               ReferencedContainer = "container:com.localksm.app.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "kusamaAppTests.xctest"
-               BlueprintName = "kusamaAppTests"
-               ReferencedContainer = "container:kusamaApp.xcodeproj">
+               BuildableName = "com.localksm.appTests.xctest"
+               BlueprintName = "com.localksm.appTests"
+               ReferencedContainer = "container:com.localksm.app.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "kusamaApp.app"
-            BlueprintName = "kusamaApp"
-            ReferencedContainer = "container:kusamaApp.xcodeproj">
+            BuildableName = "com.localksm.app.app"
+            BlueprintName = "com.localksm.app"
+            ReferencedContainer = "container:com.localksm.app.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "kusamaApp.app"
-            BlueprintName = "kusamaApp"
-            ReferencedContainer = "container:kusamaApp.xcodeproj">
+            BuildableName = "com.localksm.app.app"
+            BlueprintName = "com.localksm.app"
+            ReferencedContainer = "container:com.localksm.app.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* kusamaAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* kusamaAppTests.m */; };
+		00E356F31AD99517003FC87E /* com.localksm.appTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* com.localksm.appTests.m */; };
 		0155417D33794EE498D369BD /* Poppins-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4EA2866A11E742F2A2FA64C5 /* Poppins-LightItalic.ttf */; };
-		03855079E7FD4CBAD5E88144 /* libPods-kusamaApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C7C62E347D8BFA7AFD76A08 /* libPods-kusamaApp-tvOS.a */; };
+		03855079E7FD4CBAD5E88144 /* libPods-com.localksm.app-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C7C62E347D8BFA7AFD76A08 /* libPods-com.localksm.app-tvOS.a */; };
 		0DA9088EA0254350B7CD3C78 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D074BDAB5FCA4AD0B8A29E3B /* Fontisto.ttf */; };
 		1267806EEB254F6999B32FDA /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B15296635EC24134BEC99026 /* rubicon-icon-font.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -19,12 +19,12 @@
 		1910103FAB994D7690CE0E06 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AEF4A0EA301842159871CCED /* SimpleLineIcons.ttf */; };
 		19B170CE52A94395AE507311 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0E246DD108B407EA62B725F /* MaterialIcons.ttf */; };
 		1AB74CCED2144B208F66BF99 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05AB11266B1E4448AC368F1A /* Poppins-MediumItalic.ttf */; };
-		232A11683DFEA4ED87A198C8 /* libPods-kusamaApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1B73ABC4662EFE188CFD325 /* libPods-kusamaApp-tvOSTests.a */; };
+		232A11683DFEA4ED87A198C8 /* libPods-com.localksm.app-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1B73ABC4662EFE188CFD325 /* libPods-com.localksm.app-tvOSTests.a */; };
 		2B13FA314F0A42E381AEC679 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DBA6FBD81C94DCBBD1EAA36 /* Roboto.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2DCD954D1E0B4F2C00145EB5 /* kusamaAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* kusamaAppTests.m */; };
+		2DCD954D1E0B4F2C00145EB5 /* com.localksm.appTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* com.localksm.appTests.m */; };
 		312F3643941A4D3987F661DE /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F3A841D76654450977F1701 /* Poppins-Italic.ttf */; };
 		3C5621DCAE2742E69213EC06 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6EA1254E6EAC4ECA897A3EB5 /* FontAwesome.ttf */; };
 		42F3ED9C2E6045E4B359090C /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3441C070DB794F56A0067D25 /* Foundation.ttf */; };
@@ -36,7 +36,7 @@
 		691092D997774D76BF8383D8 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F22E83A86F9B4C969C11460D /* FontAwesome5_Solid.ttf */; };
 		6C8F42160EA54CB499209E6B /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76656A273EF0400FB2F8515C /* Poppins-Regular.ttf */; };
 		8150D8EC0EE74F79A782AFD1 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47180F358595478C997647CA /* AntDesign.ttf */; };
-		85807F674E3FD53DA80B8004 /* libPods-kusamaApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0282F1987624DF5B0FCA6EA9 /* libPods-kusamaApp.a */; };
+		85807F674E3FD53DA80B8004 /* libPods-com.localksm.app.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0282F1987624DF5B0FCA6EA9 /* libPods-com.localksm.app.a */; };
 		91A969F1A2D243C4AA155D9F /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50C1B2AB5FEA4614B2971250 /* EvilIcons.ttf */; };
 		94D4F7C9128742A890ED6BFA /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0166805409A4E75B995693E /* FontAwesome5_Regular.ttf */; };
 		97A14CAEC30540878B25E742 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4197336E6BD44DE8BB0347B /* FontAwesome5_Brands.ttf */; };
@@ -51,7 +51,7 @@
 		D85AE2E16CC14961BDEBE23F /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5A9535408B94628AF2519D0 /* Poppins-Light.ttf */; };
 		D9A82C5A16A14B8099C3B3F9 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 74D3AC32BF7A47D88ACF646D /* Ionicons.ttf */; };
 		E24177CB2ACD408794F74F31 /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9641D000FA4E90A81B769A /* Poppins-ExtraBold.ttf */; };
-		E306EC8C65C3B767C723DFA9 /* libPods-kusamaApp-kusamaAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9823814C98BC39402F8DAB68 /* libPods-kusamaApp-kusamaAppTests.a */; };
+		E306EC8C65C3B767C723DFA9 /* libPods-com.localksm.app-com.localksm.appTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9823814C98BC39402F8DAB68 /* libPods-com.localksm.app-com.localksm.appTests.a */; };
 		E72D1F63ED6B4E1B935A761C /* Poppins-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 33669EEFAE6B4C0B96804C6A /* Poppins-BoldItalic.ttf */; };
 		E8ADDCAEA6DA4DCF8DDBC1DA /* Poppins-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89F410561F8D4B7BA8B8724D /* Poppins-ThinItalic.ttf */; };
 		EA9DB780006B492D81A88BAC /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 34D7FE4D9F244FDC93013D39 /* Poppins-Black.ttf */; };
@@ -65,72 +65,72 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = kusamaApp;
+			remoteInfo = com.localksm.app;
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "kusamaApp-tvOS";
+			remoteInfo = "com.localksm.app-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* kusamaAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = kusamaAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* com.localksm.appTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = com.localksm.appTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* kusamaAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = kusamaAppTests.m; sourceTree = "<group>"; };
-		0282F1987624DF5B0FCA6EA9 /* libPods-kusamaApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-kusamaApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356F21AD99517003FC87E /* com.localksm.appTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = com.localksm.appTests.m; sourceTree = "<group>"; };
+		0282F1987624DF5B0FCA6EA9 /* libPods-com.localksm.app.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-com.localksm.app.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0383A64C6648436BA6027081 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		05AB11266B1E4448AC368F1A /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-MediumItalic.ttf"; path = "../assets/fonts/Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* kusamaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kusamaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = kusamaApp/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = kusamaApp/AppDelegate.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* com.localksm.app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = com.localksm.app.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = com.localksm.app/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = com.localksm.app/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = kusamaApp/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = kusamaApp/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = kusamaApp/main.m; sourceTree = "<group>"; };
-		14CEF0D850543DE29E4684C5 /* Pods-kusamaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kusamaApp.debug.xcconfig"; path = "Target Support Files/Pods-kusamaApp/Pods-kusamaApp.debug.xcconfig"; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* kusamaApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "kusamaApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* kusamaApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "kusamaApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = com.localksm.app/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = com.localksm.app/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = com.localksm.app/main.m; sourceTree = "<group>"; };
+		14CEF0D850543DE29E4684C5 /* Pods-com.localksm.app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.localksm.app.debug.xcconfig"; path = "Target Support Files/Pods-com.localksm.app/Pods-com.localksm.app.debug.xcconfig"; sourceTree = "<group>"; };
+		2D02E47B1E0B4A5D006451C7 /* com.localksm.app-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "com.localksm.app-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* com.localksm.app-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "com.localksm.app-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		31F698FCF7BD43FDB15747BC /* Poppins-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Thin.ttf"; path = "../assets/fonts/Poppins-Thin.ttf"; sourceTree = "<group>"; };
 		33669EEFAE6B4C0B96804C6A /* Poppins-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-BoldItalic.ttf"; path = "../assets/fonts/Poppins-BoldItalic.ttf"; sourceTree = "<group>"; };
 		3441C070DB794F56A0067D25 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		34D7FE4D9F244FDC93013D39 /* Poppins-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Black.ttf"; path = "../assets/fonts/Poppins-Black.ttf"; sourceTree = "<group>"; };
 		444A4856C0C246C6B2446127 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
-		4616A9DDE194D46CC7B79DB2 /* Pods-kusamaApp-kusamaAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kusamaApp-kusamaAppTests.debug.xcconfig"; path = "Target Support Files/Pods-kusamaApp-kusamaAppTests/Pods-kusamaApp-kusamaAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4616A9DDE194D46CC7B79DB2 /* Pods-com.localksm.app-com.localksm.appTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.localksm.app-com.localksm.appTests.debug.xcconfig"; path = "Target Support Files/Pods-com.localksm.app-com.localksm.appTests/Pods-com.localksm.app-com.localksm.appTests.debug.xcconfig"; sourceTree = "<group>"; };
 		47180F358595478C997647CA /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/native-base/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		4EA2866A11E742F2A2FA64C5 /* Poppins-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-LightItalic.ttf"; path = "../assets/fonts/Poppins-LightItalic.ttf"; sourceTree = "<group>"; };
 		50C1B2AB5FEA4614B2971250 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
-		5CB9B7B1E0ECB195BE197626 /* Pods-kusamaApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kusamaApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-kusamaApp-tvOS/Pods-kusamaApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		5CB9B7B1E0ECB195BE197626 /* Pods-com.localksm.app-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.localksm.app-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-com.localksm.app-tvOS/Pods-com.localksm.app-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		5DBA6FBD81C94DCBBD1EAA36 /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		6734DC26411242D8A6D45E54 /* Poppins-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-BlackItalic.ttf"; path = "../assets/fonts/Poppins-BlackItalic.ttf"; sourceTree = "<group>"; };
-		6C7C62E347D8BFA7AFD76A08 /* libPods-kusamaApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-kusamaApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C7C62E347D8BFA7AFD76A08 /* libPods-com.localksm.app-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-com.localksm.app-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EA1254E6EAC4ECA897A3EB5 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		74D3AC32BF7A47D88ACF646D /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		76656A273EF0400FB2F8515C /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		7A95314C020B4667BFB7A256 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-SemiBold.ttf"; path = "../assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		7B772A52B5C944789B4FCF83 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
-		7C55E535FA8FC91AB1826231 /* Pods-kusamaApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kusamaApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-kusamaApp-tvOSTests/Pods-kusamaApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7C55E535FA8FC91AB1826231 /* Pods-com.localksm.app-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.localksm.app-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-com.localksm.app-tvOSTests/Pods-com.localksm.app-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7F3A841D76654450977F1701 /* Poppins-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Italic.ttf"; path = "../assets/fonts/Poppins-Italic.ttf"; sourceTree = "<group>"; };
 		89F410561F8D4B7BA8B8724D /* Poppins-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ThinItalic.ttf"; path = "../assets/fonts/Poppins-ThinItalic.ttf"; sourceTree = "<group>"; };
 		8A9641D000FA4E90A81B769A /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraBold.ttf"; path = "../assets/fonts/Poppins-ExtraBold.ttf"; sourceTree = "<group>"; };
 		9590EA4F890B4AA3A99304DB /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		9823814C98BC39402F8DAB68 /* libPods-kusamaApp-kusamaAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-kusamaApp-kusamaAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9823814C98BC39402F8DAB68 /* libPods-com.localksm.app-com.localksm.appTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-com.localksm.app-com.localksm.appTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0166805409A4E75B995693E /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		A0E246DD108B407EA62B725F /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		A88B06037CC6470FAFCC463B /* Poppins-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Medium.ttf"; path = "../assets/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		A8CACEA58DA34E7098A708E5 /* Poppins-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-SemiBoldItalic.ttf"; path = "../assets/fonts/Poppins-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
-		AD90D15707515EC7F12313CB /* Pods-kusamaApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kusamaApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-kusamaApp-tvOSTests/Pods-kusamaApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		AD90D15707515EC7F12313CB /* Pods-com.localksm.app-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.localksm.app-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-com.localksm.app-tvOSTests/Pods-com.localksm.app-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		AEF4A0EA301842159871CCED /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		B15296635EC24134BEC99026 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
 		B291988C17AF490FABAE1000 /* Poppins-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraLightItalic.ttf"; path = "../assets/fonts/Poppins-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
-		B5648678E923D011C6C87F50 /* Pods-kusamaApp-kusamaAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kusamaApp-kusamaAppTests.release.xcconfig"; path = "Target Support Files/Pods-kusamaApp-kusamaAppTests/Pods-kusamaApp-kusamaAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		C1B73ABC4662EFE188CFD325 /* libPods-kusamaApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-kusamaApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C3184BB4A7E19E5C7D8B56A2 /* Pods-kusamaApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kusamaApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-kusamaApp-tvOS/Pods-kusamaApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		B5648678E923D011C6C87F50 /* Pods-com.localksm.app-com.localksm.appTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.localksm.app-com.localksm.appTests.release.xcconfig"; path = "Target Support Files/Pods-com.localksm.app-com.localksm.appTests/Pods-com.localksm.app-com.localksm.appTests.release.xcconfig"; sourceTree = "<group>"; };
+		C1B73ABC4662EFE188CFD325 /* libPods-com.localksm.app-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-com.localksm.app-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3184BB4A7E19E5C7D8B56A2 /* Pods-com.localksm.app-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.localksm.app-tvOS.release.xcconfig"; path = "Target Support Files/Pods-com.localksm.app-tvOS/Pods-com.localksm.app-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		C4197336E6BD44DE8BB0347B /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
-		CB65356CEF1712D74F44ECB9 /* Pods-kusamaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kusamaApp.release.xcconfig"; path = "Target Support Files/Pods-kusamaApp/Pods-kusamaApp.release.xcconfig"; sourceTree = "<group>"; };
+		CB65356CEF1712D74F44ECB9 /* Pods-com.localksm.app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.localksm.app.release.xcconfig"; path = "Target Support Files/Pods-com.localksm.app/Pods-com.localksm.app.release.xcconfig"; sourceTree = "<group>"; };
 		D074BDAB5FCA4AD0B8A29E3B /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/native-base/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		D5ED386C7DD54DC8B7EBDEB0 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		D61C5789DAFC4B23846DE9BA /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraLight.ttf"; path = "../assets/fonts/Poppins-ExtraLight.ttf"; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E306EC8C65C3B767C723DFA9 /* libPods-kusamaApp-kusamaAppTests.a in Frameworks */,
+				E306EC8C65C3B767C723DFA9 /* libPods-com.localksm.app-com.localksm.appTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,7 +156,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				85807F674E3FD53DA80B8004 /* libPods-kusamaApp.a in Frameworks */,
+				85807F674E3FD53DA80B8004 /* libPods-com.localksm.app.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,7 +164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03855079E7FD4CBAD5E88144 /* libPods-kusamaApp-tvOS.a in Frameworks */,
+				03855079E7FD4CBAD5E88144 /* libPods-com.localksm.app-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,20 +172,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				232A11683DFEA4ED87A198C8 /* libPods-kusamaApp-tvOSTests.a in Frameworks */,
+				232A11683DFEA4ED87A198C8 /* libPods-com.localksm.app-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* kusamaAppTests */ = {
+		00E356EF1AD99517003FC87E /* com.localksm.appTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* kusamaAppTests.m */,
+				00E356F21AD99517003FC87E /* com.localksm.appTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = kusamaAppTests;
+			path = com.localksm.appTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -196,7 +196,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* kusamaApp */ = {
+		13B07FAE1A68108700A75B9A /* com.localksm.app */ = {
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -207,7 +207,7 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = kusamaApp;
+			name = com.localksm.app;
 			sourceTree = "<group>";
 		};
 		1A5814BCBD5348E49AFAFFA9 /* Resources */ = {
@@ -258,14 +258,14 @@
 		1E63E4DE1972BEB8BC5D7E44 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				14CEF0D850543DE29E4684C5 /* Pods-kusamaApp.debug.xcconfig */,
-				CB65356CEF1712D74F44ECB9 /* Pods-kusamaApp.release.xcconfig */,
-				4616A9DDE194D46CC7B79DB2 /* Pods-kusamaApp-kusamaAppTests.debug.xcconfig */,
-				B5648678E923D011C6C87F50 /* Pods-kusamaApp-kusamaAppTests.release.xcconfig */,
-				5CB9B7B1E0ECB195BE197626 /* Pods-kusamaApp-tvOS.debug.xcconfig */,
-				C3184BB4A7E19E5C7D8B56A2 /* Pods-kusamaApp-tvOS.release.xcconfig */,
-				7C55E535FA8FC91AB1826231 /* Pods-kusamaApp-tvOSTests.debug.xcconfig */,
-				AD90D15707515EC7F12313CB /* Pods-kusamaApp-tvOSTests.release.xcconfig */,
+				14CEF0D850543DE29E4684C5 /* Pods-com.localksm.app.debug.xcconfig */,
+				CB65356CEF1712D74F44ECB9 /* Pods-com.localksm.app.release.xcconfig */,
+				4616A9DDE194D46CC7B79DB2 /* Pods-com.localksm.app-com.localksm.appTests.debug.xcconfig */,
+				B5648678E923D011C6C87F50 /* Pods-com.localksm.app-com.localksm.appTests.release.xcconfig */,
+				5CB9B7B1E0ECB195BE197626 /* Pods-com.localksm.app-tvOS.debug.xcconfig */,
+				C3184BB4A7E19E5C7D8B56A2 /* Pods-com.localksm.app-tvOS.release.xcconfig */,
+				7C55E535FA8FC91AB1826231 /* Pods-com.localksm.app-tvOSTests.debug.xcconfig */,
+				AD90D15707515EC7F12313CB /* Pods-com.localksm.app-tvOSTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
@@ -276,10 +276,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				0282F1987624DF5B0FCA6EA9 /* libPods-kusamaApp.a */,
-				9823814C98BC39402F8DAB68 /* libPods-kusamaApp-kusamaAppTests.a */,
-				6C7C62E347D8BFA7AFD76A08 /* libPods-kusamaApp-tvOS.a */,
-				C1B73ABC4662EFE188CFD325 /* libPods-kusamaApp-tvOSTests.a */,
+				0282F1987624DF5B0FCA6EA9 /* libPods-com.localksm.app.a */,
+				9823814C98BC39402F8DAB68 /* libPods-com.localksm.app-com.localksm.appTests.a */,
+				6C7C62E347D8BFA7AFD76A08 /* libPods-com.localksm.app-tvOS.a */,
+				C1B73ABC4662EFE188CFD325 /* libPods-com.localksm.app-tvOSTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -294,9 +294,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* kusamaApp */,
+				13B07FAE1A68108700A75B9A /* com.localksm.app */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* kusamaAppTests */,
+				00E356EF1AD99517003FC87E /* com.localksm.appTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				1A5814BCBD5348E49AFAFFA9 /* Resources */,
@@ -310,10 +310,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* kusamaApp.app */,
-				00E356EE1AD99517003FC87E /* kusamaAppTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* kusamaApp-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* kusamaApp-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* com.localksm.app.app */,
+				00E356EE1AD99517003FC87E /* com.localksm.appTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* com.localksm.app-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* com.localksm.app-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -411,9 +411,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* kusamaAppTests */ = {
+		00E356ED1AD99517003FC87E /* com.localksm.appTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "kusamaAppTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "com.localksm.appTests" */;
 			buildPhases = (
 				819E615B5D64D8F9D825AD10 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -425,14 +425,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = kusamaAppTests;
-			productName = kusamaAppTests;
-			productReference = 00E356EE1AD99517003FC87E /* kusamaAppTests.xctest */;
+			name = com.localksm.appTests;
+			productName = com.localksm.appTests;
+			productReference = 00E356EE1AD99517003FC87E /* com.localksm.appTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* kusamaApp */ = {
+		13B07F861A680F5B00A75B9A /* com.localksm.app */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "kusamaApp" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "com.localksm.app" */;
 			buildPhases = (
 				BC193D59909CC3B0F3C31AFC /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -445,14 +445,14 @@
 			);
 			dependencies = (
 			);
-			name = kusamaApp;
-			productName = kusamaApp;
-			productReference = 13B07F961A680F5B00A75B9A /* kusamaApp.app */;
+			name = com.localksm.app;
+			productName = com.localksm.app;
+			productReference = 13B07F961A680F5B00A75B9A /* com.localksm.app.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* kusamaApp-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* com.localksm.app-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "kusamaApp-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "com.localksm.app-tvOS" */;
 			buildPhases = (
 				32EE005E48B92E24378F1164 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -465,14 +465,14 @@
 			);
 			dependencies = (
 			);
-			name = "kusamaApp-tvOS";
-			productName = "kusamaApp-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* kusamaApp-tvOS.app */;
+			name = "com.localksm.app-tvOS";
+			productName = "com.localksm.app-tvOS";
+			productReference = 2D02E47B1E0B4A5D006451C7 /* com.localksm.app-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* kusamaApp-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* com.localksm.app-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "kusamaApp-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "com.localksm.app-tvOSTests" */;
 			buildPhases = (
 				F2111B6F6EAC6C41CFFA8F53 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -484,9 +484,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "kusamaApp-tvOSTests";
-			productName = "kusamaApp-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* kusamaApp-tvOSTests.xctest */;
+			name = "com.localksm.app-tvOSTests";
+			productName = "com.localksm.app-tvOSTests";
+			productReference = 2D02E4901E0B4A5D006451C7 /* com.localksm.app-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -515,7 +515,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "kusamaApp" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "com.localksm.app" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -528,10 +528,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* kusamaApp */,
-				00E356ED1AD99517003FC87E /* kusamaAppTests */,
-				2D02E47A1E0B4A5D006451C7 /* kusamaApp-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* kusamaApp-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* com.localksm.app */,
+				00E356ED1AD99517003FC87E /* com.localksm.appTests */,
+				2D02E47A1E0B4A5D006451C7 /* com.localksm.app-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* com.localksm.app-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -651,7 +651,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-kusamaApp-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-com.localksm.app-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -673,7 +673,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-kusamaApp-kusamaAppTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-com.localksm.app-com.localksm.appTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -695,7 +695,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-kusamaApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-com.localksm.app-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -717,7 +717,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-kusamaApp-tvOSTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-com.localksm.app-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -769,7 +769,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* kusamaAppTests.m in Sources */,
+				00E356F31AD99517003FC87E /* com.localksm.appTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -795,7 +795,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DCD954D1E0B4F2C00145EB5 /* kusamaAppTests.m in Sources */,
+				2DCD954D1E0B4F2C00145EB5 /* com.localksm.appTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -804,12 +804,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* kusamaApp */;
+			target = 13B07F861A680F5B00A75B9A /* com.localksm.app */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* kusamaApp-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* com.localksm.app-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -821,7 +821,7 @@
 				13B07FB21A68108700A75B9A /* Base */,
 			);
 			name = LaunchScreen.xib;
-			path = kusamaApp;
+			path = com.localksm.app;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -829,14 +829,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4616A9DDE194D46CC7B79DB2 /* Pods-kusamaApp-kusamaAppTests.debug.xcconfig */;
+			baseConfigurationReference = 4616A9DDE194D46CC7B79DB2 /* Pods-com.localksm.app-com.localksm.appTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = kusamaAppTests/Info.plist;
+				INFOPLIST_FILE = com.localksm.appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -846,17 +846,17 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/kusamaApp.app/kusamaApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/com.localksm.app.app/com.localksm.app";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B5648678E923D011C6C87F50 /* Pods-kusamaApp-kusamaAppTests.release.xcconfig */;
+			baseConfigurationReference = B5648678E923D011C6C87F50 /* Pods-com.localksm.app-com.localksm.appTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = kusamaAppTests/Info.plist;
+				INFOPLIST_FILE = com.localksm.appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -866,13 +866,13 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/kusamaApp.app/kusamaApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/com.localksm.app.app/com.localksm.app";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 14CEF0D850543DE29E4684C5 /* Pods-kusamaApp.debug.xcconfig */;
+			baseConfigurationReference = 14CEF0D850543DE29E4684C5 /* Pods-com.localksm.app.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -882,7 +882,7 @@
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
 				);
-				INFOPLIST_FILE = kusamaApp/Info.plist;
+				INFOPLIST_FILE = com.localksm.app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -890,7 +890,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = kusamaApp;
+				PRODUCT_NAME = com.localksm.app;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -899,12 +899,12 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB65356CEF1712D74F44ECB9 /* Pods-kusamaApp.release.xcconfig */;
+			baseConfigurationReference = CB65356CEF1712D74F44ECB9 /* Pods-com.localksm.app.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = kusamaApp/Info.plist;
+				INFOPLIST_FILE = com.localksm.app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -912,7 +912,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = kusamaApp;
+				PRODUCT_NAME = com.localksm.app;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -920,7 +920,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5CB9B7B1E0ECB195BE197626 /* Pods-kusamaApp-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 5CB9B7B1E0ECB195BE197626 /* Pods-com.localksm.app-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -931,14 +931,14 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "kusamaApp-tvOS/Info.plist";
+				INFOPLIST_FILE = "com.localksm.app-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.kusamaApp-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.com.localksm.app-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -948,7 +948,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C3184BB4A7E19E5C7D8B56A2 /* Pods-kusamaApp-tvOS.release.xcconfig */;
+			baseConfigurationReference = C3184BB4A7E19E5C7D8B56A2 /* Pods-com.localksm.app-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -959,14 +959,14 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "kusamaApp-tvOS/Info.plist";
+				INFOPLIST_FILE = "com.localksm.app-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.kusamaApp-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.com.localksm.app-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -976,7 +976,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7C55E535FA8FC91AB1826231 /* Pods-kusamaApp-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = 7C55E535FA8FC91AB1826231 /* Pods-com.localksm.app-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -986,24 +986,24 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "kusamaApp-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "com.localksm.app-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.kusamaApp-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.com.localksm.app-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/kusamaApp-tvOS.app/kusamaApp-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/com.localksm.app-tvOS.app/com.localksm.app-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AD90D15707515EC7F12313CB /* Pods-kusamaApp-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = AD90D15707515EC7F12313CB /* Pods-com.localksm.app-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1013,17 +1013,17 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "kusamaApp-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "com.localksm.app-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.kusamaApp-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.com.localksm.app-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/kusamaApp-tvOS.app/kusamaApp-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/com.localksm.app-tvOS.app/com.localksm.app-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -1144,7 +1144,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "kusamaAppTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "com.localksm.appTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -1153,7 +1153,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "kusamaApp" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "com.localksm.app" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -1162,7 +1162,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "kusamaApp-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "com.localksm.app-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -1171,7 +1171,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "kusamaApp-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "com.localksm.app-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -1180,7 +1180,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "kusamaApp" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "com.localksm.app" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
