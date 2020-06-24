@@ -26,9 +26,21 @@ validateEmail = async (email, name) => {
 
 const FBLoginButton = ( props ) => {
 
-  const [loading, setloading] = useState(false);
-  const [ loginFacebook ] = useMutation(LOGIN_FACEBOOK);
-  const [ signUpFacebook ] = useMutation(SIGNUP_FACEBOOK);
+    const [loading, setloading] = useState(false);
+    const [ loginFacebook ] = useMutation(LOGIN_FACEBOOK);
+    const [ signUpFacebook ] = useMutation(SIGNUP_FACEBOOK);
+
+    const mapUser = data => {
+    
+      session['id'] = data.id;
+      session['token'] = data.token;
+      session['email'] = data.email;
+      session['name'] = data.email;            
+      session['__typename'] = data.__typename;
+      session['sessionType'] = 'facebook';
+
+      return session;
+    };
 
     const _initUser = async token => {
 
@@ -49,26 +61,23 @@ const FBLoginButton = ( props ) => {
 
         const {emailExists} = await validateEmail(email, name);                
         setloading(true);
-        if (!emailExists) {
-          alert("User does not exist");          
-          setloading(false);
-          return;
+        if (!emailExists) {          
+          const resultSignUp =await _registerUser(token);
+          const { data: { signup }} = resultSignUp;
+          if (!signup.success) {
+            setloading(false);
+            alert("Try later");
+            return;
+          }
         }
                 
         const result = await loginFacebook({ variables: payload });                
         if (result.data) {
             const { data:{ login }} = result;
-            session['id'] = login.id;
-            session['token'] = login.token;
-            session['email'] = login.email;
-            session['name'] = login.email;            
-            session['__typename'] = login.__typename;
-            session['sessionType'] = 'email';
-            
+            const sessionResult = mapUser( login );            
             setloading(false);
-            setSession({session})            
-            props.actionLogin();
-            
+            setSession({ session: sessionResult})            
+            props.actionLogin();            
         }else{
             setloading(false);
         }
@@ -100,7 +109,12 @@ const FBLoginButton = ( props ) => {
           alert('Login cancelled');
         } else {          
           const data = await AccessToken.getCurrentAccessToken();
-          _registerUser(data.accessToken.toString());
+          const sessionResult = await _registerUser(data.accessToken.toString());
+          const { data: { signup }} = sessionResult;
+          if ( signup.success) {            
+            props.actionLogin();
+          }
+                
         }
     };
 
@@ -131,11 +145,10 @@ const FBLoginButton = ( props ) => {
             userFBID: fbRes.id,
             platform: Platform.OS === "ios"? "ios":"android"
           };
-          const result = await signUpFacebook({ variables: payload });        
-          props.actionLogin();
+          const result = await signUpFacebook({ variables: payload });
+          return result;
         }
-    
-        
+            
     };
 
     return (                    
