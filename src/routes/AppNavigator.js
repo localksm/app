@@ -32,16 +32,6 @@ import {
 const Drawer = createDrawerNavigator();
 const Stack =  createStackNavigator();
 
-const AuthStack = () => {
-  return(
-    <Stack.Navigator>
-      <Stack.Screen name='SignIn' component={SignIn} options={{headerShown: false}} />
-      <Stack.Screen name='SingUp' component={SignUp} options={{headerShown: false}} />
-      <Stack.Screen name='Onboarding' component={Onboarding} options={{headerShown: false}} />
-    </Stack.Navigator>
-  )
-}
-
 const OfferStack = () => {
   return(
     <Stack.Navigator initialRouteName='Offers' >
@@ -139,10 +129,10 @@ export default function AppNavigator() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName= 'Starting' >
         <Stack.Screen name='Starting' component={StartingApp} options={{headerShown: false}}  />
-        <Stack.Screen name='SignIn' component={SignIn} options={{headerShown: false}}  />
-        <Stack.Screen name='Auth' component={AuthStack} options={{headerShown: false}}  />
-        <Stack.Screen name='Drawer' component={MenuDrawer} options={{headerShown: false}} />
         <Stack.Screen name='Onboarding' component={Onboarding} options={{headerShown: false}} />
+        <Stack.Screen name='SignIn' component={SignIn} options={{headerShown: false}}  />
+        <Stack.Screen name='SignUp' component={SignUp} options={{headerShown: false}}  />     
+        <Stack.Screen name='Drawer' component={MenuDrawer} options={{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
