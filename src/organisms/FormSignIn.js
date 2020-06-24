@@ -65,7 +65,7 @@ const FormSignIn = props => {
       <View style={styles.styleLink}>
         <Link
           label="New user? Register"
-          action={() => navigation.navigate('SingUp')}
+          action={() => navigation.navigate('SignUp')}
           color="#ffffff"
         />
       </View>
