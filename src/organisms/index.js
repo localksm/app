@@ -18,3 +18,4 @@ export { default as MediationResult } from './MediationResult';
 export { default as MyOffer} from './MyOffer';
 export { default as Slider } from './Slider'; 
 export { default as OnboardingImage } from './OnboardingImage';
+export { default as HelpView } from './HelpView';

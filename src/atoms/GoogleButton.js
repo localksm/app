@@ -119,8 +119,8 @@ const GoogleButton = (props) => {
         <Button label={props.label} action={signup} stylect={props.stylect} />
        ) : (
          <View style={styles.text}>
-           <ActivityIndicator size="large" color="white" />
-           <Text>Please wait...</Text>
+           <ActivityIndicator size='small' color="white" />
+           <Text style={styles.text}>Please wait...</Text>
          </View>
        )}
     </View>
@@ -130,6 +130,7 @@ const GoogleButton = (props) => {
 const styles = StyleSheet.create({
   text: {
     alignItems: 'center',
+    color: 'white'
   },
 });
 

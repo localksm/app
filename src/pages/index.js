@@ -21,3 +21,4 @@ export { default as WonMediation } from './WonMediation';
 export { default as MyOffers} from './MyOffers';
 export { default as Filter } from './Filter';
 export { default as Onboarding } from './Onboarding';
+export { default as Help } from './Help';

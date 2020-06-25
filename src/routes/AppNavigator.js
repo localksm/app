@@ -25,7 +25,8 @@ import {
    WonMediation,
    MyOffers, 
    Filter,
-   Onboarding
+   Onboarding,
+   Help,
   } from '../pages'
 
 
@@ -110,6 +111,7 @@ const MainStack = () => {
     <Stack.Screen name='Sell' component={SellStack} options={{headerShown: false}} />
     <Stack.Screen name='Wallet' component={WalletStack} options={{headerShown: false}} />
     <Stack.Screen name='MyOffers' component={MyOffersStack} options={{headerShown: false}} />
+    <Stack.Screen name='Help' component={Help} options={{headerShown: false}} />
   </Stack.Navigator>
   )
 }
