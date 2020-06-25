@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Alert, View, ActivityIndicator, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useMutation } from '@apollo/react-hooks';
 import Button from './Button';
 import { sessionModel } from '../utils/config';
 import { client, MUTATIONS, QUERIES, setSession } from '../apollo';
 
-
 const ButtonSignUp = props => {
   const [loading, setLoading] = useState(false);
+  const [loginWithEmail] = useMutation(MUTATIONS.LOGIN);
+  const [signupWithEmail] = useMutation(MUTATIONS.SIGNUP);
   const navigation = useNavigation();
 
   const mapUser = data => {
@@ -32,39 +34,24 @@ const ButtonSignUp = props => {
     return { emailExists };
   };
 
-  const signupEmail = async (email, password, username) => {
-    const response = await client.mutate({
-      mutation: MUTATIONS.SIGNUP,
-      variables: {
-        name: username,
-        email: email,
-        password: password,
-        type: 'email',
-        platform: Platform.OS === 'ios' ? 'ios' : 'android',
-      },
-    });
-    const { success } = response.data.signup !== null && response.data.signup;
-    return { success };
-  };
-
-  const loginEmail = async (email, password) => {
-    const response = await client.mutate({
-      mutation: MUTATIONS.LOGIN,
-      variables: {
-        email: email,
-        password: password,
-        type: 'email',
-        platform: Platform.OS === 'ios' ? 'ios' : 'android',
-      },
-    });
-    const { login } = response.data !== null && response.data;
-    return { login };
-  };
-
   const SignUpWithEmail = async () => {
     setLoading(true);
     const { email, username, password, confirmPassword } = props.variables;
     const { emailExists } = await verifyUser(email);
+    const payloadLogin = {
+      email: email,
+      password: password,
+      type: 'email',
+      platform: Platform.OS === 'ios' ? 'ios' : 'android',
+    };
+    const payloadSugnUp = {
+      name: username,
+      email: email,
+      password: password,
+      type: 'email',
+      platform: Platform.OS === 'ios' ? 'ios' : 'android',
+    };
+
     try {
       if (email === '') {
         setLoading(false);
@@ -83,10 +70,12 @@ const ButtonSignUp = props => {
         return Alert.alert('Warning!', 'Passwords do not match');
       }
       if (!emailExists) {
-        const { success } = await signupEmail(email, password, username);
+        const { data } = await signupWithEmail({ variables: payloadSugnUp });
+        const { success } = data.signup;
+
         if (success) {
-          const { login } = await loginEmail(email, password);
-          const session = mapUser(login);
+          const { data } = await loginWithEmail({ variables: payloadLogin });
+          const session = mapUser(data.login);
           setSession({ session });
           return props.actionSignUp();
         }
