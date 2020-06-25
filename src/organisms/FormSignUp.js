@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
-import { InputText, Button } from '../atoms';
+import { useNavigation } from '@react-navigation/native';
+import { InputText, ButtonSignUp } from '../atoms';
 
 const FormSignUp = props => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigation = useNavigation();
+  const dataSession = {
+    username,
+    email,
+    password,
+    confirmPassword,
+  };
 
   return [
     <View key="logo" style={styles.secction_logo}>
-    <Image
-      style={styles.logo}
-      source={require('../../assets/logoKSMNoText.png')}
-    />
-     </View>,
+      <Image
+        style={styles.logo}
+        source={require('../../assets/logoKSMNoText.png')}
+      />
+    </View>,
     <View style={styles.container}>
       <InputText
         name="username"
@@ -40,11 +48,15 @@ const FormSignUp = props => {
         secureTextEntry={true}
         onChangeText={value => setConfirmPassword(value)}
       />
-    <View style={ styles.button}>
-      <Button label="Register" stylect={{ backgroundColor: '#DB5A3A' }} action={() => {}} />
-    </View>
-
-    </View>
+      <View style={styles.button}>
+        <ButtonSignUp
+          variables={dataSession}
+          label="Register"
+          stylect={{ backgroundColor: '#DB5A3A' }}
+          actionSignUp={() => navigation.navigate('Drawer')}
+        />
+      </View>
+    </View>,
   ];
 };
 
@@ -59,13 +71,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-  
     height: 100,
     resizeMode: 'contain',
   },
-  button:{
+  button: {
     paddingTop: '10%',
-  }
+  },
 });
 
 export default FormSignUp;
