@@ -16,24 +16,14 @@ import {
 } from '../utils/config';
 import { ContextProvider, ContextConsumer, withContext } from './context';
 import ApolloState from './stateManager';
-import { SIGNUP, LOGIN } from './mutations';
-import { VERIFY_USER,FEE, PAYMENT_METHODS, CURRENCIES, COUNTRIES } from './queries';
-
-/**
- * when you need to implement a query, it can be this way 
- */
-
-import { 
-  QUERY_EMAIL
-} from './queries';
-
- /**
- * when you need to implement a mutation, it can be this way
- */
+import { SIGNUP, LOGIN, LOGIN_FACEBOOK, SIGNUP_FACEBOOK } from './mutations';
 import {
-  LOGIN_FACEBOOK,
-  SIGNUP_FACEBOOK
-  } from './mutations';
+  VERIFY_USER,
+  FEE,
+  PAYMENT_METHODS,
+  CURRENCIES,
+  COUNTRIES,
+} from './queries';
 
 const httpLink = new HttpLink({
   uri: `${GRAPHQL_ENDPOINT}`,
@@ -44,7 +34,7 @@ const wsLink = new WebSocketLink({
   options: { reconnect: true },
 });
 
-export const setSession = async payload => {
+export const setSession = async (payload) => {
   return await ls.save('session', payload);
 };
 
@@ -56,7 +46,7 @@ export const removeSession = async () => {
   return await ls.clear();
 };
 
-const authLink = setContext(async _ => {
+const authLink = setContext(async (_) => {
   const data = await getSession();
   const { session } = data !== null && data;
   const jwt = session && session.token;
@@ -99,7 +89,7 @@ export const client = new ApolloClient({
   link: ApolloLink.from([errorLink, link]),
   cache,
   resolvers: {
-    logout: async id => {
+    logout: async (id) => {
       await removeSession();
     },
   },
@@ -115,7 +105,9 @@ export const QUERIES = {
 
 export const MUTATIONS = {
   LOGIN_FACEBOOK,
-  SIGNUP_FACEBOOK
+  SIGNUP_FACEBOOK,
+  SIGNUP,
+  LOGIN
 };
 
 export const SUBSCRIPTIONS = {};
