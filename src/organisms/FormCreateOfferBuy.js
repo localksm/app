@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { InputText, Dropdown, Button  } from '../atoms';
+import { InputText, Dropdown, Button, Fees  } from '../atoms';
 import { FooterWhite } from '../molecules';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const FormCreateOfferBuy = props => {
-  const [offered, setOffered] = useState('');
+  const [offered, setOffered] = useState('0');
   const [required, setRequired] = useState('');
   const navigation = useNavigation();
+
+  
   return (
     <View>
       <ScrollView>
@@ -40,6 +42,10 @@ const FormCreateOfferBuy = props => {
         </View>
       </ScrollView>
      <FooterWhite stylectContainer={styles.footerContainer}>
+         <Fees 
+          container={"jury"}
+          amount={offered}
+          />
          <View style={styles.textFooter}>
              <Text style={styles.footer}>1 KSM = $00.00 USD</Text>
          </View>
@@ -54,13 +60,13 @@ const styles = StyleSheet.create({
     marginHorizontal: '7%',
   },
   text: {
-    paddingTop: '3%',
+    paddingTop: '1%',
     color: 'white',
     fontSize: 18,
     fontFamily: 'Poppins-SemiBold',
   },
     textRequired: {
-    paddingTop: '12%',
+    paddingTop: '10%',
     color: 'white',
     fontSize: 18,
     fontFamily: 'Poppins-SemiBold',
@@ -74,8 +80,9 @@ const styles = StyleSheet.create({
       paddingBottom:10,
   },
   footerContainer:{
-    paddingHorizontal: '5%',
-    paddingBottom: '25%'
+    paddingHorizontal: '15%',
+    paddingBottom: '60%',
+    height:'41%'
 
   },
 })
