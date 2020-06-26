@@ -11,7 +11,7 @@ const Fees = (props) => {
 
     if(loading) return <ActivityIndicator size='small' color="white" />;
   
-    if(error) return <Text> Error getting rates </Text>;
+    if(error) return <Text> Error while getting fees </Text>;
 
     const {fees} = data;
     switch (props.container) {
