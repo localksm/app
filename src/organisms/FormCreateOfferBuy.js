@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { InputText, Dropdown, Button,Fees, DropdownPaymentMethods  } from '../atoms';
+import { InputText, Dropdown, Button, Fees, DropdownPaymentMethods  } from '../atoms';
 import { FooterWhite } from '../molecules';
 import { ScrollView } from 'react-native-gesture-handler';
 
