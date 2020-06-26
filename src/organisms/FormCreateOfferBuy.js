@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
-import { InputText, Dropdown, Button, Fees, DropdownPaymentMethods, DropdownCountries  } from '../atoms';
+import { InputText, Button, Fees, DropdownPaymentMethods, DropdownCountries  } from '../atoms';
 import { FooterWhite } from '../molecules';
 
 const FormCreateOfferBuy = props => {
