@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { InputText, Dropdown, Button, Fees, DropdownPaymentMethods  } from '../atoms';
 import { FooterWhite } from '../molecules';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const FormCreateOfferBuy = props => {
   const [offered, setOffered] = useState('0');
