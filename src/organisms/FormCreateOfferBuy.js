@@ -10,7 +10,6 @@ const FormCreateOfferBuy = props => {
   const [required, setRequired] = useState('');
   const [paymentMethod, setPaymentmethod] = useState('')
   const [country, setCountry] = useState('')
-
   
   const navigation = useNavigation();
 
