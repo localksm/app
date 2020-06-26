@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { InputText, Dropdown, Button, Fees  } from '../atoms';
+import { InputText, Dropdown, Button,Fees, DropdownPaymentMethods  } from '../atoms';
 import { FooterWhite } from '../molecules';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const FormCreateOfferBuy = props => {
   const [offered, setOffered] = useState('0');
   const [required, setRequired] = useState('');
+  const [paymentMethod, setPaymentmethod] = useState('')
+  
   const navigation = useNavigation();
 
   
@@ -27,11 +29,8 @@ const FormCreateOfferBuy = props => {
             placeholder="Amount KSM"
             onChangeText={value => setRequired(value)}
           />
-          <Dropdown
-            label="Preferred Payment Method"
-            action={() => {}}
-            value="Preferred Payment Method"
-            items={[]}
+          <DropdownPaymentMethods
+            action={setPaymentmethod}
           />
           <Dropdown
             label="Local currency"

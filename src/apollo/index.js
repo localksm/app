@@ -1,19 +1,23 @@
-import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from 'apollo-boost';
+import {
+  ApolloClient,
+  ApolloLink,
+  HttpLink,
+  InMemoryCache,
+} from 'apollo-boost';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { onError } from 'apollo-link-error';
 import { setContext } from 'apollo-link-context';
 import { split } from 'apollo-link';
 import ls from 'react-native-local-storage';
-import { 
-  GRAPHQL_ENDPOINT, 
-  GRAPHQL_SUBSCRIPTIONS_ENDPOINT 
+import {
+  GRAPHQL_ENDPOINT,
+  GRAPHQL_SUBSCRIPTIONS_ENDPOINT,
 } from '../utils/config';
-import {ContextProvider, ContextConsumer, withContext} from './context';
+import { ContextProvider, ContextConsumer, withContext } from './context';
 import ApolloState from './stateManager';
-import {SIGNUP, LOGIN} from './mutations';
-import { VERIFY_USER, FEE } from './queries';
-
+import { SIGNUP, LOGIN } from './mutations';
+import { VERIFY_USER,FEE, PAYMENT_METHODS, CURRENCIES, COUNTRIES } from './queries';
 
 /**
  * when you need to implement a query, it can be this way 
@@ -52,16 +56,14 @@ export const removeSession = async () => {
   return await ls.clear();
 };
 
-
 const authLink = setContext(async _ => {
-
   const data = await getSession();
-  const {session} = data !== null && data;
+  const { session } = data !== null && data;
   const jwt = session && session.token;
 
   return {
     headers: {
-      authorization: `Bearer ${jwt}`
+      authorization: `Bearer ${jwt}`,
     },
   };
 });
@@ -93,11 +95,8 @@ const link = split(
   httpAuthLink,
 );
 export const cache = new InMemoryCache();
-export const client =  new ApolloClient({
-  link: ApolloLink.from([
-    errorLink,
-    link,
-  ]),
+export const client = new ApolloClient({
+  link: ApolloLink.from([errorLink, link]),
   cache,
   resolvers: {
     logout: async id => {
@@ -107,7 +106,11 @@ export const client =  new ApolloClient({
 });
 
 export const QUERIES = {
-  QUERY_EMAIL
+  VERIFY_USER,
+  FEE,
+  PAYMENT_METHODS,
+  COUNTRIES,
+  CURRENCIES,
 };
 
 export const MUTATIONS = {
@@ -115,12 +118,9 @@ export const MUTATIONS = {
   SIGNUP_FACEBOOK
 };
 
-export const SUBSCRIPTIONS = {
-  
-};
+export const SUBSCRIPTIONS = {};
 
-
-export {ContextConsumer, ContextProvider, withContext};
+export { ContextConsumer, ContextProvider, withContext };
 
 const initialState = {
   session: null,
@@ -130,6 +130,6 @@ const initialState = {
   evidenceImages: null,
   token: null,
 };
-cache.writeData({data: initialState});
+cache.writeData({ data: initialState });
 
-export const state =  ApolloState;
+export const state = ApolloState;
