@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { InputText, Button, Link, FBLoginButton } from '../atoms';
+import { InputText, Button, Link, GoogleButton, FBLoginButton, ButtonSignIn } from '../atoms';
 
 
 
@@ -9,6 +9,10 @@ const FormSignIn = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
+  const dataSession = {
+    email: email,
+    password: password,
+  }
 
   return [
     <View key="logo" style={styles.secction_logo}>
@@ -35,10 +39,11 @@ const FormSignIn = props => {
         <Text style={styles.textForgot}>Forgot password?</Text>
       </TouchableOpacity>
       <View style={styles.buttons}>
-        <Button
+        <ButtonSignIn
           label="Login"
           stylect={{ backgroundColor: '#DB5A3A' }}
-          action={() => navigation.navigate('Drawer')}
+          actionSignIn={() => navigation.navigate('Drawer')}
+          variables={dataSession}
         />
       </View>
       <View style={styles.buttons}>

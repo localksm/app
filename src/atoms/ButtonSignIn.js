@@ -6,10 +6,10 @@ import Button from './Button';
 import { sessionModel } from '../utils/config';
 import { client, MUTATIONS, QUERIES, setSession } from '../apollo';
 
-const ButtonSignUp = props => {
-  const [loading, setLoading] = useState(false);
+const ButtonSignIn = props => {
+  const [load, setLoad] = useState(false);
   const [loginWithEmail] = useMutation(MUTATIONS.LOGIN);
-  const [signupWithEmail] = useMutation(MUTATIONS.SIGNUP);
+
   const navigation = useNavigation();
 
   const mapUser = data => {
@@ -35,17 +35,10 @@ const ButtonSignUp = props => {
   };
 
   const SignUpWithEmail = async () => {
-    setLoading(true);
-    const { email, username, password, confirmPassword } = props.variables;
+    setLoad(true);
+    const { email, password } = props.variables;
     const { emailExists } = await verifyUser(email);
     const payloadLogin = {
-      email: email,
-      password: password,
-      type: 'email',
-      platform: Platform.OS === 'ios' ? 'ios' : 'android',
-    };
-    const payloadSugnUp = {
-      name: username,
       email: email,
       password: password,
       type: 'email',
@@ -54,53 +47,37 @@ const ButtonSignUp = props => {
 
     try {
       if (email === '') {
-        setLoading(false);
+        setLoad(false);
         return Alert.alert('Warning!', 'Email is required');
-      } else if (username === '') {
-        setLoading(false);
-        return Alert.alert('Warning!', 'Username is required');
-      } else if (password === '' ) {
-        setLoading(false);
-        return Alert.alert('Warning!', 'Password is required');
-      }else if (password.length < 10) {
-        setLoading(false);
-        return Alert.alert('Warning!', 'The password must contain at least 10 alphanumeric characters');
-      } else if (confirmPassword === '') {
-        setLoading(false);
-        return Alert.alert('Warning!', 'Confirm Password is required');
-      } else if (password !== confirmPassword) {
-        setLoading(false);
-        return Alert.alert('Warning!', 'Passwords do not match');
       }
-      if (!emailExists) {
-        const { data } = await signupWithEmail({ variables: payloadSugnUp });
-        const { success } = data.signup;
-
-        if (success) {
-          const { data } = await loginWithEmail({ variables: payloadLogin });
-          const session = mapUser(data.login);
-          setSession({ session });
-          return props.actionSignUp();
-        }
+      if (password === '') {
+        setLoad(false);
+        return Alert.alert('Warning!', 'Password is required');
+      }
+      if (emailExists) {
+        const { data } = await loginWithEmail({ variables: payloadLogin });
+        const session = mapUser(data.login);
+        setSession({ session });
+        return props.actionSignUp();
       } else {
-        setLoading(false);
-        return Alert.alert('Warning!', 'The email is already registered', [
+        setLoad(false);
+        return Alert.alert('Warning!', 'The email is not registered', [
           {
-            text: 'You want to login?',
-            onPress: () => navigation.navigate('SignIn'),
+            text: 'You want to register?',
+            onPress: () => navigation.navigate('SignUp'),
           },
           { text: 'Try again?' },
         ]);
       }
     } catch (error) {
-      setLoading(false);
+      setLoad(false);
       throw new Error(error);
     }
   };
 
   return (
     <View>
-      {!loading ? (
+      {!load ? (
         <Button
           label={props.label}
           stylect={props.stylect}
@@ -123,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ButtonSignUp;
+export default ButtonSignIn;
