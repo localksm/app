@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, ActivityIndicator, Text, View, StyleSheet } from 'react-native';
 import { useMutation } from '@apollo/react-hooks';
 import { MUTATIONS, getSession } from '../apollo';
 import Button from './Button';
@@ -7,6 +7,7 @@ import Button from './Button';
 const AddFundsButton = props => {
   const [session, setSession] = useState(null);
   const [addfunds] = useMutation(MUTATIONS.ADD_FUNDS);
+  const [load, setLoad] = useState(false);
   const { variables } = props;
   function validateForm(
     offered,
@@ -122,6 +123,7 @@ const AddFundsButton = props => {
   };
 
   const sendAddFunds = async () => {
+    setLoad(true);
     const validation = validateForm(
       variables.offered,
       variables.required,
@@ -133,13 +135,17 @@ const AddFundsButton = props => {
 
     if (validation.isValid) {
       try {
+        setLoad(true);
         const send = mapData(variables, session);
         await addfunds({ variables: send });
         props.actionAddFunds();
       } catch (error) {
+        setLoad(false);
+        Alert.alert('Warning', `Error: ${error}`);
         throw new Error(error);
       }
     } else {
+      setLoad(false);
       Alert.alert('Something went wrong!', validation.message);
     }
   };
@@ -149,9 +155,20 @@ const AddFundsButton = props => {
     setSession(session);
   }, []);
 
-  return (
+  return !load ? (
     <Button label={props.label} sylect={props.style} action={sendAddFunds} />
+  ) : (
+    <View style={styles.text}>
+      <ActivityIndicator size="small" color="black" />
+      <Text style={styles.text}>Please wait...</Text>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  text: {
+    alignItems: 'center',
+  },
+});
 
 export default AddFundsButton;

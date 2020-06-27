@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#ffffff',
     fontFamily: "Poppins-Regular",
-    // paddingTop: '10%',
   },
 });
 
