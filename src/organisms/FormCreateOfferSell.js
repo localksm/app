@@ -26,12 +26,14 @@ const FormCreateOfferSell = () => {
           <Text style={styles.text}>Offered Currency</Text>
           <InputText
             name="Amount"
+            keyboardType='numeric'
             placeholder="Amount USD"
             onChangeText={value => setOffered(value)}
           />
           <Text style={styles.textRequired}>Required Currency</Text>
           <InputText
             name="Amount"
+            keyboardType='numeric'
             placeholder="Amount KSM"
             onChangeText={value => setRequired(value)}
           />

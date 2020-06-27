@@ -6,7 +6,7 @@ const FooterWhite = props => {
   
   return (
     <View style={[styles.containerFee, props.stylectContainer]} >
-      <View style={styles.feeContainer} />
+      {/* <View style={styles.feeContainer} /> */}
        {props.children}
       
     </View>
@@ -17,16 +17,13 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 50,
     borderTopLeftRadius: 50,
     justifyContent: 'center',
-    paddingTop: '10%',
-    paddingBottom: '10%',
     backgroundColor: 'white',
-    height: '30%',
-    marginTop: 50, 
+    height: '40%',
   },
-  feeContainer: {
-    marginTop: 0, 
-    borderRadius: 10,
-  },
+  // feeContainer: {
+  //   marginTop: 0, 
+  //   borderRadius: 10,
+  // },
   
 });
 

@@ -24,6 +24,7 @@ const FormSignIn = props => {
     <View style={styles.container}>
       <InputText
         name="email"
+        keyboardType= 'email-address'
         placeholder="Email"
         autoCapitalize="none"
         onChangeText={value => setEmail(value)}

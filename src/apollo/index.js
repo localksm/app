@@ -16,14 +16,8 @@ import {
 } from '../utils/config';
 import { ContextProvider, ContextConsumer, withContext } from './context';
 import ApolloState from './stateManager';
-import { SIGNUP, LOGIN, LOGIN_FACEBOOK, SIGNUP_FACEBOOK } from './mutations';
-import {
-  VERIFY_USER,
-  FEE,
-  PAYMENT_METHODS,
-  CURRENCIES,
-  COUNTRIES,
-} from './queries';
+import {SIGNUP, LOGIN, ADD_FUNDS} from './mutations';
+import { VERIFY_USER,FEE, PAYMENT_METHODS, CURRENCIES, COUNTRIES } from './queries';
 
 const httpLink = new HttpLink({
   uri: `${GRAPHQL_ENDPOINT}`,
@@ -107,7 +101,8 @@ export const MUTATIONS = {
   LOGIN_FACEBOOK,
   SIGNUP_FACEBOOK,
   SIGNUP,
-  LOGIN
+  LOGIN,
+  ADD_FUNDS,
 };
 
 export const SUBSCRIPTIONS = {};

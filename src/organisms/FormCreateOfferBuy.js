@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import {
   InputText,
-  Button,
+  AddFundsButton,
   Fees,
   DropdownPaymentMethods,
   DropdownCountries,
@@ -14,12 +14,20 @@ import { FooterWhite } from '../molecules';
 
 const FormCreateOfferBuy = props => {
   const [offered, setOffered] = useState('0');
-  const [required, setRequired] = useState('');
-  const [paymentMethod, setPaymentmethod] = useState('');
+  const [required, setRequired] = useState('0');
+  const [paymentMethods, setPaymentmethod] = useState('');
   const [country, setCountry] = useState('');
   const [currency, setCurrency] = useState('');
   const [other, setOther] = useState('');
   const navigation = useNavigation();
+  const variables = {
+    offered: offered,
+    required: required,
+    paymentMethods: paymentMethods,
+    country: country,
+    currency: currency,
+    other: other,
+  }
 
   return (
     <View>
@@ -28,18 +36,20 @@ const FormCreateOfferBuy = props => {
           <Text style={styles.text}>Offered Currency</Text>
           <InputText
             name="Amount"
+            keyboardType='numeric'
             placeholder="Amount USD"
             onChangeText={value => setOffered(value)}
           />
           <Text style={styles.textRequired}>Required Currency</Text>
           <InputText
             name="Amount"
+            keyboardType='numeric'
             placeholder="Amount KSM"
             onChangeText={value => setRequired(value)}
           />
           <DropdownPaymentMethods action={setPaymentmethod} />
-          {paymentMethod === 'BN' && <DropdownCountries action={setCountry} />}
-          {paymentMethod === 'OT' && (
+          {paymentMethods === 'BN' && <DropdownCountries action={setCountry} />}
+          {paymentMethods === 'OT' && (
             <InputText
               placeholder="Other"
               onChangeText={value => setOther(value)}
@@ -50,11 +60,12 @@ const FormCreateOfferBuy = props => {
       </ScrollView>
       <FooterWhite stylectContainer={styles.footerContainer}>
         <View style={styles.textFooter}>
-          <Text style={styles.footer}>1 KSM = $00.00 USD</Text>
+          <Text style={styles.footer}>1 KSM = ${offered} USD</Text>
         </View>
-        <Button
+        <AddFundsButton
+          variables={variables}
           label="Send"
-          action={() =>
+          actionAddFunds={() =>
             navigation.navigate('Confirmation', { typeOffer: 'Buy' })
           }
         />
@@ -65,7 +76,9 @@ const FormCreateOfferBuy = props => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: '7%',
+    justifyContent: 'center',
+    marginHorizontal: 30,
+    marginVertical: 10,
   },
   text: {
     paddingTop: '1%',
