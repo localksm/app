@@ -51,16 +51,13 @@ const CardProposal = props => {
   });
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error: {error}</Text>;
-  console.log('esta es la data',data);
   
-
   return (
     <View stlyle={styles.container}>
       <FlatList
         data={data.proposals}
         renderItem={({ item }) => {
-            
-          console.log('es el item',item);
+
           return (
             <TouchableOpacity
               onPress={() => navigation.navigate('DetailsOffer')}>
