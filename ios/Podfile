@@ -44,8 +44,8 @@ def flipper_post_install(installer)
   end
 end
 
-target 'com.localksm.app' do
-  # Pods for com.localksm.app
+target 'localksm' do
+  # Pods for localksm
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -77,13 +77,15 @@ target 'com.localksm.app' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  # pod 'react-native-slider', :path => '../node_modules/@react-native-community/slider' // Is this actually being used?
-
   pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
+  pod 'FBSDKCoreKit', :modular_headers => true
 
-  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
+  pod 'TwitterKit5'
 
-  target 'kusamaAppTests' do
+  pod 'react-native-twitter-auth', :path => '../node_modules/react-native-twitter-auth'
+
+
+  target 'localksmTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -100,10 +102,10 @@ target 'com.localksm.app' do
   end
 end
 
-target 'com.localksm.app-tvOS' do
-  # Pods for com.localksm.app-tvOS
+target 'localksm-tvOS' do
+  # Pods for localksm-tvOS
 
-  target 'com.localksm.app-tvOSTests' do
+  target 'localksm-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

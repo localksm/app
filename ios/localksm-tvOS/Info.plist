@@ -32,6 +32,20 @@
 				<true/>
 			</dict>
 		</dict>
+		<key>CFBundleURLTypes</key>
+		<array>
+		<dict>
+		<key>CFBundleURLSchemes</key>
+		<array>
+			<string>fb544089053145539</string>
+		</array>
+		</dict>
+		</array>
+		<key>FacebookAppID</key>
+		<string>544089053145539</string>
+		  <string>fbauth2</string>
+		<key>FacebookDisplayName</key>
+		<string>LocalKSM</string>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
