@@ -150,10 +150,14 @@ const AddFundsButton = props => {
     }
   };
 
-  useEffect(async () => {
+  useEffect(() => {
+    set()
+  }, []);
+
+  async function set() {
     const { session } = await getSession();
     setSession(session);
-  }, []);
+  }
 
   return !load ? (
     <Button label={props.label} sylect={props.style} action={sendAddFunds} />

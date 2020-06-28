@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import {
   InputText,
   AddFundsButton,
-  Fees,
+  Fees, // TODO: Add fees to form
   DropdownPaymentMethods,
   DropdownCountries,
   DropdownCurrencies,
