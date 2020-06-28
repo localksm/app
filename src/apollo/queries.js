@@ -56,6 +56,7 @@ export const QUERY_PROPOSALS = gql`
       body {
         usernameMaker
         usernameTaker
+        updatedAt
         requestId
         operationType
         makerId

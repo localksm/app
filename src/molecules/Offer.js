@@ -1,28 +1,27 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Image } from 'react-native';
 
 const Offer = props => {
-  // console.log(props);
-  
   return (
-    
-        <View style={styles.container}>
-          <View style={styles.right}>
-            <Image source={require('../../assets/add.png')} />
-          </View>
-          <View style={styles.center}>
-          <Text style={{...styles.text}}>{props.payment}</Text>
-            <Text style={{ ...styles.textSecond, fontSize: 14 }}>
-              {props.usernameMaker}
-            </Text>
-            <Text style={styles.textSecond}>{`date UTC`}</Text>
-          </View>
-          <View style={styles.left}>
-            <Text style={styles.textAmount}>0.00 KSM</Text>
-            <Text style={styles.textAmountUSD}>$ 1 USD</Text>
-            <Text style={styles.text_status}>Status</Text>
-          </View>
-        </View>
+    <View style={styles.container}>
+      <View style={styles.right}>
+        <Image source={require('../../assets/add.png')} />
+      </View>
+      <View style={styles.center}>
+        <Text style={{ ...styles.text }}>{props.payment}</Text>
+        <Text style={{ ...styles.textSecond, fontSize: 14 }}>
+          {props.usernameMaker}
+        </Text>
+        <Text style={styles.textSecond}>{props.date} UTC</Text>
+      </View>
+      <View style={styles.left}>
+        <Text style={styles.textAmount}>{props.offered} KSM</Text>
+        <Text style={styles.textAmountUSD}>
+          $ {props.request} {props.currency}
+        </Text>
+        <Text style={styles.text_status}>{props.status}</Text>
+      </View>
+    </View>
   );
 };
 
@@ -36,7 +35,6 @@ const styles = StyleSheet.create({
     borderBottomColor: '#b8b8b8',
     flex: 1,
     padding: 20,
-  
   },
   right: {
     flex: 0.7,
@@ -56,7 +54,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Medium',
   },
   textSecond: {
-    fontSize: 12,
+    fontSize: 10,
     padding: 1,
     color: '#b8b8b8',
     fontFamily: 'Poppins-Medium',
@@ -68,7 +66,7 @@ const styles = StyleSheet.create({
     color: '#666666',
     textAlign: 'left',
   },
-    textAmountUSD: {
+  textAmountUSD: {
     fontSize: 12,
     paddingLeft: 5,
     fontFamily: 'Poppins-Medium',
