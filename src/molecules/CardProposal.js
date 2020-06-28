@@ -5,12 +5,29 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
 import moment from 'moment';
 import { QUERIES, getSession } from '../apollo';
 import Offer from './Offer';
+
+function Loading() {
+  return (
+    <View style={[styles.container, {marginVertical: 30}]}>
+        <ActivityIndicator size="large" color="black" />
+    </View>
+  );
+}
+
+function Error({error}) {
+  return (
+    <View style={styles.container}>
+        <Text>{`Error! ${error.message}`}</Text>
+    </View>
+  );
+}
 
 function mapPaymentMethod(method) {
   const methods = {
@@ -49,8 +66,8 @@ const CardProposal = props => {
   const { loading, error, data } = useQuery(QUERIES.QUERY_PROPOSALS, {
     variables: variables
   });
-  if (loading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error: {error}</Text>;
+  if (loading) return <Loading />;
+  if (error) return <Error error={error}/>;
   
   return (
     <View stlyle={styles.container}>
@@ -71,6 +88,8 @@ const CardProposal = props => {
                 requiered={item.body.requestAmount}
                 status={item.status}
                 currency={item.body.requestAsset}
+                isOffer={true}
+                operationType={item.body.operationType}
               />
             </TouchableOpacity>
           );

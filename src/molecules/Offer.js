@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
+import {ProposalTypeImages} from '../atoms';
 
 const Offer = props => {
+  const {operationType} = props
   return (
     <View style={styles.container}>
       <View style={styles.right}>
-        <Image source={require('../../assets/add.png')} />
+        <ProposalTypeImages operationType={operationType}/>
       </View>
       <View style={styles.center}>
         <Text style={{ ...styles.text }}>{props.payment}</Text>
