@@ -24,6 +24,7 @@ import {
   CURRENCIES,
   COUNTRIES,
   PUBLIC_KEY,
+  QUERY_PROPOSALS,
 } from './queries';
 
 const httpLink = new HttpLink({
@@ -103,6 +104,7 @@ export const QUERIES = {
   COUNTRIES,
   CURRENCIES,
   PUBLIC_KEY,
+  QUERY_PROPOSALS,
 };
 
 export const MUTATIONS = {

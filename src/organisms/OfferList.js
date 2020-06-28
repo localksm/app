@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Offer } from '../molecules';
+import { CardProposal } from '../molecules';
 
 
 
@@ -23,7 +23,7 @@ const OfferList = (props) => {
       </View>
       <ScrollView>
         <View style={styles.offerList}>
-          <Offer />
+          <CardProposal />
         </View>
       </ScrollView>
     </View>
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 50,
     justifyContent: 'center',
     paddingTop: '1%',
-    paddingBottom: '10%',
+    paddingBottom: '80%',
     backgroundColor: 'white',
   },
   offerList: {

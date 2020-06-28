@@ -43,3 +43,39 @@ export const PUBLIC_KEY = gql`
     }
   }
 `;
+
+export const QUERY_PROPOSALS = gql`
+  query porposals($userId: Int, $offset: Int = 0, $limit: Int = 10) {
+    proposals(
+      userId: $userId
+      offset: $offset
+      limit: $limit
+    ) {
+      id
+      status
+      body {
+        usernameMaker
+        usernameTaker
+        requestId
+        operationType
+        makerId
+        takerId
+        offerAsset
+        offerAmount
+        requestAsset
+        requestAmount
+        paymentData {
+          proposalId
+          name
+          lastName
+          email
+          address
+          phone
+          bankData
+          accountNumber
+          type
+          country
+        }
+      }
+    }
+  }`;

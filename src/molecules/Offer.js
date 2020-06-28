@@ -1,20 +1,19 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 const Offer = props => {
-  const navigation = useNavigation();
+  // console.log(props);
+  
   return (
-    <>
-      <TouchableOpacity onPress={() => navigation.navigate('DetailsOffer')}>
+    
         <View style={styles.container}>
           <View style={styles.right}>
             <Image source={require('../../assets/add.png')} />
           </View>
           <View style={styles.center}>
-            <Text style={{...styles.text}}>Payment</Text>
+          <Text style={{...styles.text}}>{props.payment}</Text>
             <Text style={{ ...styles.textSecond, fontSize: 14 }}>
-              username Maker
+              {props.usernameMaker}
             </Text>
             <Text style={styles.textSecond}>{`date UTC`}</Text>
           </View>
@@ -24,141 +23,6 @@ const Offer = props => {
             <Text style={styles.text_status}>Status</Text>
           </View>
         </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('DetailsOffer')}>
-        <View style={styles.container}>
-          <View style={styles.right}>
-            <Image source={require('../../assets/add.png')} />
-          </View>
-          <View style={styles.center}>
-            <Text style={{...styles.text}}>Payment</Text>
-            <Text style={{ ...styles.textSecond, fontSize: 14 }}>
-              username Maker
-            </Text>
-            <Text style={styles.textSecond}>{`date UTC`}</Text>
-          </View>
-          <View style={styles.left}>
-            <Text style={styles.textAmount}>0.00 KSM</Text>
-            <Text style={styles.textAmountUSD}>$ 1 USD</Text>
-            <Text style={styles.text_status}>Status</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('DetailsOffer')}>
-        <View style={styles.container}>
-          <View style={styles.right}>
-            <Image source={require('../../assets/withdraw.png')} />
-          </View>
-          <View style={styles.center}>
-            <Text style={{...styles.text}}>Payment</Text>
-            <Text style={{ ...styles.textSecond, fontSize: 14 }}>
-              username Maker
-            </Text>
-            <Text style={styles.textSecond}>{`date UTC`}</Text>
-          </View>
-          <View style={styles.left}>
-            <Text style={styles.textAmount}>0.00 KSM</Text>
-            <Text style={styles.textAmountUSD}>$ 1 USD</Text>
-            <Text style={styles.text_status}>Status</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('DetailsOffer')}>
-        <View style={styles.container}>
-          <View style={styles.right}>
-            <Image source={require('../../assets/withdraw.png')} />
-          </View>
-          <View style={styles.center}>
-            <Text style={{...styles.text}}>Payment</Text>
-            <Text style={{ ...styles.textSecond, fontSize: 14 }}>
-              username Maker
-            </Text>
-            <Text style={styles.textSecond}>{`date UTC`}</Text>
-          </View>
-          <View style={styles.left}>
-            <Text style={styles.textAmount}>0.00 KSM</Text>
-            <Text style={styles.textAmountUSD}>$ 1 USD</Text>
-            <Text style={styles.text_status}>Status</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('DetailsOffer')}>
-        <View style={styles.container}>
-          <View style={styles.right}>
-            <Image source={require('../../assets/add.png')} />
-          </View>
-          <View style={styles.center}>
-            <Text style={{...styles.text}}>Payment</Text>
-            <Text style={{ ...styles.textSecond, fontSize: 14 }}>
-              username Maker
-            </Text>
-            <Text style={styles.textSecond}>{`date UTC`}</Text>
-          </View>
-          <View style={styles.left}>
-            <Text style={styles.textAmount}>0.00 KSM</Text>
-            <Text style={styles.textAmountUSD}>$ 1 USD</Text>
-            <Text style={styles.text_status}>Status</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('DetailsOffer')}>
-        <View style={styles.container}>
-          <View style={styles.right}>
-            <Image source={require('../../assets/add.png')} />
-          </View>
-          <View style={styles.center}>
-            <Text style={{...styles.text}}>Payment</Text>
-            <Text style={{ ...styles.textSecond, fontSize: 14 }}>
-              username Maker
-            </Text>
-            <Text style={styles.textSecond}>{`date UTC`}</Text>
-          </View>
-          <View style={styles.left}>
-            <Text style={styles.textAmount}>0.00 KSM</Text>
-            <Text style={styles.textAmountUSD}>$ 1 USD</Text>
-            <Text style={styles.text_status}>Status</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('DetailsOffer')}>
-        <View style={styles.container}>
-          <View style={styles.right}>
-            <Image source={require('../../assets/withdraw.png')} />
-          </View>
-          <View style={styles.center}>
-            <Text style={{...styles.text}}>Payment</Text>
-            <Text style={{ ...styles.textSecond, fontSize: 14 }}>
-              username Maker
-            </Text>
-            <Text style={styles.textSecond}>{`date UTC`}</Text>
-          </View>
-          <View style={styles.left}>
-            <Text style={styles.textAmount}>0.00 KSM</Text>
-            <Text style={styles.textAmountUSD}>$ 1 USD</Text>
-            <Text style={styles.text_status}>Status</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('DetailsOffer')}>
-        <View style={styles.container}>
-          <View style={styles.right}>
-            <Image source={require('../../assets/withdraw.png')} />
-          </View>
-          <View style={styles.center}>
-            <Text style={{...styles.text}}>Payment</Text>
-            <Text style={{ ...styles.textSecond, fontSize: 14 }}>
-              username Maker
-            </Text>
-            <Text style={styles.textSecond}>{`date UTC`}</Text>
-          </View>
-          <View style={styles.left}>
-            <Text style={styles.textAmount}>0.00 KSM</Text>
-            <Text style={styles.textAmountUSD}>$ 1 USD</Text>
-            <Text style={styles.text_status}>Status</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    </>
   );
 };
 
