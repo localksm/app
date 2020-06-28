@@ -4,3 +4,4 @@ export { default as FooterWhite } from './FooterWhite';
 export { default as MultiView } from './MultiView';
 export { default as CompletedMultiView } from './CompletedMultiView';
 export { default as FilePicker } from './FilePicker';
+export { default as WalletContent } from './WalletContent';

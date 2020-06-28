@@ -1,20 +1,36 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { WalletContent } from '../molecules';
+
+import { getSession } from '../apollo';
 
 const WalletView = () => {
+  const [id, setId] = React.useState(null);
+
+  React.useEffect(() => {
+    set();
+  }, []);
+
+  async function set() {
+    const ses = await getSession();
+
+    setId(() => ses.session.id);
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Your Address</Text>
-      <View style={styles.image}>
-          <Image  source={require('../../assets/qr4.png')} />
-      </View>
-      <Text style={styles.textKey}>GDLORFER7SGBXP3FBBSDR6SXD2ZN4EAYLQSKCX37GLM6AO4W5GT2R666</Text>
-      <View style={styles.image}>
-        <Text style={styles.textCopy}>Copy Address</Text>
-      </View>
-
-
+      {id !== null ? (
+        <WalletContent
+          id={id}
+          imageStyle={styles.image}
+          textKeyStyle={styles.textKey}
+          textCopyStyle={styles.textCopy}
+        />
+      ) : (
+        <ActivityIndicator />
+      )}
     </View>
   );
 };
@@ -30,8 +46,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-SemiBold',
   },
   textKey: {
-      paddingHorizontal: '10%',
-      textAlign: 'center',
+    paddingHorizontal: '10%',
+    textAlign: 'center',
     color: '#ffffff',
     fontSize: 12,
     fontFamily: 'Poppins-SemiBold',
@@ -40,9 +56,8 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 14,
     fontFamily: 'Poppins-SemiBold',
-   
   },
-  image:{
+  image: {
     paddingTop: '10%',
     paddingBottom: '5%',
   },

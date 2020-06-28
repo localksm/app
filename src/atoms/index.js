@@ -11,3 +11,4 @@ export { default as DropdownPaymentMethods } from './DropdownPaymentMethods';
 export { default as DropdownCountries } from './DropdownCountries';
 export { default as DropdownCurrencies } from './DropdownCurrencies';
 export { default as AddFundsButton } from './AddFundsButton';
+export { default as QrCode } from './QrCode';

@@ -16,8 +16,15 @@ import {
 } from '../utils/config';
 import { ContextProvider, ContextConsumer, withContext } from './context';
 import ApolloState from './stateManager';
-import {SIGNUP, LOGIN, ADD_FUNDS} from './mutations';
-import { VERIFY_USER,FEE, PAYMENT_METHODS, CURRENCIES, COUNTRIES } from './queries';
+import { SIGNUP, LOGIN, ADD_FUNDS } from './mutations';
+import {
+  VERIFY_USER,
+  FEE,
+  PAYMENT_METHODS,
+  CURRENCIES,
+  COUNTRIES,
+  PUBLIC_KEY,
+} from './queries';
 
 const httpLink = new HttpLink({
   uri: `${GRAPHQL_ENDPOINT}`,
@@ -95,6 +102,7 @@ export const QUERIES = {
   PAYMENT_METHODS,
   COUNTRIES,
   CURRENCIES,
+  PUBLIC_KEY,
 };
 
 export const MUTATIONS = {

@@ -35,3 +35,11 @@ export const COUNTRIES = gql`
     }
   }
 `;
+
+export const PUBLIC_KEY = gql`
+  query publicKeys($id: Int!) {
+    publicKeys(id:$id){
+      ksm
+    }
+  }
+`;

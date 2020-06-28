@@ -85,6 +85,8 @@ target 'localksm' do
   pod 'react-native-twitter-auth', :path => '../node_modules/react-native-twitter-auth'
 
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
   target 'localksmTests' do
     inherit! :complete
     # Pods for testing
