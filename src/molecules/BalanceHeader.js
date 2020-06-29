@@ -35,24 +35,24 @@ function BalanceHeader() {
     setSession(session);
   }
 
-  return (
+  return session !== null ? (
     <View style={styles.container}>
       <Text style={{ ...styles.textBalance, paddingBottom: '5%' }}>
         Balance
       </Text>
-      {session !== null ? (
-        <Balance
-          id={session.id}
-          style={{ ...styles.textBalance, fontSize: 20 }}
-        />
-      ) : (
-        <ActivityIndicator />
-      )}
+
+      <Balance
+        id={session.id}
+        style={{ ...styles.textBalance, fontSize: 20 }}
+      />
       <Text style={{ ...styles.textBalance, fontSize: 14 }}>
         {' '}
-        $0 USD{/* In offers user set the ksm value, but which is the reference for this? */}
+        $0 USD
+        {/* In offers user set the ksm value, but which is the reference for this? */}
       </Text>
     </View>
+  ) : (
+    <ActivityIndicator />
   );
 }
 
