@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     slide: {
       flex: 1,
       color:'red',
-      backgroundColor: '#2e2e2e',
+      backgroundColor: '#2D2D2D',
       alignItems:'center',
       justifyContent: 'center'
     },
