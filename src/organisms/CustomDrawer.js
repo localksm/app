@@ -1,19 +1,33 @@
-import React from 'react';
-import {Icon} from 'native-base';
+import React, { useEffect, useState } from 'react';
+import { Icon } from 'native-base';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { View, StyleSheet } from 'react-native';
 import { Text, Drawer } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { getSession } from '../apollo';
 
 export default function CustomDrawerContent(props) {
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    set();
+  }, []);
+
+  async function set() {
+    const { session } = await getSession();
+    setSession(session);
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
         <View style={styles.container}>
           <View style={styles.userInfoSection}>
             <View style={{ paddingBottom: '5%', alignItems: 'center' }}>
-              <Icon name='person' style={styles.icon} />
-              <Text style={styles.text}>Username</Text>
+              <Icon name="person" style={styles.icon} />
+              <Text style={styles.text}>
+                {session !== null && session.name}
+              </Text>
             </View>
             <View>
               <Text style={styles.text}>Balance</Text>
@@ -22,46 +36,28 @@ export default function CustomDrawerContent(props) {
           </View>
         </View>
         <Drawer.Section>
-
           <TouchableOpacity onPress={() => props.navigation.navigate('Buy')}>
-          <DrawerItem
-            label="Buy"
-            labelStyle={styles.labelStyle}
-          />
+            <DrawerItem label="Buy" labelStyle={styles.labelStyle} />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={()=> props.navigation.navigate('Sell')}>
-          <DrawerItem
-            label="Sell"
-            labelStyle={styles.labelStyle}
-          />
+          <TouchableOpacity onPress={() => props.navigation.navigate('Sell')}>
+            <DrawerItem label="Sell" labelStyle={styles.labelStyle} />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => props.navigation.navigate('Offers')} >
-          <DrawerItem
-            label="Offers"
-            labelStyle={styles.labelStyle}
-          />
+          <TouchableOpacity onPress={() => props.navigation.navigate('Offers')}>
+            <DrawerItem label="Offers" labelStyle={styles.labelStyle} />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={()=> props.navigation.navigate('MyOffers')} >
-          <DrawerItem
-            label="My Offers"
-            labelStyle={styles.labelStyle}
-          />
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('MyOffers')}>
+            <DrawerItem label="My Offers" labelStyle={styles.labelStyle} />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => props.navigation.navigate('Wallet')} >
-          <DrawerItem
-            label="Wallet"
-            labelStyle={styles.labelStyle}
-          />
+          <TouchableOpacity onPress={() => props.navigation.navigate('Wallet')}>
+            <DrawerItem label="Wallet" labelStyle={styles.labelStyle} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => props.navigation.navigate('Help')} >
-          <DrawerItem
-            label="Help"
-            labelStyle={styles.labelStyle}
-          />
+          <TouchableOpacity onPress={() => props.navigation.navigate('Help')}>
+            <DrawerItem label="Help" labelStyle={styles.labelStyle} />
           </TouchableOpacity>
         </Drawer.Section>
       </DrawerContentScrollView>
@@ -97,8 +93,8 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
   },
-  icon:{
+  icon: {
     color: 'white',
-    fontSize: 20
+    fontSize: 20,
   },
 });

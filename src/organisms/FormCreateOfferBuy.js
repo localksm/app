@@ -66,7 +66,7 @@ const FormCreateOfferBuy = props => {
           variables={variables}
           label="Send"
           actionAddFunds={() =>
-            navigation.navigate('Confirmation', { typeOffer: 'Buy' })
+            navigation.navigate('Confirmation', { typeOffer: 'Buy', variables: variables })
           }
         />
       </FooterWhite>

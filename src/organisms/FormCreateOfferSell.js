@@ -14,10 +14,18 @@ import { ScrollView } from 'react-native-gesture-handler';
 const FormCreateOfferSell = () => {
   const [offered, setOffered] = useState('');
   const [required, setRequired] = useState('');
-  const [paymentMethod, setPaymentmethod] = useState('');
+  const [paymentMethods, setPaymentmethod] = useState('');
   const [country, setCountry] = useState('');
   const [currency, setCurrency] = useState('');
   const [other, setOther] = useState('');
+  const variables = {
+    offered: offered,
+    required: required,
+    paymentMethods: paymentMethods,
+    country: country,
+    currency: currency,
+    other: other,
+  }
   const navigation = useNavigation();
   return (
     <View>
@@ -38,8 +46,8 @@ const FormCreateOfferSell = () => {
             onChangeText={value => setRequired(value)}
           />
           <DropdownPaymentMethods action={setPaymentmethod} />
-          {paymentMethod === 'BN' && <DropdownCountries action={setCountry} />}
-          {paymentMethod === 'OT' && (
+          {paymentMethods === 'BN' && <DropdownCountries action={setCountry} />}
+          {paymentMethods === 'OT' && (
             <InputText
               placeholder="Other"
               onChangeText={value => setOther(value)}
@@ -55,7 +63,7 @@ const FormCreateOfferSell = () => {
         <Button
           label="Send"
           action={() =>
-            navigation.navigate('Confirmation', { typeOffer: 'Sell' })
+            navigation.navigate('Confirmation', { typeOffer: 'Sell', variables: variables })
           }
         />
       </FooterWhite>

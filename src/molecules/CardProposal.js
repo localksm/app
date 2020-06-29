@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
@@ -74,10 +75,19 @@ const CardProposal = props => {
       <FlatList
         data={data.proposals}
         renderItem={({ item }) => {
-
           return (
             <TouchableOpacity
-              onPress={() => navigation.navigate('DetailsOffer')}>
+              onPress={() => {
+                switch (item.body.operationType) {
+                  case 'add_funds':
+                    return navigation.navigate('DetailsOffer', {...item})
+                  case 'withdraw_funds':
+                    return navigation.navigate('DetailsOffer', {...item})
+                  default:
+                    Alert.alert('Warning!', 'Unexpected error, contact the support area')
+                    break;
+                 }
+              }}>
               <Offer
                 payment={mapPaymentMethod(item.body.paymentMethod)}
                 usernameMaker={item.body.usernameMaker}
