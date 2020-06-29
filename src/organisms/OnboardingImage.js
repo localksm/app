@@ -2,7 +2,7 @@ import React,{ useState } from 'react';
 import { Text, View, StyleSheet, TouchableHighlight, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import { traderData, UserData } from '../utils/constants';
+import { UserData } from '../utils/constants';
 
 
 _renderItem = ({ item }) => {
@@ -17,13 +17,10 @@ _renderItem = ({ item }) => {
 
 
 const OnboardingImage = props => {
-
-    const [trader, setTrader] = useState(false);
+  
     const _renderDoneButton =()=> ( <View><Text style={ styles.controls}>Done</Text></View> );
     const _renderNextButton =()=> ( <View><Text style={ styles.controls} >Next</Text></View> );
     const _renderSkipButton =()=> ( <View><Text style={ styles.controls} >Skip</Text></View> );
-
-    const handlerSwitchUser = async () => setTrader(!trader);
 
     // This MUST be called inside the function component, NOT inside a function inside the comppnent
     const navigation = useNavigation();
@@ -34,23 +31,20 @@ const OnboardingImage = props => {
     
 
     return(
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <View style={{ flex: 1}}>
             <AppIntroSlider 
                 renderItem={_renderItem} 
-                data={trader?traderData : UserData} 
+                data={UserData} 
                 onDone={_onDone}
                 onSkip={()=> _onDone('skip')}
                 renderDoneButton={_renderDoneButton}
                 renderNextButton={_renderNextButton}
                 renderSkipButton={_renderSkipButton}
                 showSkipButton
+                dotStyle={{ backgroundColor: '#747474' }}
+                activeDotStyle= {{ backgroundColor: 'white' }}
                 />
-            <TouchableHighlight onPress={ handlerSwitchUser } underlayColor="white">
-              <View style={{  alignItems: 'center', paddingVertical: 25 }} >
-                <Text style={ styles.textLink } > { trader?"I'm a user":"I'm a trader" }</Text>
-                <Text style={ styles.textLink }> { trader?"Learn how to send a remittance":"Learn how to exchange crypto and fiat"}</Text>
-              </View>              
-            </TouchableHighlight>
+            
       </View>
     );
 }
@@ -59,7 +53,7 @@ const styles = StyleSheet.create({
     slide: {
       flex: 1,
       color:'red',
-      backgroundColor: 'white',
+      backgroundColor: '#2e2e2e',
       alignItems:'center',
       justifyContent: 'center'
     },
@@ -67,7 +61,7 @@ const styles = StyleSheet.create({
       resizeMode:'contain'
     },
     text: {
-      color: 'rgba(0,0,0,0.5)',
+      color: 'white',
       textAlign: 'left',
       alignSelf: 'flex-start',
       paddingHorizontal: 30,
@@ -75,7 +69,7 @@ const styles = StyleSheet.create({
     },
     title: {
       fontSize: 22,
-      color: 'rgba(0,0,0,0.5)',
+      color: 'white',
       textAlign: 'left',
       fontWeight: 'bold',
       letterSpacing: 1,
@@ -90,7 +84,7 @@ const styles = StyleSheet.create({
         paddingRight: 5,
         marginTop: 12,
         marginRight: 15, 
-        color: '#cc5841',
+        color: 'white',
         fontWeight: 'bold',
         fontFamily: "Poppins-Medium"
     },
