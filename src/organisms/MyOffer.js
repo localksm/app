@@ -57,7 +57,7 @@ const MyOffer = () => {
 
 
   const { loading, error, data } = useQuery(QUERIES.QUERY_USER_PROPOSALS, {
-    variables: { id: userID }
+    variables: { id: 107 }
   });
 
   if (loading) return <Loading />;
@@ -83,14 +83,13 @@ const MyOffer = () => {
         <View stlyle={ styles.containerList}>
             <FlatList
               data={data.userProposals}
-              renderItem={({ item }) => {
-
+              renderItem={({ item }) => {                             
                 return (
                   <TouchableOpacity
                     onPress={() => navigation.navigate('DetailsOffer')}>
                     <Offer
-                      payment={mapPaymentMethod(item.body.paymentData.type)}
-                      usernemeMaker={item.body.usernemeMaker}
+                      payment={mapPaymentMethod(item.body.paymentMethod)}
+                      usernemeMaker={item.body.usernameMaker}
                       date={moment(new Date(item.body.updatedAt).toUTCString()).format(
                         'MMMM Do YYYY - h:mm:ss A',
                       )}

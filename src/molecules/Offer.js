@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Image } from 'react-native';
 import {ProposalTypeImages} from '../atoms';
 
 const Offer = props => {
-  const {operationType} = props
+  const {operationType} = props;
   return (
     <View style={styles.container}>
       <View style={styles.right}>
@@ -12,7 +12,7 @@ const Offer = props => {
       <View style={styles.center}>
         <Text style={{ ...styles.text }}>{props.payment}</Text>
         <Text style={{ ...styles.textSecond, fontSize: 14 }}>
-          {props.usernameMaker}
+          {props.usernameMaker? props.usernameMaker :'unknown'}
         </Text>
         <Text style={styles.textSecond}>{props.date} UTC</Text>
       </View>
