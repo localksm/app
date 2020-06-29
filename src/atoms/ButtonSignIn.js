@@ -58,7 +58,7 @@ const ButtonSignIn = props => {
         const { data } = await loginWithEmail({ variables: payloadLogin });
         const session = mapUser(data.login);
         setSession({ session });
-        return props.actionSignUp();
+        return props.actionSignIn();
       } else {
         setLoad(false);
         return Alert.alert('Warning!', 'The email is not registered', [
