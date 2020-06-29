@@ -11,7 +11,7 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 import { useQuery } from '@apollo/react-hooks';
 import moment from 'moment';
-import { Offer } from '../molecules';
+import { Offer, BalanceHeader } from '../molecules';
 import { QUERIES, getSession } from '../apollo';
 import { useNavigation } from '@react-navigation/native';
 
