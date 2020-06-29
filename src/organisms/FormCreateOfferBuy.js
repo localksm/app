@@ -15,19 +15,20 @@ import { FooterWhite } from '../molecules';
 const FormCreateOfferBuy = props => {
   const [offered, setOffered] = useState('0');
   const [required, setRequired] = useState('0');
-  const [paymentMethods, setPaymentmethod] = useState('');
+  const [paymentMethod, setPaymentmethod] = useState('');
   const [country, setCountry] = useState('');
   const [currency, setCurrency] = useState('');
   const [other, setOther] = useState('');
   const navigation = useNavigation();
   const variables = {
-    offered: offered,
-    required: required,
-    paymentMethods: paymentMethods,
+    offerAmount: offered,
+    requestAmount: required,
+    paymentMethod: paymentMethod,
     country: country,
-    currency: currency,
+    requestAsset: currency,
     other: other,
-  }
+    operationType: 'add_funds',
+  };
 
   return (
     <View>
@@ -36,20 +37,20 @@ const FormCreateOfferBuy = props => {
           <Text style={styles.text}>Offered Currency</Text>
           <InputText
             name="Amount"
-            keyboardType='numeric'
+            keyboardType="numeric"
             placeholder="Amount USD"
             onChangeText={value => setOffered(value)}
           />
           <Text style={styles.textRequired}>Required Currency</Text>
           <InputText
             name="Amount"
-            keyboardType='numeric'
+            keyboardType="numeric"
             placeholder="Amount KSM"
             onChangeText={value => setRequired(value)}
           />
           <DropdownPaymentMethods action={setPaymentmethod} />
-          {paymentMethods === 'BN' && <DropdownCountries action={setCountry} />}
-          {paymentMethods === 'OT' && (
+          {paymentMethod === 'BN' && <DropdownCountries action={setCountry} />}
+          {paymentMethod === 'OT' && (
             <InputText
               placeholder="Other"
               onChangeText={value => setOther(value)}
@@ -64,13 +65,15 @@ const FormCreateOfferBuy = props => {
             amount={offered}
             />
         <View style={styles.textFooter}>
-          <Text style={styles.footer}>1 KSM = ${offered} USD</Text>
+          <Text style={styles.footer}>
+            {required} KSM = $ {offered} {currency}
+          </Text>
         </View>
         <AddFundsButton
           variables={variables}
           label="Send"
           actionAddFunds={() =>
-            navigation.navigate('Confirmation', { typeOffer: 'Buy', variables: variables })
+            navigation.navigate('Confirmation', { body: variables })
           }
         />
       </FooterWhite>

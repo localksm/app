@@ -10,19 +10,19 @@ const AddFundsButton = props => {
   const [load, setLoad] = useState(false);
   const { variables } = props;
   function validateForm(
-    offered,
-    required,
-    paymentMethods,
-    currency,
+    offerAmount,
+    requestAmount,
+    paymentMethod,
+    requestAsset,
     country,
     other,
   ) {
-    const offeredValidate = offered > 0;
-    const requiredValidate = required > 0;
-    const paymentValidate = paymentMethods !== '';
-    const currencyValidate = currency !== '';
-    const selectBank = paymentMethods === 'BN';
-    const selectOther = paymentMethods === 'OT';
+    const offeredValidate = offerAmount > 0;
+    const requiredValidate = requestAmount > 0;
+    const paymentValidate = paymentMethod !== '';
+    const currencyValidate = requestAsset !== '';
+    const selectBank = paymentMethod === 'BN';
+    const selectOther = paymentMethod === 'OT';
     const countryValidate = country !== '';
     const otherValidate = other !== '';
     const validation = {
@@ -102,21 +102,21 @@ const AddFundsButton = props => {
   const mapData = (data, session) => {
     const time = Date.now();
     const date = new Date(time);
-    const offerAmount = data.offered;
-    const requestAmount = data.required;
+    const offerAmount = data.offerAmount;
+    const requestAmount = data.requestAmount;
     const makerSeller = 'makerSeller';
 
     const variables = {};
     variables['makerId'] = session.id;
     variables['offerAsset'] = 'native';
     variables['offerAmount'] = parseFloat(offerAmount);
-    variables['requestAsset'] = data.currency;
+    variables['requestAsset'] = data.requestAsset;
     variables['requestAmount'] = parseFloat(requestAmount);
     variables['timestamp'] = date;
     variables['juryPool'] = '';
     variables['challengeStake'] = 0.1;
-    variables['paymentMethod'] = data.paymentMethods;
-    variables['localCurrency'] = data.currency;
+    variables['paymentMethod'] = data.paymentMethod;
+    variables['localCurrency'] = data.requestAsset;
     variables['node'] = makerSeller.replace(/["']/g, '');
 
     return variables;
@@ -125,10 +125,10 @@ const AddFundsButton = props => {
   const sendAddFunds = async () => {
     setLoad(true);
     const validation = validateForm(
-      variables.offered,
-      variables.required,
-      variables.paymentMethods,
-      variables.currency,
+      variables.offerAmount,
+      variables.requestAmount,
+      variables.paymentMethod,
+      variables.requestAsset,
       variables.country,
       variables.other,
     );

@@ -19,7 +19,7 @@ const Offer = props => {
       <View style={styles.left}>
         <Text style={styles.textAmount}>{props.offered} KSM</Text>
         <Text style={styles.textAmountUSD}>
-          $ {props.request} {props.currency}
+          $ {props.requiered} {props.currency}
         </Text>
         <Text style={styles.text_status}>{props.status}</Text>
       </View>

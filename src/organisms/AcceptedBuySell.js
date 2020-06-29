@@ -2,14 +2,55 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MultiView, FooterWhite } from '../molecules';
 import { Link, Button } from '../atoms';
-import { demo } from '../utils/demoQuery';
 
+function mapPaymentMethod(method) {
+  const methods = {
+    VE: 'Venmo',
+    ZE: 'Zelle',
+    MP: 'Mercado Pago',
+    WU: 'Western Union',
+    MG: 'Money Gram',
+    NE: 'Neteller',
+    UP: 'Uphold',
+    PP: 'Paypal',
+    BN: 'Bank',
+    OT: 'Other',
+  };
+  return methods[method];
+}
 
 const AcceptedBuySell = props => {
-  const title = `Please wait until ${demo.body.usernameMaker} sends you`;
-  const amountKSM = '00.30 KSM'
-  const exchange = `$ ${demo.body.offerAmount} in USD \n ${amountKSM} Local Currency`;
-  const details = `Payment method \n ${demo.body.paymentMethod} \nPayment details\n ${demo.body.paymentData.name}\n ${demo.body.paymentData.lastName} \n ${demo.body.paymentData.country} \n ${demo.body.paymentData.email} \n ${demo.body.paymentData.address}`;
+  const {
+    usernameMaker,
+    requestAsset,
+    offerAmount,
+    paymentMethod,
+    operationType,
+  } = props.route.params.body;
+
+  const {
+    accountNumber,
+    address,
+    bankData,
+    email,
+    lastName,
+    name,
+    phone,
+  } = props.route.params.body.paymentData;
+
+  const Name = `Name: ${name} `;
+  const Lastname = `Lastname: ${lastName}`;
+  const Email = `Email: ${email}`;
+  const Phone = `Phone number: ${phone}`;
+  const Address = `Address: ${address}`;
+  const Acount = `Acount Number: ${accountNumber}`;
+  const BankData = `Bank Information: ${bankData}`;
+  const title = `Please wait until ${usernameMaker} sends you`
+  const exchange = `$ ${offerAmount} ${requestAsset}`;
+  const details = `Payment method \n${mapPaymentMethod(
+    paymentMethod,
+  )} \nPayment details\n${Name}\n${Lastname}\n${Email}\n${Phone}\n${Address}\n${Acount}\n${BankData}`;
+  
   return (
     <View>
       <MultiView
@@ -17,32 +58,31 @@ const AcceptedBuySell = props => {
         exchange={exchange}
         details={details}
         stylect={styles.container}>
-       {/* the button only appears in status confirmed for the Maker */}
-          {props.route.params.type === 'Sell' &&
-              <Button label="Confirm sent" />
-           
-          }
+        {operationType === 'withdraw_funds' && <Button label="Confirm sent" />}
+        <View style={styles.buttons}>
+          <Link
+            label="Report a problem"
+            color="#cc5741"
+            action={() => props.navigation.navigate('ReportAProblem')}
+          />
+        </View>
       </MultiView>
-      <FooterWhite stylectContainer={styles.buttons}>
-          <Link label="Report a problem" color="#cc5741" action={() => props.navigation.navigate('ReportAProblem')} />
-          <Link label="Continue Disburse" color="#cc5741" action={() => props.navigation.navigate('Disburse')} />
-      </FooterWhite>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: '15%',
+    paddingTop: '25%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   text: {
     fontSize: 14,
     fontFamily: 'Poppins-SemiBold',
   },
   buttons: {
-    paddingTop: '1%',
     alignItems: 'center',
-    
   },
 });
 

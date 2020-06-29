@@ -83,56 +83,40 @@ export const QUERY_PROPOSALS = gql`
   }`;
 
 
-export const QUERY_USER_PROPOSALS = gql`
-query userProposals($id: Int, $limit: Int = 100,$offset: Int = 0 ) {
-    userProposals(id:$id limit:$limit offset:$offset ){ 
-        id
-        hash
-        status
-        count
-        localCurrency
-        body {
-            paymentData {
-                country
-                email
-                userId
-                proposalId
-                name
-                lastName
-                address
-                phone
-                bankData
-                accountNumber
-                type
-            }
-            requestId
-            makerId
-            takerId
-            makerType
-            takerType
-            operationType
-            offerAsset
-            requestAsset
-            offerAmount
-            requestAmount
-            timestamp
-            conditions
-            audience
-            challengeStake
-            juryPool
-            paymentMethod
-            usernameMaker
-            usernameTaker
-            from
-            to
-            toEmail
-            remittanceSuccess
-            fromUsername
-            toUsername
-            updatedAt
-            adjudicationId
-        }
-    }
-    
-}
-`;
+  export const QUERY_USER_PROPOSALS = gql`
+  query userProposals($id: Int, $limit: Int = 100,$offset: Int = 0 ) {
+      userProposals(id:$id limit:$limit offset:$offset ){ 
+          id
+          hash
+          status
+          count
+          localCurrency
+          body {
+              usernameMaker
+              usernameTaker
+              updatedAt
+              requestId
+              operationType
+              makerId
+              takerId
+              offerAsset
+              offerAmount
+              requestAsset
+              requestAmount
+              paymentMethod
+              paymentData {
+                  proposalId
+                  name
+                  lastName
+                  email
+                  address
+                  phone
+                  bankData
+                  accountNumber
+                  type
+                  country
+              }
+          }
+      }
+  }
+  `;

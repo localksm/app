@@ -55,15 +55,15 @@ const styles = StyleSheet.create({
     borderBottomColor: 'white',
   },
   details: {
-    paddingHorizontal: '10%',
-    paddingBottom: '20%',
+    paddingHorizontal: '20%',
+    paddingBottom: '0%',
   },
   containerFooter: {
     flexDirection: 'column',
     borderTopRightRadius: 50,
     borderTopLeftRadius: 50,
     justifyContent: 'center',
-    marginTop: '45%',
+    marginTop: '35%',
     backgroundColor: 'white',
     width: '100%',
   },

@@ -2,15 +2,55 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MultiView } from '../molecules';
 import { Link, Button, ConfirmSentBuyButton } from '../atoms';
-import { demo } from '../utils/demoQuery';
+
+function mapPaymentMethod(method) {
+  const methods = {
+    VE: 'Venmo',
+    ZE: 'Zelle',
+    MP: 'Mercado Pago',
+    WU: 'Western Union',
+    MG: 'Money Gram',
+    NE: 'Neteller',
+    UP: 'Uphold',
+    PP: 'Paypal',
+    BN: 'Bank',
+    OT: 'Other',
+  };
+  return methods[method];
+}
 
 const ConfirmedBuySell = props => {
-  // console.log(props.route.params);
-  
-  const title = `Please wait until ${demo.body.usernameMaker} sends you`;
-   const amountKSM = '00.30 KSM'
-   const exchange = `$ ${demo.body.offerAmount} in USD \n ${amountKSM} Local Currency`;
-   const details = `Payment method \n ${demo.body.paymentMethod} \nPayment details\n ${demo.body.paymentData.name}\n ${demo.body.paymentData.lastName} \n ${demo.body.paymentData.country} \n ${demo.body.paymentData.email} \n ${demo.body.paymentData.address}`;
+
+  const {
+    usernameTaker,
+    requestAmount,
+    requestAsset,
+    offerAmount,
+    paymentMethod,
+    operationType,
+  } = props.route.params.body;
+
+  const {
+    accountNumber,
+    address,
+    bankData,
+    email,
+    lastName,
+    name,
+    phone,
+    proposalId
+  } = props.route.params.body.paymentData;
+
+  const Name = `Name: ${name} `;
+  const Lastname = `Lastname: ${lastName}`;
+  const Email = `Email: ${email}`;
+  const Phone = `Phone number: ${phone}`;
+  const Address = `Address: ${address}`;
+  const Acount = `Acount Number: ${accountNumber}`;
+  const BankData = `Bank Information: ${bankData}`;
+  const title = `${usernameTaker} has accepted your offer `;
+  const exchange = `Please send \n $ ${offerAmount} ${requestAsset}`;
+  const details = `Payment method \n${mapPaymentMethod(paymentMethod)} \nPayment details\n${Name}\n${Lastname}\n${Email}\n${Phone}\n${Address}\n${Acount}\n${BankData}`;
   return (
     <View>
       <MultiView
@@ -19,20 +59,30 @@ const ConfirmedBuySell = props => {
         details={details}
         stylect={styles.container}>
         <View style={styles.textContainer}>
-          
-            <Text style={styles.text}>You'll receive: 0.00 KSM</Text>
-        
-            <Text style={styles.text}>
-              Please confirm that you receive the correct amount
-            </Text>
-          
+          {operationType === 'add_funds' ?
+          <Text style={styles.text}>You'll receive: {requestAmount} KSM</Text>
+          :
+          <Text style={styles.text}>
+            Please confirm that you receive the correct amount
+          </Text>
+        }
         </View>
-      
-        
-        <ConfirmSentBuyButton label="Confirm Sent" actionConfirmSent={() => props.navigation.navigate('TransactionCompleted')} />
-        
-        <Button label="Confirm received" action={() => props.navigation.navigate('TransactionCompleted')} />
-        
+        {operationType === 'add_funds' ?
+        <ConfirmSentBuyButton
+          variables={proposalId}
+          label="Confirm Sent"
+          actionConfirmSent={() =>
+            props.navigation.navigate('TransactionCompleted')
+          }
+        />
+        :
+        <Button
+          label="Confirm received"
+          action={() => props.navigation.navigate('TransactionCompleted')}
+        />  
+      }
+
+
         <View style={styles.buttons}>
           <Link label="Report a problem" color="#cc5741" />
         </View>
@@ -43,8 +93,7 @@ const ConfirmedBuySell = props => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: '2%',
-    
+    paddingTop: '0%',
   },
   textContainer: {
     alignItems: 'center',
@@ -53,7 +102,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     fontFamily: 'Poppins-Medium',
-    textAlign:'center',
+    textAlign: 'center',
   },
   buttons: {
     paddingTop: '3%',

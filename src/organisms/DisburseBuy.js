@@ -6,18 +6,37 @@ import { Link, Button } from '../atoms';
 import { demo } from '../utils/demoQuery';
 
 const DisburseBuy = props => {
-  const title = `Please wait until ${demo.body.usernameMaker} sends you`;
-  const amountKSM = '00.30 KSM';
-  const exchange = `$ ${
-    demo.body.offerAmount
-  } in USD \n ${amountKSM} Local Currency`;
-  const details = `Payment method \n ${
-    demo.body.paymentMethod
-  } \nPayment details\n ${demo.body.paymentData.name}\n ${
-    demo.body.paymentData.lastName
-  } \n ${demo.body.paymentData.country} \n ${demo.body.paymentData.email} \n ${
-    demo.body.paymentData.address
-  }`;
+  const {
+    usernameMaker,
+    requestAsset,
+    offerAmount,
+    paymentMethod,
+    operationType,
+  } = props.route.params.body;
+
+  const {
+    accountNumber,
+    address,
+    bankData,
+    email,
+    lastName,
+    name,
+    phone,
+  } = props.route.params.body.paymentData;
+
+  const Name = `Name: ${name} `;
+  const Lastname = `Lastname: ${lastName}`;
+  const Email = `Email: ${email}`;
+  const Phone = `Phone number: ${phone}`;
+  const Address = `Address: ${address}`;
+  const Acount = `Acount Number: ${accountNumber}`;
+  const BankData = `Bank Information: ${bankData}`;
+  const title = `${usernameMaker} has sent you`
+  const exchange = `$ ${offerAmount} ${requestAsset}`;
+  const details = `Payment method \n${mapPaymentMethod(
+    paymentMethod,
+  )} \nPayment details\n${Name}\n${Lastname}\n${Email}\n${Phone}\n${Address}\n${Acount}\n${BankData}`;
+  
   return (
     <View>
       <ScrollView>

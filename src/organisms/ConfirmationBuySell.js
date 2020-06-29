@@ -4,9 +4,13 @@ import { Link } from '../atoms';
 import { FooterWhite } from '../molecules';
 
 const ConfirmationBuySell = props => {
-  console.log(props.route.params.variables);
-  const {currency, offered, required} = props.route.params.variables
-  
+  const {
+    requestAsset,
+    requestAmount,
+    offerAmount,
+    operationType,
+  } = props.route.params.body;
+
   return (
     <View>
       <View style={styles.container}>
@@ -15,21 +19,22 @@ const ConfirmationBuySell = props => {
         </View>
         <View>
           <Text style={styles.textTitle}>
-            {props.route.params.typeOffer} submitted{' '}
+            {operationType === 'add_funds' ? 'Buy' : 'Sell'} submitted{' '}
           </Text>
         </View>
         <View>
           <Text style={styles.text}>Please wait until someone accepts it.</Text>
         </View>
       </View>
-
       <FooterWhite stylectContainer={styles.containerColum}>
         <View style={styles.colum}>
           <View>
             <Text style={styles.textColumOneRowOne}>Offered</Text>
           </View>
           <View>
-            <Text style={styles.textColumOneRowTwo}>{offered} {currency}</Text>
+            <Text style={styles.textColumOneRowTwo}>
+              {offerAmount} {requestAsset}
+            </Text>
           </View>
         </View>
         <View style={styles.colum}>
@@ -37,17 +42,19 @@ const ConfirmationBuySell = props => {
             <Text style={styles.textColumtwoRowtwo}>Required</Text>
           </View>
           <View>
-            <Text style={styles.textColumOneRowTwo}>{required} KSM</Text>
+            <Text style={styles.textColumOneRowTwo}>{requestAmount} KSM</Text>
           </View>
         </View>
         <View style={styles.conversion}>
           <View>
-            <Text style={styles.conversionText}>1 KSM = 5.80 USD</Text>
+            <Text style={styles.conversionText}>
+              {requestAmount} KSM = $ {offerAmount} {requestAsset}
+            </Text>
           </View>
         </View>
         <View style={styles.link}>
           <Link label="Cancel" color="#CC5741" />
-          <Link
+          {/* <Link
             label="Confirmed"
             color="#CC5741"
             action={() =>
@@ -55,7 +62,7 @@ const ConfirmationBuySell = props => {
                 type: props.route.params.typeOffer,
               })
             }
-          />
+          /> */}
         </View>
       </FooterWhite>
     </View>

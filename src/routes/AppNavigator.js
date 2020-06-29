@@ -51,6 +51,16 @@ const MyOffersStack = () => {
   return(
     <Stack.Navigator>
       <Stack.Screen name='MyOffers' component={MyOffers} options={{headerShown: false}} />
+      <Stack.Screen name='Confirmation' component={Confirmation} options={{headerShown: false}} />
+      <Stack.Screen name='AcceptedBuy' component={AcceptedBuy} options={{headerShown: false}} />
+      <Stack.Screen name='AcceptedSell' component={AcceptedSell} options={{headerShown: false}} />
+      <Stack.Screen name='CreateOfferBuy' component={CreateOfferBuy} options={{headerShown: false}} />
+      <Stack.Screen name='ConfirmedBuy' component={ConfirmedBuy} options={{headerShown: false}} />
+      <Stack.Screen name='ConfirmedSell' component={ConfirmedSell} options={{headerShown: false}} />
+      <Stack.Screen name='Disburse' component={Disburse} options={{headerShown: false}} />
+      <Stack.Screen name='TransactionCompleted' component={TransactionCompleted} options={{headerShown: false}} />
+      <Stack.Screen name='CreateOfferSell' component={CreateOfferSell} options={{headerShown: false}} />
+      <Stack.Screen name='ReportAProblem' component={ReportAProblemStack} options={{headerShown: false}} />
     </Stack.Navigator>
 
   )
@@ -60,9 +70,6 @@ const MyOffersStack = () => {
      <Stack.Navigator>
       <Stack.Screen name='CreateOfferBuy' component={CreateOfferBuy} options={{headerShown: false}} />
       <Stack.Screen name='Confirmation' component={Confirmation} options={{headerShown: false}} />
-      <Stack.Screen name='Confirmed' component={ConfirmedBuy} options={{headerShown: false}} />
-      <Stack.Screen name='TransactionCompleted' component={TransactionCompleted} options={{headerShown: false}} />
-      <Stack.Screen name='ReportAProblem' component={ReportAProblemStack} options={{headerShown: false}} />
      </Stack.Navigator>
    )
  }
@@ -71,9 +78,6 @@ const MyOffersStack = () => {
     <Stack.Navigator>
      <Stack.Screen name='CreateOfferSell' component={CreateOfferSell} options={{headerShown: false}} />
      <Stack.Screen name='Confirmation' component={Confirmation} options={{headerShown: false}} />
-     <Stack.Screen name='Confirmed' component={ConfirmedSell} options={{headerShown: false}} />
-     <Stack.Screen name='TransactionCompleted' component={TransactionCompleted} options={{headerShown: false}} />
-     <Stack.Screen name='ReportAProblem' component={ReportAProblemStack} options={{headerShown: false}} />
     </Stack.Navigator>
   )
 }
@@ -139,3 +143,4 @@ export default function AppNavigator() {
     </NavigationContainer>
   );
 }
+

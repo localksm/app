@@ -6,12 +6,12 @@ import {
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useQuery } from '@apollo/react-hooks';
 import moment from 'moment';
-
-import { Offer, BalanceHeader } from '../molecules';
+import { Offer } from '../molecules';
 import { QUERIES, getSession } from '../apollo';
 import { useNavigation } from '@react-navigation/native';
 
@@ -49,7 +49,8 @@ function Error({ error }) {
 
 const MyOffer = () => {
   const navigation = useNavigation();
-  const [userID, setuserID] = useState(0);
+  const [userID, setuserID] = useState(null);
+  const [name, setName] = useState(null);
 
   useEffect(() => {
     prepareData();
@@ -58,6 +59,7 @@ const MyOffer = () => {
   const prepareData = async () => {
     const { session } = await getSession();
     await setuserID(session.id);
+    await setName(session.name);
   };
 
   const { loading, error, data } = useQuery(QUERIES.QUERY_USER_PROPOSALS, {
@@ -74,33 +76,86 @@ const MyOffer = () => {
       </View>
       <ScrollView>
         <View style={styles.offerList}>
-          <View stlyle={styles.containerList}>
-            <FlatList
-              data={data.userProposals}
-              renderItem={({ item }) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate('DetailsOffer', { ...item })
-                    }>
-                    <Offer
-                      payment={mapPaymentMethod(item.body.paymentMethod)}
-                      usernemeMaker={item.body.usernameMaker}
-                      date={moment(
-                        new Date(item.body.updatedAt).toUTCString(),
-                      ).format('MMMM Do YYYY - h:mm:ss A')}
-                      offered={item.body.offerAmount}
-                      requiered={item.body.requestAmount}
-                      status={item.status}
-                      currency={item.body.requestAsset}
-                      isOffer={true}
-                      operationType={item.body.operationType}
-                    />
-                  </TouchableOpacity>
-                );
-              }}
-            />
-          </View>
+          <FlatList
+            data={data.userProposals}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  onPress={async () => {
+                    const isMaker = name === item.body.usernameMaker;
+                    switch (item.status) {
+                      case 'created':
+                        return navigation.navigate('Confirmation', { ...item });
+                      case 'accepted':
+                        if (isMaker) {
+                          if (item.body.operationType === 'add_funds') {
+                            return navigation.navigate('ConfirmedBuy', {
+                              ...item,
+                            });
+                          } else {
+                            return navigation.navigate('ConfirmedSell', {
+                              ...item,
+                            });
+                          }
+                        } else {
+                          if (item.body.operationType === 'add_funds') {
+                            return navigation.navigate('AcceptedBuy', {
+                              ...item,
+                            });
+                          } else {
+                            return navigation.navigate('AcceptedSell', {
+                              ...item,
+                            });
+                          }
+                        }
+                      case 'confirmed':
+                        if (isMaker) {
+                          if (item.body.operationType === 'add_funds') {
+                            return navigation.navigate('ConfirmedBuy', {
+                              ...item,
+                            });
+                          } else {
+                            return navigation.navigate('ConfirmedSell', {
+                              ...item,
+                            });
+                          }
+                        } else {
+                          if (item.body.operationType === 'add_funds') {
+                            return navigation.navigate('Disburse', { ...item });
+                          } else {
+                            return navigation.navigate('ConfirmedSell', {
+                              ...item,
+                            });
+                          }
+                        }
+                      case 'complet':
+                        return navigation.navigate('TransactionCompleted', {
+                          ...item,
+                        });
+                      default:
+                        Alert.alert('Warning!', 'Proposal not found');
+                        break;
+                    }
+
+                    navigation.navigate('DetailsOffer');
+                  }}>
+                  <Offer
+                    payment={mapPaymentMethod(item.body.paymentMethod)}
+                    usernameMaker={item.body.usernameMaker}
+                    date={moment(
+                      new Date(item.body.updatedAt).toUTCString(),
+                    ).format('MMMM Do YYYY - h:mm:ss A')}
+                    offered={item.body.offerAmount}
+                    requiered={item.body.requestAmount}
+                    status={item.status}
+                    currency={item.body.requestAsset}
+                    isOffer={true}
+                    operationType={item.body.operationType}
+                  />
+                </TouchableOpacity>
+              );
+            }}
+          />
         </View>
       </ScrollView>
     </View>
@@ -121,7 +176,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 50,
     justifyContent: 'center',
     paddingTop: '1%',
-    paddingBottom: '10%',
+    paddingBottom: '80%',
     backgroundColor: 'white',
   },
   containerList: {
