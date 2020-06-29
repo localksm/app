@@ -86,6 +86,7 @@ const GoogleButton = (props) => {
         const { login } = await loginGoogle(email, idToken);
         const session = mapUser(login);
         setSession({ session });
+        setLoading(false);
         return props.actionLogin();
       } else {
         const { success } = await signupGoogle(email, idToken);
@@ -93,6 +94,7 @@ const GoogleButton = (props) => {
           const { login } = await loginGoogle(email, idToken);
           const session = mapUser(login);
           setSession({ session });
+          setLoading(false);
           return props.actionLogin();
         }
       }

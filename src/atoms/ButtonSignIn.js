@@ -58,6 +58,7 @@ const ButtonSignIn = props => {
         const { data } = await loginWithEmail({ variables: payloadLogin });
         const session = mapUser(data.login);
         setSession({ session });
+        setLoading(false);
         return props.actionSignIn();
       } else {
         setLoad(false);

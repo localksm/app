@@ -68,7 +68,6 @@ const OfferDetails = props => {
         variables: { proposalId: props.route.params.id },
       });
     } catch (error) {
-
       setLoading(false);
       return Alert.alert(
         'Error',
@@ -120,7 +119,11 @@ const OfferDetails = props => {
           },
           {
             query: QUERIES.QUERY_USER_PROPOSALS,
-            variables: { id: makerId, offset: 0, limit: 100 },
+            variables: {
+              id: takerId,
+              offset: 0,
+              limit: 100,
+            },
           },
         ],
       });
