@@ -11,7 +11,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useQuery } from '@apollo/react-hooks';
 import moment from 'moment';
 
-import { Offer } from '../molecules';
+import { Offer, BalanceHeader } from '../molecules';
 import { QUERIES, getSession } from '../apollo';
 import { useNavigation } from '@react-navigation/native';
 
@@ -70,34 +70,25 @@ const MyOffer = () => {
   return (
     <View>
       <View style={styles.container}>
-        <Text style={{ ...styles.textBalance, paddingBottom: '5%' }}>
-          Balance
-        </Text>
-        <Text style={{ ...styles.textBalance, fontSize: 20 }}>
-          1,245.00 KSM
-        </Text>
-        <Text style={{ ...styles.textBalance, fontSize: 14 }}>
-          {' '}
-          $7,804.40 USD
-        </Text>
+        <BalanceHeader />
       </View>
       <ScrollView>
         <View style={styles.offerList}>
           <View stlyle={styles.containerList}>
             <FlatList
               data={data.userProposals}
-              renderItem={({ item }) => {                             
+              renderItem={({ item }) => {
                 return (
                   <TouchableOpacity
                     onPress={() =>
-                      navigation.navigate('DetailsOffer', {  ...item })
+                      navigation.navigate('DetailsOffer', { ...item })
                     }>
                     <Offer
                       payment={mapPaymentMethod(item.body.paymentMethod)}
                       usernemeMaker={item.body.usernameMaker}
-                      date={moment(new Date(item.body.updatedAt).toUTCString()).format(
-                        'MMMM Do YYYY - h:mm:ss A',
-                      )}
+                      date={moment(
+                        new Date(item.body.updatedAt).toUTCString(),
+                      ).format('MMMM Do YYYY - h:mm:ss A')}
                       offered={item.body.offerAmount}
                       requiered={item.body.requestAmount}
                       status={item.status}

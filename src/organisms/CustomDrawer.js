@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Icon } from 'native-base';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { Text, Drawer } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { getSession } from '../apollo';
+import Balance from '../atoms/Balance';
 
 export default function CustomDrawerContent(props) {
   const [session, setSession] = useState(null);
@@ -31,7 +32,11 @@ export default function CustomDrawerContent(props) {
             </View>
             <View>
               <Text style={styles.text}>Balance</Text>
-              <Text style={styles.text}>0 KSM</Text>
+              {session !== null ? (
+                <Balance style={styles.text} id={session?.id} />
+              ) : (
+                <ActivityIndicator />
+              )}
             </View>
           </View>
         </View>

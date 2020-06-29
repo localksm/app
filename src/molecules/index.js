@@ -6,3 +6,4 @@ export { default as CompletedMultiView } from './CompletedMultiView';
 export { default as FilePicker } from './FilePicker';
 export { default as WalletContent } from './WalletContent';
 export { default as CardProposal } from './CardProposal';
+export { default as BalanceHeader } from './BalanceHeader';
