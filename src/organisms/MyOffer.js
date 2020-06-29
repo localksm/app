@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useQuery } from '@apollo/react-hooks';
 import moment from 'moment';
@@ -26,43 +33,39 @@ function mapPaymentMethod(method) {
 
 function Loading() {
   return (
-    <View style={[styles.container, {marginVertical: 30}]}>
-        <ActivityIndicator size="large" color="black" />
+    <View style={[styles.container, { marginVertical: 30 }]}>
+      <ActivityIndicator size="large" color="black" />
     </View>
   );
 }
 
-function Error({error}) {
+function Error({ error }) {
   return (
     <View style={styles.container}>
-        <Text>{`Error! ${error.message}`}</Text>
+      <Text>{`Error! ${error.message}`}</Text>
     </View>
   );
 }
 
 const MyOffer = () => {
-  const navigation = useNavigation();  
+  const navigation = useNavigation();
   const [userID, setuserID] = useState(0);
-  
+
   useEffect(() => {
-    
     prepareData();
   }, []);
 
-  const prepareData = async()=>{
-    const {session} = await getSession();
+  const prepareData = async () => {
+    const { session } = await getSession();
     await setuserID(session.id);
-    
-  }
-
+  };
 
   const { loading, error, data } = useQuery(QUERIES.QUERY_USER_PROPOSALS, {
-    variables: { id: userID }
+    variables: { id: userID },
   });
 
   if (loading) return <Loading />;
-  if (error) return <Error error={error}/>;
-  
+  if (error) return <Error error={error} />;
 
   return (
     <View>
@@ -80,13 +83,15 @@ const MyOffer = () => {
       </View>
       <ScrollView>
         <View style={styles.offerList}>
-        <View stlyle={ styles.containerList}>
+          <View stlyle={styles.containerList}>
             <FlatList
               data={data.userProposals}
               renderItem={({ item }) => {                             
                 return (
                   <TouchableOpacity
-                    onPress={() => navigation.navigate('DetailsOffer')}>
+                    onPress={() =>
+                      navigation.navigate('DetailsOffer', {  ...item })
+                    }>
                     <Offer
                       payment={mapPaymentMethod(item.body.paymentMethod)}
                       usernemeMaker={item.body.usernameMaker}
@@ -100,12 +105,11 @@ const MyOffer = () => {
                       isOffer={true}
                       operationType={item.body.operationType}
                     />
-
                   </TouchableOpacity>
                 );
               }}
             />
-        </View>          
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -129,12 +133,12 @@ const styles = StyleSheet.create({
     paddingBottom: '10%',
     backgroundColor: 'white',
   },
-  containerList:{
+  containerList: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export default MyOffer;

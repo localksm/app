@@ -5,7 +5,7 @@ const Context = createContext({});
 export const ContextProvider = Context.Provider;
 export const ContextConsumer = Context.Consumer;
 
-export const withContext = Comment => props => (
+export const withContext = Component => props => (
     <ContextConsumer>
         {state => <Component {...props} state={state} />}
     </ContextConsumer>
