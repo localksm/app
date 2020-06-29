@@ -51,7 +51,6 @@ const MyOffer = () => {
 
   const prepareData = async()=>{
     const {session} = await getSession();
-    //console.log(session);
     await setuserID(session.id);
     
   }
