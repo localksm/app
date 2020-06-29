@@ -74,8 +74,6 @@ const CardProposal = props => {
       <FlatList
         data={data.proposals}
         renderItem={({ item }) => {
-          console.log(item);
-          
 
           return (
             <TouchableOpacity
