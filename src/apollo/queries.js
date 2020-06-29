@@ -65,6 +65,7 @@ export const QUERY_PROPOSALS = gql`
         offerAmount
         requestAsset
         requestAmount
+        paymentMethod
         paymentData {
           proposalId
           name

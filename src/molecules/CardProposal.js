@@ -74,13 +74,15 @@ const CardProposal = props => {
       <FlatList
         data={data.proposals}
         renderItem={({ item }) => {
+          console.log(item);
+          
 
           return (
             <TouchableOpacity
               onPress={() => navigation.navigate('DetailsOffer')}>
               <Offer
-                payment={mapPaymentMethod(item.body.paymentData.type)}
-                usernemeMaker={item.body.usernemeMaker}
+                payment={mapPaymentMethod(item.body.paymentMethod)}
+                usernameMaker={item.body.usernameMaker}
                 date={moment(new Date(item.body.updatedAt).toUTCString()).format(
                   'MMMM Do YYYY - h:mm:ss A',
                 )}
