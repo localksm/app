@@ -59,6 +59,10 @@ const FormCreateOfferBuy = props => {
         </View>
       </ScrollView>
       <FooterWhite stylectContainer={styles.footerContainer}>
+        <Fees 
+            container={"jury"}
+            amount={offered}
+            />
         <View style={styles.textFooter}>
           <Text style={styles.footer}>1 KSM = ${offered} USD</Text>
         </View>
