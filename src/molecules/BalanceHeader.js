@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 
 function BalanceHeader() {
   const [session, setSession] = React.useState(null);
+  const [show, showBalance] = React.useState(false);
 
   React.useEffect(() => {
     set();
@@ -35,16 +36,22 @@ function BalanceHeader() {
     setSession(session);
   }
 
+  setTimeout(() => {
+    showBalance(true);
+  }, 3000);
+
   return session !== null ? (
     <View style={styles.container}>
       <Text style={{ ...styles.textBalance, paddingBottom: '5%' }}>
         Balance
       </Text>
 
-      <Balance
-        id={session.id}
-        style={{ ...styles.textBalance, fontSize: 20 }}
-      />
+      {show ? (
+        <Balance
+          id={session.id}
+          style={{ ...styles.textBalance, fontSize: 20 }}
+        />
+      ) : <ActivityIndicator/>}
       <Text style={{ ...styles.textBalance, fontSize: 14 }}>
         {' '}
         $0 USD
