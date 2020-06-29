@@ -173,3 +173,13 @@ export const ADD_FUNDS = gql`
     }
   }
 `;
+
+
+export const CONFIRM_PROPOSAL = gql`
+mutation confirmProposal($proposalId: Int) {
+  confirmProposal(proposalId: $proposalId){
+    id
+  }
+}
+
+`;

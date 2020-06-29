@@ -16,3 +16,4 @@ export { default as PaymentForm} from './PaymentForm'
 export { default as AddFundsButton } from './AddFundsButton';
 export { default as QrCode } from './QrCode';
 export { default as ProposalTypeImages } from './ProposalTypeImages'; 
+export { default as ConfirmSentBuyButton } from './ConfirmSentBuyButton';

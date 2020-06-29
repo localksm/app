@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MultiView } from '../molecules';
-import { Link, Button } from '../atoms';
+import { Link, Button, ConfirmSentBuyButton } from '../atoms';
 import { demo } from '../utils/demoQuery';
 
 const ConfirmedBuySell = props => {
+  // console.log(props.route.params);
+  
   const title = `Please wait until ${demo.body.usernameMaker} sends you`;
    const amountKSM = '00.30 KSM'
    const exchange = `$ ${demo.body.offerAmount} in USD \n ${amountKSM} Local Currency`;
@@ -17,20 +19,20 @@ const ConfirmedBuySell = props => {
         details={details}
         stylect={styles.container}>
         <View style={styles.textContainer}>
-          {props.route.params.type === 'Buy' ? (
+          
             <Text style={styles.text}>You'll receive: 0.00 KSM</Text>
-          ) : (
+        
             <Text style={styles.text}>
               Please confirm that you receive the correct amount
             </Text>
-          )}
+          
         </View>
-        {props.route.params.type === 'Buy' ? 
-        // condition through the status the appearance of the button in Sell flow
-        <Button label="Confirm Sent" action={() => props.navigation.navigate('TransactionCompleted')} />
-        :
+      
+        
+        <ConfirmSentBuyButton label="Confirm Sent" actionConfirmSent={() => props.navigation.navigate('TransactionCompleted')} />
+        
         <Button label="Confirm received" action={() => props.navigation.navigate('TransactionCompleted')} />
-        }
+        
         <View style={styles.buttons}>
           <Link label="Report a problem" color="#cc5741" />
         </View>

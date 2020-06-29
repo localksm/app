@@ -16,10 +16,27 @@ import {
 } from '../utils/config';
 import { ContextProvider, ContextConsumer, withContext } from './context';
 import ApolloState from './stateManager';
-
-import {SIGNUP, LOGIN, SEND_ACCEPTANCE, SEND_RESOLUTION, SEND_SETTLEMENT, SEND_FULFILLMENT, INSERT_PROPOSAL_PAYMENT_METHOD, ADD_FUNDS } from './mutations';
-import { VERIFY_USER,FEE, PAYMENT_METHODS, CURRENCIES, COUNTRIES, PUBLIC_KEY, QUERY_PROPOSALS,QUERY_USER_PROPOSALS } from './queries';
-
+import {
+  SIGNUP,
+  LOGIN,
+  ADD_FUNDS,
+  CONFIRM_PROPOSAL,
+  SEND_ACCEPTANCE,
+  SEND_RESOLUTION,
+  SEND_SETTLEMENT,
+  SEND_FULFILLMENT,
+  INSERT_PROPOSAL_PAYMENT_METHOD,
+} from './mutations';
+import {
+  VERIFY_USER,
+  FEE,
+  PAYMENT_METHODS,
+  CURRENCIES,
+  COUNTRIES,
+  PUBLIC_KEY,
+  QUERY_PROPOSALS,
+  QUERY_USER_PROPOSALS,
+} from './queries';
 
 const httpLink = new HttpLink({
   uri: `${GRAPHQL_ENDPOINT}`,
@@ -99,7 +116,7 @@ export const QUERIES = {
   CURRENCIES,
   PUBLIC_KEY,
   QUERY_PROPOSALS,
-  QUERY_USER_PROPOSALS
+  QUERY_USER_PROPOSALS,
 };
 
 export const MUTATIONS = {
@@ -113,6 +130,7 @@ export const MUTATIONS = {
   SEND_FULFILLMENT,
   INSERT_PROPOSAL_PAYMENT_METHOD,
   ADD_FUNDS,
+  CONFIRM_PROPOSAL,
 };
 
 export const SUBSCRIPTIONS = {};

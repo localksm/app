@@ -4,6 +4,9 @@ import { Link } from '../atoms';
 import { FooterWhite } from '../molecules';
 
 const ConfirmationBuySell = props => {
+  console.log(props.route.params.variables);
+  const {currency, offered, required} = props.route.params.variables
+  
   return (
     <View>
       <View style={styles.container}>
@@ -26,7 +29,7 @@ const ConfirmationBuySell = props => {
             <Text style={styles.textColumOneRowOne}>Offered</Text>
           </View>
           <View>
-            <Text style={styles.textColumOneRowTwo}>11.6 USD</Text>
+            <Text style={styles.textColumOneRowTwo}>{offered} {currency}</Text>
           </View>
         </View>
         <View style={styles.colum}>
@@ -34,7 +37,7 @@ const ConfirmationBuySell = props => {
             <Text style={styles.textColumtwoRowtwo}>Required</Text>
           </View>
           <View>
-            <Text style={styles.textColumOneRowTwo}>2 KSM</Text>
+            <Text style={styles.textColumOneRowTwo}>{required} KSM</Text>
           </View>
         </View>
         <View style={styles.conversion}>
@@ -75,8 +78,7 @@ const styles = StyleSheet.create({
     paddingTop: '5%',
     paddingBottom: '10%',
     backgroundColor: 'white',
-    height: '40%',
-    width: '100%',
+    height: '43%',
     fontFamily: 'Poppins-Medium',
   },
   colum: {
