@@ -57,7 +57,7 @@ const MyOffer = () => {
 
 
   const { loading, error, data } = useQuery(QUERIES.QUERY_USER_PROPOSALS, {
-    variables: { id: 107 }
+    variables: { id: userID }
   });
 
   if (loading) return <Loading />;
