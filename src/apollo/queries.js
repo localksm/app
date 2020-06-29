@@ -86,7 +86,7 @@ export const QUERY_PROPOSALS = gql`
 export const QUERY_USER_PROPOSALS = gql`
 query userProposals($id: Int, $limit: Int = 100,$offset: Int = 0 ) {
     userProposals(id:$id limit:$limit offset:$offset ){ 
-    id
+        id
         hash
         status
         count
