@@ -7,8 +7,8 @@ import { FooterWhite } from '../molecules';
 import { withContext, getSession, MUTATIONS, QUERIES } from '../apollo';
 
 const OfferDetails = props => {
-  const [loading, setLoading] = useState(false);
 
+  const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('');
   const [paymentDataform, setPaymentDataform] = useState(false);
   const [proposalId, setProposalId] = useState(null);
@@ -163,7 +163,7 @@ const OfferDetails = props => {
     }
 
     setLoading(false);
-    props.navigation.navigate('AcceptedBuy', { type: 'Buy' });
+    props.navigation.navigate('AcceptedBuy', {...props.route.params});
   };
 
   const handleTextChange = (name, value) => {
@@ -247,8 +247,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   containerButtons: {
-    // paddingTop: '30%',
+    paddingTop: '30%',
     paddingBottom: '5%',
+    height: '5%'
   },
   buttonConfirm: {
     marginHorizontal: 20,

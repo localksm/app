@@ -1,17 +1,33 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native'
 import { CompletedMultiView } from '../molecules';
-import { Link, Button } from '../atoms';
-import { demo } from '../utils/demoQuery';
+import { Button } from '../atoms';
+
+function mapPaymentMethod(method) {
+  const methods = {
+    VE: 'Venmo',
+    ZE: 'Zelle',
+    MP: 'Mercado Pago',
+    WU: 'Western Union',
+    MG: 'Money Gram',
+    NE: 'Neteller',
+    UP: 'Uphold',
+    PP: 'Paypal',
+    BN: 'Bank',
+    OT: 'Other',
+  };
+  return methods[method];
+}
 
 const Completed = props => {
+  const navigation = useNavigation()
 
   const {
     requestAsset,
     requestAmount,
     offerAmount,
     paymentMethod,
-    operationType,
   } = props.route.params.body;
 
   const {
@@ -50,10 +66,7 @@ const Completed = props => {
             {/* here the information of the FEE will be placed */}
           </Text>
         </View>
-        <Button label="Ok" action={() => props.navigation.navigate('App')} />
-
-        
-       
+        <Button label="Ok" action={() => navigation.navigate('Offers')} />
       </CompletedMultiView>
     </View>
   );
@@ -61,7 +74,7 @@ const Completed = props => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: '15%',
+    paddingTop: '1%',
   },
   textContainer: {
     alignItems: 'center',
