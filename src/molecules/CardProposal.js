@@ -47,25 +47,20 @@ function mapPaymentMethod(method) {
 }
 
 const CardProposal = props => {
-  const [session, setSession] = useState(null);
- 
+  const [id, setId] = useState(null);
   const navigation = useNavigation();
-
-  const variables = {
-    userId: session !== null && session.id,
-  };
-
+  
   useEffect(() => {
     set();
   }, []);
 
   async function set() {
     const { session } = await getSession();
-    setSession(session);
+    setId(session.id);
   }
 
   const { loading, error, data } = useQuery(QUERIES.QUERY_PROPOSALS, {
-    variables: variables
+    variables: {userId: id}
   });
   if (loading) return <Loading />;
   if (error) return <Error error={error}/>;
@@ -112,7 +107,7 @@ const CardProposal = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
