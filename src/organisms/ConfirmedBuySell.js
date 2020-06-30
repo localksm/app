@@ -75,7 +75,7 @@ const ConfirmedBuySell = props => {
               variables={proposalId}
               label="Confirm Sent"
               actionConfirmSent={() =>
-                props.navigation.navigate('TransactionCompleted')
+                props.navigation.navigate('TransactionCompleted',{...props.route.params})
               }
             />
           )
