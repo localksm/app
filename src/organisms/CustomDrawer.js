@@ -33,7 +33,7 @@ export default function CustomDrawerContent(props) {
             <View>
               <Text style={styles.text}>Balance</Text>
               {session !== null ? (
-                <Balance style={styles.text} id={session?.id} />
+                <Balance style={styles.text} id={session.id} />
               ) : (
                 <ActivityIndicator />
               )}
