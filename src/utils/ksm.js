@@ -2,8 +2,6 @@
 import fetch from 'node-fetch';
 
 async function getBalance(address) {
-  console.log('STARTING');
-
   const URL = 'https://kusama.subscan.io/api/open/account';
   const aux = await fetch(URL, {
     method: 'POST',
