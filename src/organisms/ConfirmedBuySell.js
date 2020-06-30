@@ -20,7 +20,6 @@ function mapPaymentMethod(method) {
 }
 
 const ConfirmedBuySell = props => {
-  
   const {
     usernameTaker,
     requestAmount,
@@ -38,8 +37,9 @@ const ConfirmedBuySell = props => {
     lastName,
     name,
     phone,
-    proposalId
+    proposalId,
   } = props.route.params.body.paymentData;
+  const { status } = props.route.params;
 
   const Name = `Name: ${name} `;
   const Lastname = `Lastname: ${lastName}`;
@@ -50,7 +50,9 @@ const ConfirmedBuySell = props => {
   const BankData = `Bank Information: ${bankData}`;
   const title = `${usernameTaker} has accepted your offer `;
   const exchange = `Please send \n $ ${offerAmount} ${requestAsset}`;
-  const details = `Payment method \n${mapPaymentMethod(paymentMethod)} \nPayment details\n${Name}\n${Lastname}\n${Email}\n${Phone}\n${Address}\n${Acount}\n${BankData}`;
+  const details = `Payment method \n${mapPaymentMethod(
+    paymentMethod,
+  )} \nPayment details\n${Name}\n${Lastname}\n${Email}\n${Phone}\n${Address}\n${Acount}\n${BankData}`;
   return (
     <View>
       <MultiView
@@ -59,29 +61,30 @@ const ConfirmedBuySell = props => {
         details={details}
         stylect={styles.container}>
         <View style={styles.textContainer}>
-          {operationType === 'add_funds' ?
-          <Text style={styles.text}>You'll receive: {requestAmount} KSM</Text>
-          :
-          <Text style={styles.text}>
-            Please confirm that you receive the correct amount
-          </Text>
-        }
+          {operationType === 'add_funds' ? (
+            <Text style={styles.text}>You'll receive: {requestAmount} KSM</Text>
+          ) : (
+            <Text style={styles.text}>
+              Please confirm that you receive the correct amount
+            </Text>
+          )}
         </View>
-        {operationType === 'add_funds' ?
-        <ConfirmSentBuyButton
-          variables={proposalId}
-          label="Confirm Sent"
-          actionConfirmSent={() =>
-            props.navigation.navigate('TransactionCompleted',{...props.route.params})
-          }
-        />
-        :
-        <Button
-          label="Confirm received"
-          action={() => props.navigation.navigate('TransactionCompleted')}
-        />  
-      }
-
+        {operationType === 'add_funds' ? (
+          status === 'accepted' && (
+            <ConfirmSentBuyButton
+              variables={proposalId}
+              label="Confirm Sent"
+              actionConfirmSent={() =>
+                props.navigation.navigate('TransactionCompleted')
+              }
+            />
+          )
+        ) : (
+          <Button
+            label="Confirm received"
+            action={() => props.navigation.navigate('TransactionCompleted')}
+          />
+        )}
 
         <View style={styles.buttons}>
           <Link label="Report a problem" color="#cc5741" />
