@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text, ActivityIndicator } from 'react-native';
-import { useQuery } from '@apollo/react-hooks';
+import { Text  } from 'react-native';
 import { getBalances } from '../utils/ksm';
 import { QUERIES, client } from '../apollo';
 
@@ -17,6 +16,8 @@ function Balance(props) {
     });
     const address = res.data.publicKeys.ksm;
     const balance = await getBalances(address);
+    console.log(balance);
+    
     setBalance(() => balance.free.toString());
   }
 
