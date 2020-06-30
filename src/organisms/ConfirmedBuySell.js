@@ -20,9 +20,7 @@ function mapPaymentMethod(method) {
 }
 
 const ConfirmedBuySell = props => {
-  console.log(props.route.params);
   
-
   const {
     usernameTaker,
     requestAmount,
