@@ -1,4 +1,3 @@
-// import { WsProvider, ApiPromise } from '@polkadot/api';
 import fetch from 'node-fetch';
 
 async function getBalance(address) {
