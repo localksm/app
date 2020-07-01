@@ -3,11 +3,11 @@ import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
   InputText,
-  Button,
   Link,
   GoogleButton,
   FBLoginButton,
   ButtonSignIn,
+  TWLoginButton,
 } from '../atoms';
 
 const FormSignIn = props => {
@@ -67,10 +67,10 @@ const FormSignIn = props => {
           />
         </View>
         <View style={styles.buttons}>
-          <Button
+          <TWLoginButton
             label="Login with Twitter"
             stylect={{ backgroundColor: '#58C5FA' }}
-            action={() => navigation.navigate('Drawer')}
+            actionLogin={() => navigation.navigate('Drawer')}
           />
         </View>
 

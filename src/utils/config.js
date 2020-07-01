@@ -28,6 +28,6 @@ export const googleConfig = {
 };
 
 export const twitterConfig = {
-  consumer_key: '61vg7Wc3E8SDjOSZsKdJpDBh1',
-  consumer_secret: 'ZFoOPW3VLOdbtGA03GxmzYZFS0TSITKtJCk9pqrhfUlTjK1OtX',
+  consumer_key: 'wwOBrFV2MyEOG7D0DgibC4vNU',
+  consumer_secret: 'd4UrAVZgv7fZYspuMxoBGD9J1RhaieFHtOBSVsOSL2z9VFYDNG',
 };

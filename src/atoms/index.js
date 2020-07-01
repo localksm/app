@@ -1,5 +1,3 @@
-import { from } from 'apollo-link';
-
 export { default as Button } from './Button';
 export { default as InputText } from './InputText';
 export { default as Link } from './Link';
@@ -18,3 +16,4 @@ export { default as QrCode } from './QrCode';
 export { default as ProposalTypeImages } from './ProposalTypeImages'; 
 export { default as ConfirmSentBuyButton } from './ConfirmSentBuyButton';
 export { default as ConfirmReceivedButton } from './ConfirmReceivedButton';
+export { default as TWLoginButton } from './TwitterButton';

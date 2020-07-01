@@ -9,6 +9,8 @@ export const SIGNUP = gql`
     $userFBID: String
     $password: String
     $platform: Platform!
+    $authTokenSecret: String
+    $userTWID: String
   ) {
     signup(
       name: $name
@@ -18,6 +20,8 @@ export const SIGNUP = gql`
       token: $token
       userFBID: $userFBID
       platform: $platform
+      authTokenSecret: $authTokenSecret
+      userTWID: $userTWID
     ) {
       success
       error
@@ -34,6 +38,8 @@ export const LOGIN = gql`
     $token: String
     $userFBID: String
     $platform: Platform
+    $authTokenSecret: String
+    $userTWID: String
   ) {
     login(
       email: $email
@@ -42,6 +48,8 @@ export const LOGIN = gql`
       token: $token
       userFBID: $userFBID
       platform: $platform
+      authTokenSecret: $authTokenSecret
+      userTWID: $userTWID
     ) {
       id
       email
@@ -203,3 +211,6 @@ export const SEND_DISBURSEMENT_SELLER = gql`
     }
   }
 `;
+
+
+
