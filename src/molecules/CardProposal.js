@@ -16,16 +16,16 @@ import Offer from './Offer';
 
 function Loading() {
   return (
-    <View style={[styles.container, {marginVertical: 30}]}>
-        <ActivityIndicator size="large" color="black" />
+    <View style={[styles.container, { marginVertical: 30 }]}>
+      <ActivityIndicator size="large" color="black" />
     </View>
   );
 }
 
-function Error({error}) {
+function Error({ error }) {
   return (
     <View style={styles.container}>
-        <Text>{`Error! ${error.message}`}</Text>
+      <Text>{`Error! ${error.message}`}</Text>
     </View>
   );
 }
@@ -63,8 +63,8 @@ const CardProposal = props => {
     variables: {userId: id}
   });
   if (loading) return <Loading />;
-  if (error) return <Error error={error}/>;
-  
+  if (error) return <Error error={error} />;
+
   return (
     <View stlyle={styles.container}>
       <FlatList
@@ -75,13 +75,16 @@ const CardProposal = props => {
               onPress={() => {
                 switch (item.body.operationType) {
                   case 'add_funds':
-                    return navigation.navigate('DetailsOffer', {...item})
+                    return navigation.navigate('DetailsOffer', { ...item });
                   case 'withdraw_funds':
-                    return navigation.navigate('DetailsOffer', {...item})
+                    return navigation.navigate('DetailsOffer', { ...item });
                   default:
-                    Alert.alert('Warning!', 'Unexpected error, contact the support area')
+                    Alert.alert(
+                      'Warning!',
+                      'Unexpected error, contact the support area',
+                    );
                     break;
-                 }
+                }
               }}>
               <Offer
                 payment={mapPaymentMethod(item.body.paymentMethod)}

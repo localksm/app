@@ -145,8 +145,8 @@ const MyOffer = () => {
                     date={moment(
                       new Date(item.body.updatedAt).toUTCString(),
                     ).format('MMMM Do YYYY - h:mm:ss A')}
-                    offered={item.body.offerAmount}
-                    requiered={item.body.requestAmount}
+                    offered={item.body.requestAmount}
+                    requiered={item.body.offerAmount}
                     status={item.status}
                     currency={item.body.offerAsset}
                     isOffer={true}
