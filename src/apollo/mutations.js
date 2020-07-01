@@ -53,61 +53,50 @@ export const LOGIN = gql`
 `;
 
 export const SEND_ACCEPTANCE = gql`
-  mutation sendAcceptance($proposalId: Int!){    
-     sendAcceptance(   
-       proposalId: $proposalId
-       node: takerBuyer
-    ) {
-             id    
-      }  
+  mutation sendAcceptance($proposalId: Int!) {
+    sendAcceptance(proposalId: $proposalId, node: takerBuyer) {
+      id
+    }
   }
 `;
 
 export const SEND_RESOLUTION = gql`
-  mutation sendResolution($proposalId: Int! $takerId:Int!){    
-    sendResolution( 
+  mutation sendResolution($proposalId: Int!, $takerId: Int!) {
+    sendResolution(
       proposalId: $proposalId
       takerId: $takerId
       node: makerSeller
-    ) 
-    {      
+    ) {
       id
       hash
-    } 
+    }
   }
 `;
 
-export const SEND_SETTLEMENT =gql`
-  mutation sendSettlement(
-    $proposalId: Int!
-    $makerId: Int!
-    $takerId: Int!
-  ) {
+export const SEND_SETTLEMENT = gql`
+  mutation sendSettlement($proposalId: Int!, $makerId: Int!, $takerId: Int!) {
     sendSettlement(
       proposalId: $proposalId
       makerId: $makerId
       takerId: $takerId
       node: takerBuyer
-      ) {
-            id
-            hash
-      }
+    ) {
+      id
+      hash
     }
+  }
 `;
 
 export const SEND_FULFILLMENT = gql`
-  mutation sendFulfillment(
-    $proposalId: Int!  
-    $takerId: Int!
-  ){  
+  mutation sendFulfillment($proposalId: Int!, $takerId: Int!) {
     sendFulfillment(
       proposalId: $proposalId
       node: takerBuyer
       takerId: $takerId
-      ){ 
-        id
-      }
+    ) {
+      id
     }
+  }
 `;
 
 export const INSERT_PROPOSAL_PAYMENT_METHOD = gql`
@@ -123,23 +112,24 @@ export const INSERT_PROPOSAL_PAYMENT_METHOD = gql`
     $accountNumber: String
     $country: String
     $paymentMethod: PaymentMethods!
-  ){
-  addPaymentMethod(
-    userId: $userId
-    proposalId: $proposalId
-    name: $name
-    email: $email
-    lastName: $lastName
-    address: $address
-    phone: $phone
-    bankData: $bankData
-    accountNumber: $accountNumber
-    country: $country
-    paymentMethod: $paymentMethod
-  ){
-    id
+  ) {
+    addPaymentMethod(
+      userId: $userId
+      proposalId: $proposalId
+      name: $name
+      email: $email
+      lastName: $lastName
+      address: $address
+      phone: $phone
+      bankData: $bankData
+      accountNumber: $accountNumber
+      country: $country
+      paymentMethod: $paymentMethod
+    ) {
+      id
+    }
   }
-}`;
+`;
 
 export const ADD_FUNDS = gql`
   mutation addFunds(
@@ -174,12 +164,42 @@ export const ADD_FUNDS = gql`
   }
 `;
 
-
 export const CONFIRM_PROPOSAL = gql`
-mutation confirmProposal($proposalId: Int) {
-  confirmProposal(proposalId: $proposalId){
-    id
+  mutation confirmProposal($proposalId: Int) {
+    confirmProposal(proposalId: $proposalId) {
+      id
+    }
   }
-}
+`;
 
+export const SEND_DISBURSEMENT_BUYER = gql`
+  mutation sendDisbursementBuyer(
+    $proposalId: Int!
+    $takerId: Int!
+  ) {
+    sendDisbursementBuyer(
+      proposalId: $proposalId
+      takerId: $takerId
+      node: takerBuyer
+    ) {
+      success
+      error
+    }
+  }
+`;
+
+export const SEND_DISBURSEMENT_SELLER = gql`
+  mutation sendDisbursementSeller(
+    $proposalId: Int!
+    $takerId: Int!
+  ) {
+    sendDisbursementSeller(
+      proposalId: $proposalId
+      takerId: $takerId
+      node: makerBuyer
+    ) {
+      success
+      error
+    }
+  }
 `;

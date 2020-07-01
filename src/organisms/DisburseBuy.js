@@ -2,16 +2,32 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MultiView, FooterWhite } from '../molecules';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Link, Button } from '../atoms';
-import { demo } from '../utils/demoQuery';
+import { Link, Button, ConfirmReceivedButton } from '../atoms';
+
+function mapPaymentMethod(method) {
+  const methods = {
+    VE: 'Venmo',
+    ZE: 'Zelle',
+    MP: 'Mercado Pago',
+    WU: 'Western Union',
+    MG: 'Money Gram',
+    NE: 'Neteller',
+    UP: 'Uphold',
+    PP: 'Paypal',
+    BN: 'Bank',
+    OT: 'Other',
+  };
+  return methods[method];
+}
 
 const DisburseBuy = props => {
+
   const {
     usernameMaker,
     requestAsset,
     offerAmount,
     paymentMethod,
-    operationType,
+    takerId
   } = props.route.params.body;
 
   const {
@@ -22,7 +38,13 @@ const DisburseBuy = props => {
     lastName,
     name,
     phone,
+    proposalId
   } = props.route.params.body.paymentData;
+
+  const variables ={
+    proposalId: proposalId,
+    takerId: takerId,
+  }
 
   const Name = `Name: ${name} `;
   const Lastname = `Lastname: ${lastName}`;
@@ -52,11 +74,14 @@ const DisburseBuy = props => {
           Please confirm that you receive the correct amount
         </Text>
 
-        <Button
+        <ConfirmReceivedButton
+          variables={variables}
           label="Confirm Sent"
-          action={() => props.navigation.navigate('TransactionCompleted')}
+          actionConfirmSent={() => props.navigation.navigate('TransactionCompleted',{...props.route.params})}
         />
-        <Link label="Report a problem" color="#cc5741" />
+        <View style={styles.link} >
+          <Link label="Report a problem" color="#cc5741" action={()=> props.navigation.navigate('ReportAProblem',{...props.route.params})} />
+        </View>
       </FooterWhite>
     </View>
   );
@@ -64,18 +89,22 @@ const DisburseBuy = props => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: '15%',
+    paddingTop: '80%',
   },
   textContainer: {
-    paddingBottom: '70%',
+    paddingBottom: '20%',
     paddingHorizontal: '10%',
-    height: '50%',
   },
   text: {
     fontSize: 14,
     fontFamily: 'Poppins-SemiBold',
     textAlign: 'center',
+    paddingBottom: 20
   },
+  link:{
+    paddingHorizontal: '25%',
+    paddingTop: 20,
+  }
 });
 
 export default DisburseBuy;

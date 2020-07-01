@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { MultiView } from '../molecules';
 import { Link, Button, ConfirmSentBuyButton } from '../atoms';
 
@@ -20,6 +20,8 @@ function mapPaymentMethod(method) {
 }
 
 const ConfirmedBuySell = props => {
+  const [send, setSend] = useState(false);
+
   const {
     usernameTaker,
     requestAmount,
@@ -69,14 +71,14 @@ const ConfirmedBuySell = props => {
             </Text>
           )}
         </View>
-        {operationType === 'add_funds' ? (
+        {send ? (
+          Alert.alert('Confirmed')
+        ) : operationType === 'add_funds' ? (
           status === 'accepted' && (
             <ConfirmSentBuyButton
               variables={proposalId}
               label="Confirm Sent"
-              actionConfirmSent={() =>
-                props.navigation.navigate('TransactionCompleted',{...props.route.params})
-              }
+              actionConfirmSent={() => setSend(true)}
             />
           )
         ) : (
@@ -96,7 +98,7 @@ const ConfirmedBuySell = props => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: '0%',
+    paddingTop: '10%',
   },
   textContainer: {
     alignItems: 'center',
