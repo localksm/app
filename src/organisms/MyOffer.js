@@ -148,7 +148,7 @@ const MyOffer = () => {
                     offered={item.body.offerAmount}
                     requiered={item.body.requestAmount}
                     status={item.status}
-                    currency={item.body.requestAsset}
+                    currency={item.body.offerAsset}
                     isOffer={true}
                     operationType={item.body.operationType}
                   />
