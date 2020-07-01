@@ -108,9 +108,9 @@ const AddFundsButton = props => {
 
     const variables = {};
     variables['makerId'] = session.id;
-    variables['offerAsset'] = 'native';
+    variables['requestAsset'] = 'native';
     variables['offerAmount'] = parseFloat(offerAmount);
-    variables['requestAsset'] = data.requestAsset;
+    variables['offerAsset'] = data.requestAsset;
     variables['requestAmount'] = parseFloat(requestAmount);
     variables['timestamp'] = date;
     variables['juryPool'] = '';
