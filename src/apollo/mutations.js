@@ -195,7 +195,7 @@ export const SEND_DISBURSEMENT_SELLER = gql`
     sendDisbursementSeller(
       proposalId: $proposalId
       takerId: $takerId
-      node: makerBuyer
+      node: makerSeller
     ) {
       success
       error
