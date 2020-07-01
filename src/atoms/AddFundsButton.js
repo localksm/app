@@ -108,7 +108,7 @@ const AddFundsButton = props => {
 
     const variables = {};
     variables['makerId'] = session.id;
-    variables['offerAsset'] = 'native';
+    variables['offerAsset'] = 'ksm';
     variables['offerAmount'] = parseFloat(offerAmount);
     variables['requestAsset'] = data.requestAsset;
     variables['requestAmount'] = parseFloat(requestAmount);
