@@ -143,7 +143,6 @@ export const ADD_FUNDS = gql`
     $challengeStake: Float
     $paymentMethod: PaymentMethods!
     $localCurrency: CurrencyEnum
-    $node: NodeTypes!
   ) {
     addFunds(
       makerId: $makerId
@@ -156,7 +155,7 @@ export const ADD_FUNDS = gql`
       challengeStake: $challengeStake
       paymentMethod: $paymentMethod
       localCurrency: $localCurrency
-      node: $node
+      node: makerSeller
     ) {
       id
       hash

@@ -114,10 +114,9 @@ const AddFundsButton = props => {
     variables['requestAmount'] = parseFloat(requestAmount);
     variables['timestamp'] = date;
     variables['juryPool'] = '';
-    variables['challengeStake'] = 0.1;
+    variables['challengeStake'] = 0.001;
     variables['paymentMethod'] = data.paymentMethod;
     variables['localCurrency'] = data.requestAsset;
-    variables['node'] = makerSeller.replace(/["']/g, '');
 
     return variables;
   };
