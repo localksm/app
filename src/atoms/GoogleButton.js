@@ -5,8 +5,8 @@ import {
   statusCodes,
 } from '@react-native-community/google-signin';
 import { sessionModel, googleConfig } from '../utils/config';
-import { Button } from './Button';
 import { client, MUTATIONS, QUERIES, setSession } from '../apollo';
+import Button from './Button';
 
 const GoogleButton = (props) => {
   const [loading, setLoading] = useState(false);

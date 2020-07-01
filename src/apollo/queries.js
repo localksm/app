@@ -1,10 +1,20 @@
 import { gql } from 'apollo-boost';
 
-export const QUERY_EMAIL = gql`
-  query verifyUser($email: String, $name: String) {
-    verifyUser(email: $email, name: $name) {
-      emailExists
+export const VERIFY_USER = gql`
+  query verifyUser($email: String) {
+    verifyUser(email: $email) {
+      email
       nameExists
+      emailExists
+    }
+  }
+`;
+
+export const FEE = gql`
+  query {
+    fees {
+      fee
+      amount
     }
   }
 `;

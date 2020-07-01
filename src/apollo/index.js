@@ -49,7 +49,7 @@ const wsLink = new WebSocketLink({
   options: { reconnect: true },
 });
 
-export const setSession = async (payload) => {
+export const setSession = async payload => {
   return await ls.save('session', payload);
 };
 
@@ -61,7 +61,7 @@ export const removeSession = async () => {
   return await ls.clear();
 };
 
-const authLink = setContext(async (_) => {
+const authLink = setContext(async _ => {
   const data = await getSession();
   const { session } = data !== null && data;
   const jwt = session && session.token;
@@ -104,7 +104,7 @@ export const client = new ApolloClient({
   link: ApolloLink.from([errorLink, link]),
   cache,
   resolvers: {
-    logout: async (id) => {
+    logout: async id => {
       await removeSession();
     },
   },
@@ -122,8 +122,6 @@ export const QUERIES = {
 };
 
 export const MUTATIONS = {
-  LOGIN_FACEBOOK,
-  SIGNUP_FACEBOOK,
   SIGNUP,
   LOGIN,
   SEND_ACCEPTANCE,

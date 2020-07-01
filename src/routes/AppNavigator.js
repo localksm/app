@@ -99,13 +99,6 @@ const WalletStack = () => {
   )
 }
 
-const WalletStack = () => {
-  return(
-    <Stack.Navigator>
-      <Stack.Screen name='Wallet' component={Wallet} options={{headerShown: false}} />
-    </Stack.Navigator>
-  )
-}
 
 const MainStack = () => {
   return(

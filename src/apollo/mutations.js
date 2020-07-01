@@ -23,7 +23,8 @@ export const SIGNUP = gql`
       error
       userId
     }
-  }`;
+  }
+`;
 
 export const LOGIN = gql`
   mutation login(
