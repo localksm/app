@@ -53,8 +53,8 @@ export const LOGIN = gql`
 `;
 
 export const SEND_ACCEPTANCE = gql`
-  mutation sendAcceptance($proposalId: Int!) {
-    sendAcceptance(proposalId: $proposalId, node: takerBuyer) {
+  mutation sendAcceptance($proposalId: Int! $takerId:Int!) {
+    sendAcceptance(proposalId: $proposalId, takerId:$takerId node: takerBuyer) {
       id
     }
   }

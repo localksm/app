@@ -65,7 +65,7 @@ const OfferDetails = props => {
 
     try {
       await sendAcceptance({
-        variables: { proposalId: props.route.params.id },
+        variables: { proposalId: props.route.params.id, takerId },
       });
     } catch (error) {
       setLoading(false);
