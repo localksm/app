@@ -1,23 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { Icon } from 'native-base';
+import { CommonActions } from '@react-navigation/native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { Text, Drawer } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { getSession } from '../apollo';
+import { getSession, setSession } from '../apollo';
 import Balance from '../atoms/Balance';
 
 export default function CustomDrawerContent(props) {
-  const [session, setSession] = useState(null);
-
+  const [user, setUser] = useState(null);
+  
   useEffect(() => {
     set();
   }, []);
 
   async function set() {
     const { session } = await getSession();
-    setSession(session);
+    setUser(session);
   }
+
+  const logout = props => {
+      setSession({session: null})
+      props.navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{ name: 'SignIn' }],
+        }),
+      );
+    };
+    
+  
 
   return (
     <View style={{ flex: 1 }}>
@@ -27,13 +40,13 @@ export default function CustomDrawerContent(props) {
             <View style={{ paddingBottom: '5%', alignItems: 'center' }}>
               <Icon name="person" style={styles.icon} />
               <Text style={styles.text}>
-                {session !== null && session.name}
+                {user !== null && user.name}
               </Text>
             </View>
             <View>
               <Text style={styles.text}>Balance</Text>
-              {session !== null ? (
-                <Balance style={styles.text} id={session.id} />
+              {user !== null ? (
+                <Balance style={styles.text} id={user.id} />
               ) : (
                 <ActivityIndicator />
               )}
@@ -70,7 +83,7 @@ export default function CustomDrawerContent(props) {
         <DrawerItem
           label="Logout"
           labelStyle={{ color: 'white', fontSize: 18 }}
-          onPress={() => props.navigation.navigate('SignIn')}
+          onPress={() => logout(props)}
         />
       </Drawer.Section>
     </View>
