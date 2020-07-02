@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         height: 30,        
     },
     text_btn:{         
-        fontSize: 14,  
+        fontSize: 16,  
         fontFamily: 'Poppins-SemiBold',      
     }
 });
