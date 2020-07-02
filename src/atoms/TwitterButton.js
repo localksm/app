@@ -144,7 +144,7 @@ const TWLoginButton = props => {
     <View>
       {!loading ? (
         <Button
-          label="login With Twitter"
+          label="Login with Twitter"
           action={signIn}
           stylect={{ backgroundColor: '#58C5FA' }}
         />
