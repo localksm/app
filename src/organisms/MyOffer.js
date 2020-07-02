@@ -128,7 +128,7 @@ const MyOffer = () => {
                             });
                           }
                         }
-                      case 'complet':
+                      case 'completed':
                         return navigation.navigate('TransactionCompleted', {
                           ...item,
                         });
