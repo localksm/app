@@ -28,15 +28,15 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.514153515531-0jvo61789c0egbqupqjt0log2kq33kck</string>
-                <string>twitterkit-wwOBrFV2MyEOG7D0DgibC4vNU</string>
+				<string>twitterkit-wwOBrFV2MyEOG7D0DgibC4vNU</string>
 			</array>
 		</dict>
 	</array>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>twitter</string>
-        <string>twitterauth</string>
-    </array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>twitter</string>
+		<string>twitterauth</string>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>

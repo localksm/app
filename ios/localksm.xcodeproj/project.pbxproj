@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* localksmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* localksmTests.m */; };
-		01A7060424AD6ADD002FF65A /* TwitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A7060224AD6ADA002FF65A /* TwitterKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		01A7060524AD6ADD002FF65A /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A7060324AD6ADC002FF65A /* TwitterCore.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		01A7060424AD6ADD002FF65A /* TwitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A7060224AD6ADA002FF65A /* TwitterKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		01A7060524AD6ADD002FF65A /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A7060324AD6ADC002FF65A /* TwitterCore.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		0D6D8D218D574C63A69AAA59 /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F864A2A2540945BCBCC8AE53 /* Poppins-ExtraLight.ttf */; };
 		0FF89EE1337342D9B8465EF0 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6EEEB73255BF4A13A586E27F /* Roboto.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
