@@ -15,7 +15,7 @@ function Dropdown(props) {
     <View style={styles.container}>
       <RNPickerSelect
         placeholder={placeholder}
-        style={{...styles.picker, inputIOS: {color: '#2D2D2D'}, fontFamily: "Poppins-Medium"}}
+        style={{...styles.picker, inputIOS: {color: '#ffffff'}, fontFamily: "Poppins-Medium"}}
         inputIOS={styles.picker}
         items={props.items}
         onValueChange={(itemValue) => props.action(itemValue)}
