@@ -22,3 +22,22 @@ export function backHandlerControl (props) {
   }, [BackHandler]);
 };
 
+export function backHandlerOffer (props) {
+
+  const onBackPress = async props => {
+    props.navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: 'App' }],
+      }),
+    );
+  };
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => onBackPress(props));
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', () =>
+        onBackPress(props),
+      );
+    };
+  }, [BackHandler]);
+};

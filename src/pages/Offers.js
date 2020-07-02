@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { OfferList, HomeLayout } from '../organisms';
 import { styleBackground } from '../utils/styles';
+import { backHandlerOffer } from '../utils/backHandlerControl'
 import { Button } from '../atoms';
 
 const Offers = props => {
+  backHandlerOffer(props)
   return (
     <HomeLayout>
       <View style={styleBackground.container}>
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white',
     height: 30,
-    width: 90
+    width: 90,
   },
 });
 
