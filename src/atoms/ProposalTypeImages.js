@@ -6,7 +6,7 @@ import yellowIcon from '../../assets/withdraw.png';
 const ProposalTypeImages = ({ operationType }) => {
   switch (operationType) {
     case 'add_funds':
-      return <Image source={greenIcon} />;
+      return <Image resizeMethod="resize" style={{ width: 30, height: 30 }}  source={greenIcon} />;
     case 'withdraw_funds':
       return <Image source={yellowIcon} />;
     case 'buy':

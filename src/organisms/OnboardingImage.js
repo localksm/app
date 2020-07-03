@@ -1,14 +1,15 @@
 import React,{ useState } from 'react';
-import { Text, View, StyleSheet, TouchableHighlight, Image } from 'react-native';
+import { Text, View, StyleSheet, TouchableHighlight, Image, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { UserData } from '../utils/constants';
 
 
 _renderItem = ({ item }) => {
+  let {width} = Dimensions.get('window');
     return (
         <View style={styles.slide}>
-        <Image source={item.image} />
+        <Image  resizeMethod="resize" style={{ width: (width-20 ), height: (width-70) }}  source={item.image} />
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.text}>{item.text}</Text>
         </View>
