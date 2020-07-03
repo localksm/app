@@ -53,7 +53,7 @@ const ConfirmReceivedButton = props => {
       }
     } catch (error) {
       setLoad(false);
-      Alert.alert('Warning', `Error: ${error}`);
+      Alert.alert('Warning', 'Something went wrong, please contact support');
       throw new Error(error);
     }
   };
