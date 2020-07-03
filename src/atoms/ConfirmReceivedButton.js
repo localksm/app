@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, ActivityIndicator, Text, View, StyleSheet } from 'react-native';
 import { useMutation } from '@apollo/react-hooks';
-import { MUTATIONS } from '../apollo';
+import { MUTATIONS, QUERIES, getSession } from '../apollo';
 import Button from './Button';
 
 const ConfirmReceivedButton = props => {
@@ -12,9 +12,17 @@ const ConfirmReceivedButton = props => {
     MUTATIONS.SEND_DISBURSEMENT_SELLER,
   );
   const [load, setLoad] = useState(false);
+  const [id, setId] = useState(null);
   const { proposalId, takerId } = props.variables;
-  console.log(proposalId, takerId);
-  
+
+  useEffect(() => {
+    set();
+  }, []);
+
+  async function set() {
+    const { session } = await getSession();
+    setId(session.id);
+  }
 
   const confirmSent = async () => {
     try {
@@ -27,6 +35,16 @@ const ConfirmReceivedButton = props => {
         setLoad(true);
         await sendDisbursementSeller({
           variables: { proposalId: proposalId, takerId: takerId },
+          refetchQueries: [
+            {
+              query: QUERIES.QUERY_PROPOSALS,
+              variables: { userId: id, offset: 0, limit: 100 },
+            },
+            {
+              query: QUERIES.QUERY_USER_PROPOSALS,
+              variables: { id: id, offset: 0, limit: 100 },
+            },
+          ],
         });
         return props.actionConfirmSent();
       } else {
