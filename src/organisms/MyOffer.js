@@ -64,6 +64,7 @@ const MyOffer = () => {
 
   const { loading, error, data } = useQuery(QUERIES.QUERY_USER_PROPOSALS, {
     variables: { id: userID },
+    pollInterval: 3000
   });
 
   if (loading) return <Loading />;

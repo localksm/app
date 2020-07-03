@@ -13,6 +13,7 @@ import { useQuery } from '@apollo/react-hooks';
 import moment from 'moment';
 import { QUERIES, getSession } from '../apollo';
 import Offer from './Offer';
+import { Polyline } from 'react-native-svg';
 
 function Loading() {
   return (
@@ -60,7 +61,8 @@ const CardProposal = props => {
   }
 
   const { loading, error, data } = useQuery(QUERIES.QUERY_PROPOSALS, {
-    variables: {userId: id}
+    variables: {userId: id},
+    pollInterval: 6000
   });
   if (loading) return <Loading />;
   if (error) return <Error error={error} />;
