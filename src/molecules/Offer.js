@@ -41,8 +41,7 @@ const styles = StyleSheet.create({
   right: {
     flex: 0.7,
     justifyContent: 'center',
-    alignItems: 'center',
-    //backgroundColor: 'red',
+    alignItems: 'center',    
     width:'100%',
     height:'100%',
     minWidth: 5,
