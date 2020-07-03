@@ -9,6 +9,10 @@ const ProposalTypeImages = ({ operationType }) => {
       return <Image source={greenIcon} />;
     case 'withdraw_funds':
       return <Image source={yellowIcon} />;
+    case 'buy':
+      return <Image source={greenIcon} />;
+    case 'sell':
+      return <Image source={yellowIcon} />;
   }
 };
 

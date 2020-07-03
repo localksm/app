@@ -22,7 +22,7 @@ function mapPaymentMethod(method) {
 const AcceptedBuySell = props => {
   const {
     usernameMaker,
-    requestAsset,
+    offerAsset,
     offerAmount,
     paymentMethod,
     operationType,
@@ -46,7 +46,7 @@ const AcceptedBuySell = props => {
   const Acount = `Acount Number: ${accountNumber}`;
   const BankData = `Bank Information: ${bankData}`;
   const title = `Please wait until ${usernameMaker} sends you`
-  const exchange = `$ ${offerAmount} ${requestAsset}`;
+  const exchange = `$ ${offerAmount} ${offerAsset}`;
   const details = `Payment method \n${mapPaymentMethod(
     paymentMethod,
   )} \nPayment details\n${Name}\n${Lastname}\n${Email}\n${Phone}\n${Address}\n${Acount}\n${BankData}`;

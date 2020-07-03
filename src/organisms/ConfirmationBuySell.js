@@ -19,7 +19,7 @@ const ConfirmationBuySell = props => {
         </View>
         <View>
           <Text style={styles.textTitle}>
-            {operationType === 'add_funds' ? 'Buy' : 'Sell'} submitted{' '}
+            {operationType === 'add_funds' || operationType === 'buy' ? 'Buy' : 'Sell'} submitted{' '}
           </Text>
         </View>
         <View>

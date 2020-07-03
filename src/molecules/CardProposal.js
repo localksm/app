@@ -80,6 +80,10 @@ const CardProposal = props => {
                     return navigation.navigate('DetailsOffer', { ...item });
                   case 'withdraw_funds':
                     return navigation.navigate('DetailsOffer', { ...item });
+                  case 'buy':
+                    return navigation.navigate('DetailsOffer', { ...item });
+                  case 'sell':
+                    return navigation.navigate('DetailsOffer', { ...item });
                   default:
                     Alert.alert(
                       'Warning!',

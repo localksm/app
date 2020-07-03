@@ -89,7 +89,7 @@ const MyOffer = () => {
                         return navigation.navigate('Confirmation', { ...item });
                       case 'accepted':
                         if (isMaker) {
-                          if (item.body.operationType === 'add_funds') {
+                          if (item.body.operationType === 'add_funds' || item.body.operationType === 'buy') {
                             return navigation.navigate('ConfirmedBuy', {
                               ...item,
                             });
@@ -99,7 +99,7 @@ const MyOffer = () => {
                             });
                           }
                         } else {
-                          if (item.body.operationType === 'add_funds') {
+                          if (item.body.operationType === 'add_funds' || item.body.operationType === 'buy') {
                             return navigation.navigate('AcceptedBuy', {
                               ...item,
                             });
@@ -111,7 +111,7 @@ const MyOffer = () => {
                         }
                       case 'confirmed':
                         if (isMaker) {
-                          if (item.body.operationType === 'add_funds') {
+                          if (item.body.operationType === 'add_funds' || item.body.operationType === 'buy') {
                             return navigation.navigate('ConfirmedBuy', {
                               ...item,
                             });
@@ -121,7 +121,7 @@ const MyOffer = () => {
                             });
                           }
                         } else {
-                          if (item.body.operationType === 'add_funds') {
+                          if (item.body.operationType === 'add_funds' || item.body.operationType === 'buy') {
                             return navigation.navigate('Disburse', { ...item });
                           } else {
                             return navigation.navigate('ConfirmedSell', {

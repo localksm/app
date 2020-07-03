@@ -63,7 +63,7 @@ const ConfirmedBuySell = props => {
         details={details}
         stylect={styles.container}>
         <View style={styles.textContainer}>
-          {operationType === 'add_funds' ? (
+          {operationType === 'add_funds' || operationType === 'buy' ? (
             <Text style={styles.text}>You'll receive: {requestAmount} KSM</Text>
           ) : (
             <Text style={styles.text}>
@@ -73,7 +73,7 @@ const ConfirmedBuySell = props => {
         </View>
         {send ? (
           Alert.alert('Confirmed')
-        ) : operationType === 'add_funds' ? (
+        ) : operationType === 'add_funds' || operationType === 'buy' ? (
           status === 'accepted' && (
             <ConfirmSentBuyButton
               variables={proposalId}
