@@ -22,15 +22,15 @@ const Fees = (props) => {
                 <View  style={ styles.container } >
                     <View style={styles.groupItem}>
                         <Text style={styles.text}>Transfer amount: </Text>
-                        <Text style={styles.text}>{`$${parseFloat(amount)} KSM`}</Text>
+                        <Text style={styles.text}>{`${parseFloat(amount)} KSM`}</Text>
                     </View>
                     <View style={styles.groupItem}>
                         <Text style={styles.text}>Transfer fee: </Text>
-                        <Text style={styles.text}>- {`$${feeResult.amount} KSM`}</Text>
+                        <Text style={styles.text}>- {`${feeResult.amount} KSM`}</Text>
                     </View>
                     <View style={styles.groupItem}>
                         <Text style={styles.text}>You will receive: </Text>
-                        <Text style={styles.text}> { parseFloat(amount)? `$${parseFloat( amount - feeResult.amount ).toFixed(2)} KSM `: '...'}</Text>
+                        <Text style={styles.text}> { parseFloat(amount)? `${parseFloat( amount - feeResult.amount ).toFixed(2)} KSM `: '...'}</Text>
                     </View>            
               </View>
             );

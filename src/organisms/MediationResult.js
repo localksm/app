@@ -38,7 +38,7 @@ const MediationResult = props => {
           </Text>
         </View>
         <View>
-          <Text>You received $ 00.00 KSM</Text>
+          <Text>You received 00.00 KSM</Text>
         </View>
         <Button label='Ok'  action={() => props.navigation.navigate('Offers')} />
       </FooterWhite>
