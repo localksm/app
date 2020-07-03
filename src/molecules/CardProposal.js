@@ -62,7 +62,7 @@ const CardProposal = props => {
 
   const { loading, error, data } = useQuery(QUERIES.QUERY_PROPOSALS, {
     variables: {userId: id},
-    pollInterval: 6000
+    pollInterval: 3000
   });
   if (loading) return <Loading />;
   if (error) return <Error error={error} />;
