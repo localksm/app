@@ -1,10 +1,12 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, ActivityIndicator } from 'react-native';
 import getBalance from '../utils/ksm';
 import { QUERIES, client } from '../apollo';
 
 function Balance(props) {
-  const [balance, setBalance] = React.useState(0);
+  const [free, setFreeBalance] = React.useState(0);
+  const [total, setTotalBalance] = React.useState(0);
+  const [show, showBalance] = React.useState(false);
 
   React.useEffect(() => {
     set();
@@ -17,15 +19,28 @@ function Balance(props) {
         variables: { id: props.id },
       });
       const address = res.data.publicKeys.ksm;
-      const balance = await getBalance(address);
-
-      setBalance(() => balance.toString());
+      await getBalance(address, setResponse);
     } catch (e) {
       throw new Error(e);
     }
   }
 
-  return <Text style={props.style}>{balance} KSM</Text>;
+  function setResponse(freeBalance, totalBalance) {
+    setFreeBalance(() => freeBalance.toString());
+    setTotalBalance(() => totalBalance.toString());
+    showBalance(true);
+  }
+
+  return !show ? (
+    <ActivityIndicator />
+  ) : (
+    <>
+      <Text style={props.styleTotal}>{total} KSM</Text>
+      {!props.isDrawer ? null : (
+        <Text style={{...props.styleFree, fontSize:10}}>free: {free} KSM</Text>
+      )}
+    </>
+  );
 }
 
 export default Balance;

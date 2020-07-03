@@ -1,21 +1,22 @@
-import fetch from 'node-fetch';
+import { ApiPromise, WsProvider } from '@polkadot/api';
 
-async function getBalance(address) {
-  const URL = 'https://kusama.subscan.io/api/open/account';
-  const aux = await fetch(URL, {
-    method: 'POST',
-    headers: {
-      'Content-type': 'application/json',
-    },
-    body: JSON.stringify({ address: address }),
-  });
+async function getBalance(address, callback) {
+  const wsProvider = new WsProvider('wss://kusama-rpc.polkadot.io');
+  const api = await ApiPromise.create({ provider: wsProvider });
 
-  const res = await aux.json();
-  
-  if(res.code === 0){
-      return res.data.balance;
-    }
-    return 0;
+  await api.query.system
+    .account(address, ({ nonce, data: balance }) => {
+      const total =
+        (parseInt(balance.free, 10) + parseInt(balance.reserved, 10)) *
+        0.000000000001;
+      const free = parseInt(balance.free, 10) * 0.000000000001;
+      callback(free, total);
+    })
+    .catch(e => {
+      throw new Error(e);
+    });
+
+  return 0;
 }
 
 export default getBalance;

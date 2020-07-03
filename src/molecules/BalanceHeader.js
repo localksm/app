@@ -36,9 +36,6 @@ function BalanceHeader() {
     setSession(session);
   }
 
-  setTimeout(() => {
-    showBalance(true);
-  }, 3000);
 
   return session !== null ? (
     <View style={styles.container}>
@@ -46,17 +43,11 @@ function BalanceHeader() {
         Balance
       </Text>
 
-      {show ? (
-        <Balance
-          id={session.id}
-          style={{ ...styles.textBalance, fontSize: 20 }}
-        />
-      ) : <ActivityIndicator/>}
-      <Text style={{ ...styles.textBalance, fontSize: 14 }}>
-        {' '}
-        $0 USD
-        {/* In offers user set the ksm value, but which is the reference for this? */}
-      </Text>
+      <Balance
+        id={session.id}
+        styleTotal={{ ...styles.textBalance, fontSize: 20 }}
+        styleFree={{ ...styles.textBalance, fontSize: 10 }}
+      />
     </View>
   ) : (
     <ActivityIndicator />
