@@ -35,6 +35,7 @@ const FormCreateOfferBuy = props => {
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.text}>Offered Currency</Text>
+          <DropdownCurrencies action={setCurrency} />
           <InputText
             name="Amount"
             keyboardType="numeric"
@@ -56,7 +57,7 @@ const FormCreateOfferBuy = props => {
               onChangeText={value => setOther(value)}
             />
           )}
-          <DropdownCurrencies action={setCurrency} />
+          
         </View>
       </ScrollView>
       <FooterWhite stylectContainer={styles.footerContainer}>

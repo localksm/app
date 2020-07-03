@@ -39,6 +39,7 @@ const FormCreateOfferSell = () => {
             onChangeText={value => setOffered(value)}
           />
           <Text style={styles.textRequired}>Required Currency</Text>
+          <DropdownCurrencies action={setCurrency} />
           <InputText
             name="Amount"
             keyboardType='numeric'
@@ -53,7 +54,6 @@ const FormCreateOfferSell = () => {
               onChangeText={value => setOther(value)}
             />
           )}
-          <DropdownCurrencies action={setCurrency} />
         </View>
       </ScrollView>
       <FooterWhite stylectContainer={styles.footerContainer}>
