@@ -30,6 +30,7 @@ function Balance(props) {
   function setResponse(freeBalance, totalBalance) {
     setFreeBalance(() => freeBalance.toString());
     setTotalBalance(() => totalBalance.toString());
+    showBalance(true);
   }
 
    function setCostResponse(cost) {
