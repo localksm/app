@@ -6,7 +6,7 @@ export { default as StartingApp } from './StartingApp';
 export { default as SignIn } from './SignIn';
 export { default as SignUp } from './SignUp';
 export { default as CreateOfferBuy } from './CreateOfferBuy';
-export { default as CreateOfferSell } from './CretaeOfferSell';
+export { default as CreateOfferSell } from './CreateOfferSell';
 export { default as Confirmation } from './Confirmation';
 export { default as ConfirmedBuy } from './ConfirmedBuy';
 export { default as ConfirmedSell } from './ConfirmedSell';

@@ -36,17 +36,16 @@ function BalanceHeader() {
     setSession(session);
   }
 
-
   return session !== null ? (
     <View style={styles.container}>
       <Text style={{ ...styles.textBalance, paddingBottom: '5%' }}>
         Balance
       </Text>
-
       <Balance
         id={session.id}
         styleTotal={{ ...styles.textBalance, fontSize: 20 }}
         styleFree={{ ...styles.textBalance, fontSize: 10 }}
+        styleText={{ ...styles.textBalance, fontSize: 14 }}
       />
     </View>
   ) : (

@@ -1,6 +1,6 @@
 import { ApiPromise, WsProvider } from '@polkadot/api';
 
-async function getBalance(address, callback) {
+export async function getBalance(address, callback) {
   const wsProvider = new WsProvider('wss://kusama-rpc.polkadot.io');
   const api = await ApiPromise.create({ provider: wsProvider });
 
@@ -19,4 +19,20 @@ async function getBalance(address, callback) {
   return 0;
 }
 
-export default getBalance;
+export async function getAverageCost(callback){
+
+    try{
+        const getUSDcost = await fetch(
+          'https://api.coingecko.com/api/v3/simple/price?ids=kusama&vs_currencies=USD'
+        );
+
+        const json = await getUSDcost.json(); 
+        console.log("get avaerage "+JSON.stringify(json));
+
+        callback(json.kusama.usd);
+    }catch(error){
+        throw new Error(error);
+    }
+
+    return 0;    
+}
