@@ -7,7 +7,8 @@ export default function QrWallet(props){
     <QRCode
       value={value !== null ? value : 'No Address'}
       size={200}
-      color='#2D2D2D'
+      color='#ffffff'
+      backgroundColor='#2D2D2D'
       logo={require('../../assets/logoWhite.png')}
       logoBackgroundColor="#cc5741"
       logoSize={40}
