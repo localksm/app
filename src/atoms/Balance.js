@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, ActivityIndicator } from 'react-native';
-import {getBalance, getAverageCost} from '../utils/ksm';
-import { QUERIES, client } from '../apollo';
+import { getBalance, getAverageCost } from '../utils/ksm';
+import { QUERIES, client, withContext } from '../apollo';
 
 function Balance(props) {
   const [free, setFreeBalance] = React.useState(0);
@@ -21,7 +21,10 @@ function Balance(props) {
       });
       const address = res.data.publicKeys.ksm;
       await getBalance(address, setResponse);
-      await getAverageCost(setCostResponse);
+
+      if (!props.isDrawer) {
+        await getAverageCost(setCostResponse);
+      }
     } catch (e) {
       throw new Error(e);
     }
@@ -33,7 +36,7 @@ function Balance(props) {
     showBalance(true);
   }
 
-   function setCostResponse(cost) {
+  function setCostResponse(cost) {
     setAverageCost(() => cost.toString());
     showBalance(true);
   }
@@ -42,14 +45,19 @@ function Balance(props) {
     <ActivityIndicator />
   ) : (
     <>
-      <Text style={props.styleTotal}>{total} KSM</Text>      
-      {!props.isDrawer ? 
-        (<Text style={{ ...props.styleText, fontSize: 14 }}>{' '}≈${(averageCost*total).toFixed(2)} USD</Text>) 
-        : 
-        (<Text style={{...props.styleFree, fontSize:10}}>free: {free} KSM</Text>
+      <Text style={props.styleTotal}>{total} KSM</Text>
+      {!props.isDrawer ? (
+        <Text style={{ ...props.styleText, fontSize: 14 }}>
+          {' '}
+          ≈${(averageCost * total).toFixed(2)} USD
+        </Text>
+      ) : (
+        <Text style={{ ...props.styleFree, fontSize: 10 }}>
+          free: {free} KSM
+        </Text>
       )}
     </>
   );
 }
 
-export default Balance;
+export default withContext(Balance);

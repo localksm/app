@@ -27,7 +27,6 @@ export async function getAverageCost(callback){
         );
 
         const json = await getUSDcost.json(); 
-        console.log("get avaerage "+JSON.stringify(json));
 
         callback(json.kusama.usd);
     }catch(error){
