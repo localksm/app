@@ -67,7 +67,7 @@ const FormCreateOfferBuy = props => {
             />
         <View style={styles.textFooter}>
           <Text style={styles.footer}>
-            {required} KSM = $ {offered} {currency}
+            1 KSM = $ {offered} {currency}
           </Text>
         </View>
         <AddFundsButton

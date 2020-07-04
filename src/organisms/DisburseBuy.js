@@ -21,10 +21,17 @@ function mapPaymentMethod(method) {
 }
 
 const DisburseBuy = props => {
+  const [details, setDetails] = React.useState('');
+
+  React.useEffect(() => {
+    const str = string();
+    setDetails(() => str);
+  }, []);
+  
 
   const {
     usernameMaker,
-    requestAsset,
+    offerAsset,
     offerAmount,
     paymentMethod,
     takerId
@@ -45,19 +52,30 @@ const DisburseBuy = props => {
     proposalId: proposalId,
     takerId: takerId,
   }
+  const obj = {
+    'Acount number': accountNumber,
+    Address: address,
+    'Bank Information': bankData,
+    Email: email,
+    'Last Name': lastName,
+    Name: name,
+    Phone: phone,
+  };
 
-  const Name = `Name: ${name} `;
-  const Lastname = `Lastname: ${lastName}`;
-  const Email = `Email: ${email}`;
-  const Phone = `Phone number: ${phone}`;
-  const Address = `Address: ${address}`;
-  const Acount = `Acount Number: ${accountNumber}`;
-  const BankData = `Bank Information: ${bankData}`;
+  const string = () => {
+    let str = `Payment method \n ${mapPaymentMethod(
+      paymentMethod,
+    )} \nPayment details \n`;
+    Object.keys(obj).forEach(k => {
+      if (obj[k] !== null && obj[k] !== '' && obj[k] !== undefined) {
+        str = str + `${k}: ${obj[k]}\n`;
+      }
+    });
+    return str;
+  };
+
   const title = `${usernameMaker} has sent you`
-  const exchange = `$ ${offerAmount} ${requestAsset}`;
-  const details = `Payment method \n${mapPaymentMethod(
-    paymentMethod,
-  )} \nPayment details\n${Name}\n${Lastname}\n${Email}\n${Phone}\n${Address}\n${Acount}\n${BankData}`;
+  const exchange = `$ ${offerAmount} ${offerAsset}`;
   
   return (
     <View>

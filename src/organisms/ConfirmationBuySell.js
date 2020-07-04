@@ -48,7 +48,7 @@ const ConfirmationBuySell = props => {
         <View style={styles.conversion}>
           <View>
             <Text style={styles.conversionText}>
-              {requestAmount} KSM = $ {offerAmount} {requestAsset}
+              1 KSM = $ {offerAmount} {requestAsset}
             </Text>
           </View>
         </View>

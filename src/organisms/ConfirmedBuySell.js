@@ -21,11 +21,17 @@ function mapPaymentMethod(method) {
 
 const ConfirmedBuySell = props => {
   const [send, setSend] = useState(false);
+  const [details, setDetails] = React.useState('');
+
+  React.useEffect(() => {
+    const str = string();
+    setDetails(() => str);
+  }, []);
 
   const {
     usernameTaker,
     requestAmount,
-    requestAsset,
+    offerAsset,
     offerAmount,
     paymentMethod,
     operationType,
@@ -43,18 +49,32 @@ const ConfirmedBuySell = props => {
   } = props.route.params.body.paymentData;
   const { status } = props.route.params;
 
-  const Name = `Name: ${name} `;
-  const Lastname = `Lastname: ${lastName}`;
-  const Email = `Email: ${email}`;
-  const Phone = `Phone number: ${phone}`;
-  const Address = `Address: ${address}`;
-  const Acount = `Acount Number: ${accountNumber}`;
-  const BankData = `Bank Information: ${bankData}`;
+  const obj = {
+    'Acount number': accountNumber,
+    Address: address,
+    'Bank Information': bankData,
+    Email: email,
+    'Last Name': lastName,
+    Name: name,
+    Phone: phone,
+  };
+
+  const string = () => {
+    let str = `Payment method \n ${mapPaymentMethod(
+      paymentMethod,
+    )} \nPayment details \n`;
+    Object.keys(obj).forEach(k => {
+      if (obj[k] !== null && obj[k] !== '' && obj[k] !== undefined) {
+        str = str + `${k}: ${obj[k]}\n`;
+      }
+    });
+    return str;
+  };
+
+ 
   const title = `${usernameTaker} has accepted your offer `;
-  const exchange = `Please send \n $ ${offerAmount} ${requestAsset}`;
-  const details = `Payment method \n${mapPaymentMethod(
-    paymentMethod,
-  )} \nPayment details\n${Name}\n${Lastname}\n${Email}\n${Phone}\n${Address}\n${Acount}\n${BankData}`;
+  const exchange = `Please send \n $ ${offerAmount} ${offerAsset}`;
+  
   return (
     <View>
       <MultiView
@@ -98,11 +118,10 @@ const ConfirmedBuySell = props => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: '10%',
+    paddingTop: '0%',
   },
   textContainer: {
     alignItems: 'center',
-    paddingBottom: '5%',
   },
   text: {
     fontSize: 14,

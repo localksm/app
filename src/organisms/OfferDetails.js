@@ -167,7 +167,29 @@ const OfferDetails = props => {
           accountNumber,
           paymentMethod,
         },
-      });      
+      });   
+      setLoading(false);
+      props.navigation.navigate('AcceptedBuy', {
+        body: {
+          usernameMaker: props.route.params.body.usernameMaker,
+          offerAsset: props.route.params.body.offerAsset,
+          offerAmount: props.route.params.body.offerAmount,
+          paymentMethod: props.route.params.body.paymentMethod,
+          operationType: props.route.params.body.operationType,
+          paymentData: {
+            userId: takerId,
+            proposalId: proposalId,
+            name,
+            email,
+            lastName,
+            address,
+            phone,
+            bankData,
+            accountNumber,
+            paymentMethod,
+          },
+        },
+      });   
       
     } catch (error) {
       setLoading(false);
