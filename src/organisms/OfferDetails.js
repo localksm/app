@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, Alert, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  Alert,
+  Dimensions,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useMutation } from '@apollo/react-hooks';
 import { Link, Button, InputText, PaymentForm } from '../atoms';
 import { FooterWhite } from '../molecules';
 import { withContext, getSession, MUTATIONS, QUERIES } from '../apollo';
-
 
 function mapPaymentMethod(method) {
   const methods = {
@@ -55,30 +61,30 @@ const OfferDetails = props => {
   );
 
   const screenHeight = Math.round(Dimensions.get('window').height);
-  
 
   useEffect(() => {
     _prepareData();
   }, []);
 
   const _prepareData = async () => {
-        
     const { session } = await getSession();
-    await setTakerId(session.id);    
+    await setTakerId(session.id);
     const params = props.route.params;
-    await setPaymentMethod( params.body.paymentMethod);
+    await setPaymentMethod(params.body.paymentMethod);
     await setPaymentDataform(true);
-    await setProposalId(params.id );
+    await setProposalId(params.id);
     await setMakerId(params.body.makerId);
   };
 
   const actionSendAcceptance = async () => {
-        
     setLoading(true);
     try {
-         
       await sendAcceptance({
-        variables: { proposalId: props.route.params.id, takerId },
+        variables: {
+          proposalId: props.route.params.id,
+          takerId,
+          node: 'takerBuyer',
+        },
       });
     } catch (error) {
       setLoading(false);
@@ -92,8 +98,8 @@ const OfferDetails = props => {
 
     try {
       await sendResolution({
-        variables: { proposalId: proposalId, takerId },
-      });      
+        variables: { proposalId: proposalId, takerId, node: 'makerSeller' },
+      });
     } catch (error) {
       setLoading(false);
       return Alert.alert(
@@ -105,14 +111,14 @@ const OfferDetails = props => {
     }
 
     try {
-     await sendSettlement({
+      await sendSettlement({
         variables: {
           proposalId: proposalId,
           makerId: makerId,
           takerId,
+          node: 'takerBuyer',
         },
-      });      
-      
+      });
     } catch (error) {
       setLoading(false);
       return Alert.alert(
@@ -124,9 +130,8 @@ const OfferDetails = props => {
     }
 
     try {
-
       await sendFulfillment({
-        variables: { proposalId: proposalId, takerId },
+        variables: { proposalId: proposalId, takerId, node: 'takerBuyer' },
         refetchQueries: [
           {
             query: QUERIES.QUERY_PROPOSALS,
@@ -141,8 +146,7 @@ const OfferDetails = props => {
             },
           },
         ],
-      });      
-      
+      });
     } catch (error) {
       setLoading(false);
       return Alert.alert(
@@ -154,7 +158,7 @@ const OfferDetails = props => {
     }
 
     try {
-     await addPaymentMethod({
+      await addPaymentMethod({
         variables: {
           userId: takerId,
           proposalId: proposalId,
@@ -167,7 +171,7 @@ const OfferDetails = props => {
           accountNumber,
           paymentMethod,
         },
-      });   
+      });
       setLoading(false);
       props.navigation.navigate('AcceptedBuy', {
         body: {
@@ -189,8 +193,7 @@ const OfferDetails = props => {
             paymentMethod,
           },
         },
-      });   
-      
+      });
     } catch (error) {
       setLoading(false);
       return Alert.alert(
@@ -202,7 +205,7 @@ const OfferDetails = props => {
     }
 
     setLoading(false);
-    props.navigation.navigate('AcceptedBuy', {...props.route.params});
+    props.navigation.navigate('AcceptedBuy', { ...props.route.params });
   };
 
   const handleTextChange = (name, value) => {
@@ -296,27 +299,27 @@ const OfferDetails = props => {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    marginHorizontal: 30,    
-    paddingBottom:'70%',
+    marginHorizontal: 30,
+    paddingBottom: '70%',
     paddingTop: '20%',
     zIndex: 1,
     elevation: 1,
   },
-  containerButtons: {        
-    paddingBottom:'40%',
+  containerButtons: {
+    paddingBottom: '40%',
     paddingTop: '15%',
     zIndex: 2,
-    elevation: 2
+    elevation: 2,
   },
-  containerButtonsSmall: {        
-    paddingBottom:'20%',
+  containerButtonsSmall: {
+    paddingBottom: '20%',
     paddingTop: '12%',
     zIndex: 2,
-    elevation: 2
+    elevation: 2,
   },
   buttonConfirm: {
     marginHorizontal: 20,
-    paddingTop: 0
+    paddingTop: 0,
   },
   containerFee: {
     borderTopRightRadius: 50,
@@ -361,9 +364,9 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     fontFamily: 'Poppins-Medium',
     color: '#ffffff',
-    textAlign:'right',
-    alignSelf:'stretch',
-    marginVertical: 5
+    textAlign: 'right',
+    alignSelf: 'stretch',
+    marginVertical: 5,
   },
   textareaContainer: {
     height: 180,

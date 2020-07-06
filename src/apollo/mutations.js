@@ -64,20 +64,24 @@ export const LOGIN = gql`
 `;
 
 export const SEND_ACCEPTANCE = gql`
-  mutation sendAcceptance($proposalId: Int! $takerId:Int!) {
-    sendAcceptance(proposalId: $proposalId, takerId:$takerId node: takerBuyer) {
+  mutation sendAcceptance(
+    $proposalId: Int!
+    $takerId: Int!
+    $node: NodeTypes!
+  ) {
+    sendAcceptance(proposalId: $proposalId, takerId: $takerId, node: $node) {
       id
     }
   }
 `;
 
 export const SEND_RESOLUTION = gql`
-  mutation sendResolution($proposalId: Int!, $takerId: Int!) {
-    sendResolution(
-      proposalId: $proposalId
-      takerId: $takerId
-      node: makerSeller
-    ) {
+  mutation sendResolution(
+    $proposalId: Int!
+    $takerId: Int!
+    $node: NodeTypes!
+  ) {
+    sendResolution(proposalId: $proposalId, takerId: $takerId, node: $node) {
       id
       hash
     }
@@ -85,12 +89,17 @@ export const SEND_RESOLUTION = gql`
 `;
 
 export const SEND_SETTLEMENT = gql`
-  mutation sendSettlement($proposalId: Int!, $makerId: Int!, $takerId: Int!) {
+  mutation sendSettlement(
+    $proposalId: Int!
+    $makerId: Int!
+    $takerId: Int!
+    $node: NodeTypes!
+  ) {
     sendSettlement(
       proposalId: $proposalId
       makerId: $makerId
       takerId: $takerId
-      node: takerBuyer
+      node: $node
     ) {
       id
       hash
@@ -99,12 +108,12 @@ export const SEND_SETTLEMENT = gql`
 `;
 
 export const SEND_FULFILLMENT = gql`
-  mutation sendFulfillment($proposalId: Int!, $takerId: Int!) {
-    sendFulfillment(
-      proposalId: $proposalId
-      node: takerBuyer
-      takerId: $takerId
-    ) {
+  mutation sendFulfillment(
+    $proposalId: Int!
+    $takerId: Int!
+    $node: NodeTypes!
+  ) {
+    sendFulfillment(proposalId: $proposalId, node: $node, takerId: $takerId) {
       id
     }
   }
@@ -186,11 +195,12 @@ export const SEND_DISBURSEMENT_BUYER = gql`
   mutation sendDisbursementBuyer(
     $proposalId: Int!
     $takerId: Int!
+    $node: NodeTypes!
   ) {
     sendDisbursementBuyer(
       proposalId: $proposalId
       takerId: $takerId
-      node: takerBuyer
+      node: $node
     ) {
       success
       error
@@ -202,17 +212,15 @@ export const SEND_DISBURSEMENT_SELLER = gql`
   mutation sendDisbursementSeller(
     $proposalId: Int!
     $takerId: Int!
+    $node: NodeTypes!
   ) {
     sendDisbursementSeller(
       proposalId: $proposalId
       takerId: $takerId
-      node: makerSeller
+      node: $node
     ) {
       success
       error
     }
   }
 `;
-
-
-

@@ -28,13 +28,21 @@ const ConfirmReceivedButton = props => {
     try {
       setLoad(true);
       const response = await sendDisbursementBuyer({
-        variables: { proposalId: proposalId, takerId: takerId },
+        variables: {
+          proposalId: proposalId,
+          takerId: takerId,
+          node: 'takerBuyer',
+        },
       });
       const { success } = response.data.sendDisbursementBuyer;
       if (success) {
         setLoad(true);
         await sendDisbursementSeller({
-          variables: { proposalId: proposalId, takerId: takerId },
+          variables: {
+            proposalId: proposalId,
+            takerId: takerId,
+            node: 'makerSeller',
+          },
           refetchQueries: [
             {
               query: QUERIES.QUERY_PROPOSALS,
