@@ -233,11 +233,7 @@ const OfferDetails = props => {
     }
   };
 
-  return loading ? (
-    <View style={styles.loading}>
-      <ActivityIndicator size="large" color={'white'} />
-    </View>
-  ) : (
+  return (
     <>
       <View style={{flex: 1}}>
           <View style={{flex: screenHeight <= 683?0.8 : 0.9}}>
@@ -269,11 +265,21 @@ const OfferDetails = props => {
           </View>
           <View style={{flex: screenHeight <= 683? 0.2 :0.1}}>
           <FooterWhite stylectContainer={ screenHeight <= 683? styles.containerButtonsSmall: styles.containerButtons}>
+            {
+              loading ?
+              <View style={styles.textLoad}>
+                <View style={styles.textLoad}>
+                  <ActivityIndicator size='small' color="black" />
+                </View>
+                  <Text style={styles.textLoad}>Please wait...</Text>
+              </View>
+              :
               <Button
                 label="Confirm"
                 action={actionSendAcceptance}
                 stylect={styles.buttonConfirm}
               />
+            }
               <Link
                 label="Cancel"
                 color="#cc5741"
@@ -333,7 +339,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     elevation: 3,
   },
-
+  textLoad:{
+    alignItems: 'center',
+    color: 'black',
+    paddingBottom: 10
+  },
   text: {
     marginVertical: 5,
     fontSize: 18,
