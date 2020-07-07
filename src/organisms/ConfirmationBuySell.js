@@ -11,6 +11,8 @@ const ConfirmationBuySell = props => {
     operationType,
   } = props.route.params.body;
 
+  const valueKSM = 1 * offerAmount / requestAmount
+
   return (
     <View>
       <View style={styles.container}>
@@ -48,7 +50,7 @@ const ConfirmationBuySell = props => {
         <View style={styles.conversion}>
           <View>
             <Text style={styles.conversionText}>
-              1 KSM = $ {offerAmount} {requestAsset}
+              1 KSM = $ {valueKSM} {requestAsset}
             </Text>
           </View>
         </View>

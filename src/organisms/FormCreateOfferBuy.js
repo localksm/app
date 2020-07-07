@@ -30,6 +30,8 @@ const FormCreateOfferBuy = props => {
     operationType: 'add_funds',
   };
 
+  const valueKSM = 1 * offered / required
+  
   return (
     <View>
       <ScrollView>
@@ -67,7 +69,7 @@ const FormCreateOfferBuy = props => {
             />
         <View style={styles.textFooter}>
           <Text style={styles.footer}>
-            1 KSM = $ {offered} {currency}
+            1 KSM = $ {valueKSM} {currency}
           </Text>
         </View>
         <AddFundsButton
