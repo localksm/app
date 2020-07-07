@@ -27,18 +27,18 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.514153515531-0jvo61789c0egbqupqjt0log2kq33kck</string>
+				<string>com.googleusercontent.apps.514153515531-srjm0vkiu1va0nmuvkk5kpl2fn1ge6q8</string>
 				<string>twitterkit-wwOBrFV2MyEOG7D0DgibC4vNU</string>
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>twitter</string>
 		<string>twitterauth</string>
 	</array>
-	<key>CFBundleVersion</key>
-	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

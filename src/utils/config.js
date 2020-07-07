@@ -22,8 +22,8 @@ process.env.NODE_ENV == 'development'
 export const googleConfig = {
   webClientId:
     Platform.OS === 'ios'
-      ? '514153515531-0jvo61789c0egbqupqjt0log2kq33kck.apps.googleusercontent.com'
-      : '514153515531-0hos00aong5embcokuo73po0e303v9t5.apps.googleusercontent.com'
+      ? '514153515531-srjm0vkiu1va0nmuvkk5kpl2fn1ge6q8.apps.googleusercontent.com'
+      : '514153515531-805ps37oc567a0do8fe0rb0lr1c12iap.apps.googleusercontent.com'
       
 };
 
