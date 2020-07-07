@@ -97,7 +97,7 @@ const ConfirmedBuySell = props => {
           status === 'accepted' && (
             <ConfirmSentBuyButton
               variables={proposalId}
-              label="Confirm Sent"
+              label="Confirm received"
               actionConfirmSent={() => setSend(true)}
             />
           )
