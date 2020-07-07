@@ -2,7 +2,9 @@ import React,{ useState } from 'react';
 import { Text, View, StyleSheet, TouchableHighlight, Image, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import ls from 'react-native-local-storage';
 import { UserData } from '../utils/constants';
+import { getSession } from '../apollo';
 
 
 _renderItem = ({ item }) => {
@@ -26,8 +28,23 @@ const OnboardingImage = props => {
     // This MUST be called inside the function component, NOT inside a function inside the comppnent
     const navigation = useNavigation();
 
-    const _onDone = input => {      
-      navigation.navigate('SignIn');
+    const _onDone = async input => {
+      const ins =  await ls.get('instruction');            
+      if (!ins) {
+        await ls.save('instruction', true);      
+      }
+
+      const result = await getSession();      
+      if (result !== null) {
+        if (result.session ==null) {
+          navigation.navigate('SignIn');  
+        } else {
+          navigation.navigate('Drawer');          
+        }        
+      }else{        
+        navigation.navigate('SignIn');
+      }
+
     };
     
 
@@ -36,7 +53,7 @@ const OnboardingImage = props => {
             <AppIntroSlider 
                 renderItem={_renderItem} 
                 data={UserData} 
-                onDone={_onDone}
+                onDone={()=> _onDone('done')}
                 onSkip={()=> _onDone('skip')}
                 renderDoneButton={_renderDoneButton}
                 renderNextButton={_renderNextButton}

@@ -77,6 +77,9 @@ export default function CustomDrawerContent(props) {
           <TouchableOpacity onPress={() => props.navigation.navigate('Help')}>
             <DrawerItem label="Help" labelStyle={styles.labelStyle} />
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => props.navigation.navigate('Onboarding')}>
+            <DrawerItem label="Quick Tour" labelStyle={styles.labelStyle} />
+          </TouchableOpacity>
         </Drawer.Section>
       </DrawerContentScrollView>
       <Drawer.Section style={styles.buttonLogout}>
