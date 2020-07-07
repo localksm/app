@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Alert, View, ActivityIndicator, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/react-hooks';
+import validator from 'validator';
 import Button from './Button';
 import { sessionModel } from '../utils/config';
 import { client, MUTATIONS, QUERIES, setSession } from '../apollo';
@@ -53,24 +54,27 @@ const ButtonSignUp = props => {
     };
 
     try {
-      if (email === '') {
+      if (validator.isEmpty(email)) {
         setLoading(false);
-        return Alert.alert('Warning!', 'Email is required');
-      } else if (username === '') {
+        return props.errorEmail();
+      } else if (!validator.isEmail(email)) {
         setLoading(false);
-        return Alert.alert('Warning!', 'Username is required');
-      } else if (password === '' ) {
+        return props.errorEmailValid();
+      } else if (validator.isEmpty(username)) {
         setLoading(false);
-        return Alert.alert('Warning!', 'Password is required');
-      }else if (password.length < 10) {
+        return props.errorName();
+      } else if (validator.isEmpty(password)) {
         setLoading(false);
-        return Alert.alert('Warning!', 'The password must contain at least 10 alphanumeric characters');
-      } else if (confirmPassword === '') {
+        return props.errorPass();
+      } else if (validator.isInt(password, { min: 10 })) {
         setLoading(false);
-        return Alert.alert('Warning!', 'Confirm Password is required');
-      } else if (password !== confirmPassword) {
+        return props.errorPass();
+      } else if (validator.isEmpty(confirmPassword)) {
         setLoading(false);
-        return Alert.alert('Warning!', 'Passwords do not match');
+        return props.errorConfirm();
+      } else if (!validator.equals(password, confirmPassword)) {
+        setLoading(false);
+        return props.errorConfirm();
       }
       if (!emailExists) {
         const { data } = await signupWithEmail({ variables: payloadSugnUp });

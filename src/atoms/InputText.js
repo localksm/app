@@ -15,7 +15,7 @@ function InputText(props) {
       onChangeText={value => {
         props.onChangeText(cleanText(value));
       }}
-      placeholderTextColor="#ffffff"
+      placeholderTextColor='#ffffff'
      
     />
   );

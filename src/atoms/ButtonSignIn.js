@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Alert, View, ActivityIndicator, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/react-hooks';
+import validator from 'validator';
 import Button from './Button';
 import { sessionModel } from '../utils/config';
 import { client, MUTATIONS, QUERIES, setSession } from '../apollo';
@@ -34,9 +35,12 @@ const ButtonSignIn = props => {
     return { emailExists };
   };
 
+ 
+
   const SignUpWithEmail = async () => {
     setLoad(true);
     const { email, password } = props.variables;
+   
     const { emailExists } = await verifyUser(email);
     const payloadLogin = {
       email: email,
@@ -48,11 +52,23 @@ const ButtonSignIn = props => {
     try {
       if (email === '') {
         setLoad(false);
+        props.actionErrorEmail()
         return Alert.alert('Warning!', 'Email is required');
       }
       if (password === '') {
         setLoad(false);
+        props.actionErrorPass()
         return Alert.alert('Warning!', 'Password is required');
+      }
+      if(!validator.isEmail(email)){
+        setLoad(false);
+        props.actionErrorEmail()
+        return Alert.alert('Warning!','Enter a valid email')
+      }
+      if(!validator.isInt(password,{min:10})){
+        setLoad(false);
+        props.actionErrorPass()
+        return Alert.alert('Warning!', 'The password must contain at least 10 alphanumeric characters')
       }
       if (emailExists) {
         const { data } = await loginWithEmail({ variables: payloadLogin });

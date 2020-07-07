@@ -13,6 +13,8 @@ import {
 const FormSignIn = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorEmail, setErrorEmail] = useState(false)
+  const [errorPass, setErrorPass] = useState(false)
   const navigation = useNavigation();
   const dataSession = {
     email: email,
@@ -33,15 +35,17 @@ const FormSignIn = props => {
           keyboardType="email-address"
           placeholder="Email"
           autoCapitalize="none"
-          onChangeText={value => setEmail(value)}
+          onChangeText={value => {setErrorEmail(false),setEmail(value)}}
+          stylect={errorEmail && styles.error}
+          
         />
         <InputText
           name="password"
           placeholder="Password"
           secureTextEntry={true}
-          onChangeText={value => setPassword(value)}
+          onChangeText={value => {setErrorPass(false),setPassword(value)}}
+          stylect={errorPass && styles.error}
         />
-
         <TouchableOpacity>
           <Text style={styles.textForgot}>Forgot password?</Text>
         </TouchableOpacity>
@@ -51,6 +55,10 @@ const FormSignIn = props => {
             stylect={{ backgroundColor: '#DB5A3A' }}
             actionSignIn={() => navigation.navigate('Drawer')}
             variables={dataSession}
+            actionErrorEmail={() => setErrorEmail(true)}
+            actionErrorPass={() => setErrorPass(true)}
+            
+            
           />
         </View>
         <View style={styles.buttons}>
@@ -121,6 +129,12 @@ const styles = StyleSheet.create({
     paddingVertical: '20%',
     paddingTop: '3%',
     paddingBottom: '1%',
+  },
+  error: {
+    borderColor: 'red',
+    borderBottomWidth: 1,
+    color: 'red'
+    
   },
 });
 
