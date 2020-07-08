@@ -2,7 +2,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { WalletContent } from '../molecules';
-
 import { getSession } from '../apollo';
 
 const WalletView = () => {
@@ -38,7 +37,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     alignItems: 'center',
-    paddingVertical: '15%',
   },
   text: {
     color: '#ffffff',
@@ -60,6 +58,10 @@ const styles = StyleSheet.create({
   image: {
     paddingTop: '10%',
     paddingBottom: '5%',
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 });
 

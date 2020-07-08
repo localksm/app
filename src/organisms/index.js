@@ -22,3 +22,4 @@ export { default as Slider } from './Slider';
 export { default as OnboardingImage } from './OnboardingImage';
 export { default as HelpView } from './HelpView';
 export { default as FormLayout} from './FormLayout';
+export {default as Withdraw } from './Withdraw';

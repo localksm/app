@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, ActivityIndicator } from 'react-native';
+import { Text, ActivityIndicator, View } from 'react-native';
 import { getBalance, getAverageCost } from '../utils/ksm';
 import { QUERIES, client, withContext } from '../apollo';
 
@@ -45,16 +45,25 @@ function Balance(props) {
     <ActivityIndicator />
   ) : (
     <>
-      <Text style={props.styleTotal}>{total} KSM</Text>
-      {!props.isDrawer ? (
-        <Text style={{ ...props.styleText, fontSize: 14 }}>
-          {' '}
-          ≈${(averageCost * total).toFixed(2)} USD
-        </Text>
+      {props.isWithdraw ? (
+        <View>
+          <Text style={props.styleTotal}>{total} KSM</Text>
+        </View>
+      ) : !props.isDrawer ? (
+        <View>
+          <Text style={props.styleTotal}>{total} KSM</Text>
+          <Text style={{ ...props.styleText, fontSize: 14 }}>
+            {' '}
+            ≈${(averageCost * total).toFixed(2)} USD
+          </Text>
+        </View>
       ) : (
-        <Text style={{ ...props.styleFree, fontSize: 10 }}>
-          free: {free} KSM
-        </Text>
+        <View>
+          <Text style={props.styleTotal}>{total} KSM</Text>
+          <Text style={{ ...props.styleFree, fontSize: 10 }}>
+            free: {free} KSM
+          </Text>
+        </View>
       )}
     </>
   );
