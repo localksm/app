@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
-import { MultiView } from '../molecules';
 import { Link, Button, ConfirmSentBuyButton } from '../atoms';
+import FormLayout from './FormLayout';
 
 function mapPaymentMethod(method) {
   const methods = {
@@ -74,54 +74,64 @@ const ConfirmedBuySell = props => {
  
   const title = `${usernameTaker} has accepted your offer `;
   const exchange = `Please send \n $ ${offerAmount} ${offerAsset}`;
-  
-  return (
-    <View>
-      <MultiView
-        title={title}
-        exchange={exchange}
-        details={details}
-        stylect={styles.container}>
-        <View style={styles.textContainer}>
-          {operationType === 'add_funds' || operationType === 'buy' ? (
-            <Text style={styles.text}>You'll receive: {requestAmount} KSM</Text>
-          ) : (
-            <Text style={styles.text}>
-              Please confirm that you receive the correct amount
-            </Text>
-          )}
-        </View>
-        {send ? (
-          Alert.alert('Confirmed')
-        ) : operationType === 'add_funds' || operationType === 'buy' ? (
-          status === 'accepted' && (
-            <ConfirmSentBuyButton
-              variables={proposalId}
-              label="Confirm received"
-              actionConfirmSent={() => setSend(true)}
-            />
-          )
-        ) : (
-          <Button
-            label="Confirm received"
-            action={() => props.navigation.navigate('TransactionCompleted')}
-          />
-        )}
 
-        <View style={styles.buttons}>
-          <Link label="Report a problem" color="#cc5741" />
+  return (
+    <FormLayout.Content>
+      <FormLayout.Body>
+        <View style={styles.containerDetail}>
+          <View style={styles.title}>
+            <Text style={styles.textTitle}>{title}</Text>
+          </View>
+          <View style={styles.exchange}>
+            <Text style={styles.textDetail}>{exchange}</Text>
+          </View>
+          <View style={styles.details}>
+            <Text style={styles.textDetail}>{details}</Text>
+          </View>
         </View>
-      </MultiView>
-    </View>
+      </FormLayout.Body>
+      <FormLayout.Footer>
+        <View style={ styles.containerFooder}>
+          <View style={styles.textContainer}>
+            {operationType === 'add_funds' || operationType === 'buy' ? (
+              <Text style={styles.text}>You'll receive: {requestAmount} KSM</Text>
+            ) : (
+              <Text style={styles.text}>
+                Please confirm that you receive the correct amount
+              </Text>
+            )}
+          </View>
+          {send ? (
+            Alert.alert('Confirmed')
+          ) : operationType === 'add_funds' || operationType === 'buy' ? (
+            status === 'accepted' && (
+              <ConfirmSentBuyButton
+                variables={proposalId}
+                label="Confirm Sent"
+                actionConfirmSent={() => setSend(true)}
+              />
+            )
+          ) : (
+            <Button
+              label="Confirm received"
+              action={() => props.navigation.navigate('TransactionCompleted')}
+            />
+          )}
+          <View style={styles.buttons}>
+            <Link label="Report a problem" color="#cc5741" />
+          </View>
+        </View>
+      </FormLayout.Footer>
+    </FormLayout.Content>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerDetail: {
     paddingTop: '0%',
   },
   textContainer: {
-    alignItems: 'center',
+    alignItems: 'center'    
   },
   text: {
     fontSize: 14,
@@ -132,6 +142,40 @@ const styles = StyleSheet.create({
     paddingTop: '3%',
     alignItems: 'center',
   },
+  
+  title: {
+    alignItems: 'center',
+    paddingTop: '5%',
+    marginHorizontal: '10%',
+    paddingBottom: ' 5%',
+  },
+  textTitle: {
+    textAlign: 'center',
+    fontSize: 17,
+    fontFamily: 'Poppins-SemiBold',
+    color: 'white',
+  },
+  textDetail: {
+    textAlign: 'center',
+    margin: '10%',
+    color: 'white',
+    fontFamily: 'Poppins-Regular',
+  },
+  exchange: {
+    marginHorizontal: '10%',
+    borderWidth: 1,
+    borderColor: '#2D2D2D',
+    borderBottomColor: 'white',
+  },
+  details: {
+    paddingHorizontal: '20%',
+    paddingBottom: '0%',
+  },
+  containerFooder:{  
+    flex: 1, 
+    marginTop: '3%', 
+    marginHorizontal: '8%' 
+  }  
 });
 
 export default ConfirmedBuySell;

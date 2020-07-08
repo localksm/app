@@ -1,3 +1,5 @@
+import { from } from 'apollo-link';
+
 export { default as HomeLayout } from './HomeLayout';
 export { default as CustomDrawerContent } from './CustomDrawer';
 export { default as OfferList } from './OfferList';
@@ -19,3 +21,4 @@ export { default as MyOffer} from './MyOffer';
 export { default as Slider } from './Slider'; 
 export { default as OnboardingImage } from './OnboardingImage';
 export { default as HelpView } from './HelpView';
+export { default as FormLayout} from './FormLayout';
