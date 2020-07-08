@@ -8,11 +8,11 @@ const ProposalTypeImages = ({ operationType }) => {
     case 'add_funds':
       return <Image resizeMethod="resize" style={{ width: 30, height: 30 }}  source={greenIcon} />;
     case 'withdraw_funds':
-      return <Image source={yellowIcon} />;
+      return <Image resizeMethod="resize" style={{ width: 30, height: 30 }} source={yellowIcon} />;
     case 'buy':
-      return <Image source={greenIcon} />;
+      return <Image resizeMethod="resize" style={{ width: 30, height: 30 }} source={greenIcon} />;
     case 'sell':
-      return <Image source={yellowIcon} />;
+      return <Image resizeMethod="resize" style={{ width: 30, height: 30 }} source={yellowIcon} />;
   }
 };
 
