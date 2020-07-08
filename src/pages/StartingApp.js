@@ -7,6 +7,7 @@ import {
   StatusBar,
   ActivityIndicator,
 } from 'react-native';
+import ls from 'react-native-local-storage';
 import { useNavigation } from '@react-navigation/native';
 
 StartingApp = () => {
@@ -14,9 +15,23 @@ StartingApp = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    setTimeout(() => {
-      navigateToOnboarding();
-    }, 1000);
+    
+      handleValidateCarouselInstriction= async()=>{
+
+        const ins =  await ls.get('instruction');               
+        if (!ins) {
+         setTimeout(()=>{
+            navigation.navigate('Onboarding');
+         },1000);
+
+        }else{
+         setTimeout(()=>{
+             navigation.navigate('SignIn')
+          },1000);
+        }
+      }
+ handleValidateCarouselInstriction()
+  
   }, []);
 
   const navigateToOnboarding = () => {

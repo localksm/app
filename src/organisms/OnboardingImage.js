@@ -29,20 +29,18 @@ const OnboardingImage = props => {
     const navigation = useNavigation();
 
     const _onDone = async input => {
-      const ins =  await ls.get('instruction');            
+      const ins =  await ls.get('instruction');          
       if (!ins) {
         await ls.save('instruction', true);      
       }
 
-      const result = await getSession();      
-      if (result !== null) {
-        if (result.session ==null) {
-          navigation.navigate('SignIn');  
-        } else {
-          navigation.navigate('Drawer');          
-        }        
-      }else{        
-        navigation.navigate('SignIn');
+      const result = await getSession();
+     
+      if (result === null) {
+         return navigation.navigate('SignIn');  
+            
+      }else if(result.session !== null){      
+        return navigation.navigate('Drawer');
       }
 
     };
