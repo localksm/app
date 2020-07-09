@@ -41,7 +41,7 @@ const FormCreateOfferBuy = props => {
           <InputText
             name="Amount"
             keyboardType="numeric"
-            placeholder="Amount USD"
+            placeholder={`Amount ${currency}`}
             onChangeText={value => setOffered(value)}
           />
           <Text style={styles.textRequired}>Required Currency</Text>
