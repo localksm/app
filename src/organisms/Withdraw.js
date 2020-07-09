@@ -10,7 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import { InputText, Button } from '../atoms';
-import { getBalance } from '../utils/ksm';
+import { getBalance, validateAddress } from '../utils/ksm';
 import { QUERIES, client, withContext, getSession } from '../apollo';
 
 const Withdraw = () => {
@@ -64,6 +64,7 @@ const Withdraw = () => {
             <InputText
               placeholder="Enter address"
               onChangeText={value => setAddress(value)}
+              noReturn
             />
           </View>
           {total === '0' ? (
@@ -78,7 +79,27 @@ const Withdraw = () => {
               }
             />
           ) : (
-            <Button label="Submit" stylect={styles.button} action={() => {}} />
+            <Button
+              label="Submit"
+              stylect={styles.button}
+              action={() => {
+                // Currently we are just validating the address, this should be also implemented into the mutation component
+                const isValidAddress = validateAddress(address);
+
+                if (isValidAddress) {
+                  // Perform the send action...
+                  Alert.alert(
+                    'Valid Address',
+                    `Please verify this is the correct address before sending:\n ${address}`,
+                  );
+                } else {
+                  Alert.alert(
+                    'Warning!',
+                    'This seems to be an invalid kusama address. Kusama addresses always start with a capital letter like C, D, F, G, H, J...',
+                  );
+                }
+              }}
+            />
           )}
         </View>
       </TouchableWithoutFeedback>

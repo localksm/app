@@ -1,4 +1,5 @@
 import { ApiPromise, WsProvider } from '@polkadot/api';
+import { Keyring } from '@polkadot/keyring';
 
 export async function getBalance(address, callback) {
   const wsProvider = new WsProvider('wss://kusama-rpc.polkadot.io');
@@ -19,19 +20,39 @@ export async function getBalance(address, callback) {
   return 0;
 }
 
-export async function getAverageCost(callback){
+export async function getAverageCost(callback) {
+  try {
+    const getUSDcost = await fetch(
+      'https://api.coingecko.com/api/v3/simple/price?ids=kusama&vs_currencies=USD',
+    );
 
-    try{
-        const getUSDcost = await fetch(
-          'https://api.coingecko.com/api/v3/simple/price?ids=kusama&vs_currencies=USD'
-        );
+    const json = await getUSDcost.json();
 
-        const json = await getUSDcost.json(); 
+    callback(json.kusama.usd);
+  } catch (error) {
+    throw new Error(error);
+  }
 
-        callback(json.kusama.usd);
-    }catch(error){
-        throw new Error(error);
-    }
+  return 0;
+}
 
-    return 0;    
+export function validateAddress(addr) {
+  const addrFirstChar = addr.substring(0, 1);
+
+  // Create an instance of the Keyring
+  const keyring = new Keyring();
+
+  encodedAddress = keyring.encodeAddress(addr, 2);
+
+  if (
+    encodedAddress === addr &&
+    addrFirstChar.match(/^[A-Z]*$/) &&
+    addr.length === 47
+  ) {
+    // This is a Prefix 2 address. Kusama addresses always start with a capital letter like C, D, F, G, H, J...
+    return true;
+  } else {
+    // Invalid address
+    return false;
+  }
 }
