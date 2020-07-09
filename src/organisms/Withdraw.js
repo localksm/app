@@ -6,15 +6,18 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   ScrollView,
+  ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { InputText, Button } from '../atoms';
-import Balance from '../atoms/Balance';
-import { getSession } from '../apollo';
+import { getBalance } from '../utils/ksm';
+import { QUERIES, client, withContext, getSession } from '../apollo';
 
 const Withdraw = () => {
   const [amount, setAmount] = useState(0);
   const [address, setAddress] = useState('');
-  const [session, setSession] = useState(null);
+  const [total, setTotalBalance] = useState(0);
+  const [show, showBalance] = useState(false);
 
   useEffect(() => {
     set();
@@ -22,15 +25,35 @@ const Withdraw = () => {
 
   async function set() {
     const { session } = await getSession();
-    setSession(session.id);
+
+    try {
+      const res = await client.query({
+        query: QUERIES.PUBLIC_KEY,
+        variables: { id: session.id },
+      });
+      const address = res.data.publicKeys.ksm;
+      await getBalance(address, setResponse);
+    } catch (e) {
+      throw new Error(e);
+    }
   }
+
+  function setResponse(totalBalance) {
+    setTotalBalance(() => totalBalance.toString());
+    showBalance(true);
+  }
+
   return (
     <ScrollView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
           <View style={styles.balance}>
             <Text style={styles.text}>Current Balance</Text>
-            <Balance id={session} styleTotal={styles.text} isWithdraw />
+            {!show ? (
+              <ActivityIndicator size="large" color="white" />
+            ) : (
+              <Text style={styles.text}>{total} KSM</Text>
+            )}
           </View>
           <View style={styles.input}>
             <InputText
@@ -43,7 +66,20 @@ const Withdraw = () => {
               onChangeText={value => setAddress(value)}
             />
           </View>
-          <Button label="Submit" stylect={styles.button} action={() => {}} />
+          {total === '0' ? (
+            <Button
+              label="Submit"
+              stylect={styles.button}
+              action={() =>
+                Alert.alert(
+                  'Warning!',
+                  'You do not have enough balance to carry out this transaction',
+                )
+              }
+            />
+          ) : (
+            <Button label="Submit" stylect={styles.button} action={() => {}} />
+          )}
         </View>
       </TouchableWithoutFeedback>
     </ScrollView>
@@ -74,4 +110,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Withdraw;
+export default withContext(Withdraw);

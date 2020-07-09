@@ -7,8 +7,6 @@ import { backHandlerControl } from '../utils/backHandlerControl';
 
 const Wallet = props => {
   const [select, setSelect] = useState(false);
-  console.log(select);
-  
   backHandlerControl(props);
   return (
     <HomeLayout>
