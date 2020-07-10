@@ -24,10 +24,9 @@ const Offers = props => {
 };
 const styles = StyleSheet.create({
   buttonFilter: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'flex-end',
-    paddingLeft: '70%',
-    paddingRight: '8%',
+    paddingRight: '8%'
   },
   button: {
     color: 'white',

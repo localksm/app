@@ -13,7 +13,6 @@ import { useQuery } from '@apollo/react-hooks';
 import moment from 'moment';
 import { QUERIES, getSession } from '../apollo';
 import Offer from './Offer';
-import { Polyline } from 'react-native-svg';
 
 function Loading() {
   return (
@@ -68,9 +67,12 @@ const CardProposal = props => {
   if (error) return <Error error={error} />;
 
   return (
-    <View stlyle={styles.container}>
+    <>
       <FlatList
         data={data.proposals}
+        ListFooterComponent={<View />}
+        ListFooterComponentStyle={styles.listFooterComponent}
+        contentContainerStyle={styles.contentContainer }
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
@@ -109,7 +111,7 @@ const CardProposal = props => {
           );
         }}
       />
-    </View>
+    </>
   );
 };
 
@@ -118,8 +120,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
+  listFooterComponent:{
+    height: 30
+  },
+  contentContainer:{
+    paddingBottom: 300 
+  }
 });
 
 export default CardProposal;

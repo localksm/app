@@ -1,24 +1,22 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { CardProposal, BalanceHeader } from '../molecules';
 
 const OfferList = () => {
   return (
-    <View>
-      <BalanceHeader />
-      <ScrollView>
+    <>
+        <View style={styles.containerHeader}>
+          <BalanceHeader />
+        </View>
         <View style={styles.offerList}>
           <CardProposal />
-        </View>
-      </ScrollView>
-    </View>
+        </View>      
+    </>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    paddingBottom: '10%',
+  containerHeader: {
+    height: '14%'
   },
   textBalance: {
     color: 'white',
@@ -27,11 +25,11 @@ const styles = StyleSheet.create({
   },
   offerList: {
     borderTopRightRadius: 50,
-    borderTopLeftRadius: 50,
-    justifyContent: 'center',
-    paddingTop: '1%',
-    paddingBottom: '80%',
+    borderTopLeftRadius: 50,    
+    paddingTop: '1%',    
     backgroundColor: 'white',
+    overflow:'hidden',
+    minHeight: '86%'    
   },
   offerList: {
     borderTopRightRadius: 50,

@@ -29,14 +29,14 @@ const Offer = props => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: 'row',
     marginHorizontal: 5,
     backgroundColor: 'transparent',
-    resizeMode: 'contain',
-    borderBottomWidth: 0.35,
-    borderBottomColor: '#b8b8b8',
-    flex: 1,
+    resizeMode: 'contain',    
     padding: 20,
+    borderBottomWidth: 0.35,
+    borderBottomColor: '#b8b8b8'
   },
   right: {
     flex: 0.7,

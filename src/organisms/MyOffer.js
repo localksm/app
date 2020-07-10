@@ -8,7 +8,6 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { useQuery } from '@apollo/react-hooks';
 import moment from 'moment';
 import { Offer, BalanceHeader } from '../molecules';
@@ -33,7 +32,7 @@ function mapPaymentMethod(method) {
 
 function Loading() {
   return (
-    <View style={[styles.container, { marginVertical: 30 }]}>
+    <View style={[styles.offerList, { marginVertical: 30 }]}>
       <ActivityIndicator size="large" color="black" />
     </View>
   );
@@ -71,14 +70,16 @@ const MyOffer = () => {
   if (error) return <Error error={error} />;
 
   return (
-    <View>
+    <>
       <View style={styles.container}>
         <BalanceHeader />
-      </View>
-      <ScrollView>
+      </View>      
         <View style={styles.offerList}>
           <FlatList
             data={data.userProposals}
+            ListFooterComponent={<View />}
+            ListFooterComponentStyle={ styles.listFooterComponent }
+            contentContainerStyle={styles.contentContainer}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
@@ -157,15 +158,15 @@ const MyOffer = () => {
               );
             }}
           />
-        </View>
-      </ScrollView>
-    </View>
+        </View>      
+    </>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    paddingBottom: '10%',
+    alignItems: 'center',    
+    minWidth: '16%',
+    height:'16%'    
   },
   textBalance: {
     color: 'white',
@@ -174,11 +175,11 @@ const styles = StyleSheet.create({
   },
   offerList: {
     borderTopRightRadius: 50,
-    borderTopLeftRadius: 50,
-    justifyContent: 'center',
-    paddingTop: '1%',
-    paddingBottom: '80%',
+    borderTopLeftRadius: 50,    
+    paddingTop: '1%',    
     backgroundColor: 'white',
+    overflow:'hidden',
+    minHeight: '84%'    
   },
   containerList: {
     flex: 1,
@@ -186,6 +187,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  listFooterComponent:{
+    height: 30
+  },
+  contentContainer:{
+    paddingBottom: 300 
+  }
 });
 
 export default MyOffer;
