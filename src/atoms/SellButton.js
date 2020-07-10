@@ -3,24 +3,29 @@ import { Alert, ActivityIndicator, Text, View, StyleSheet } from 'react-native';
 import { useMutation } from '@apollo/react-hooks';
 import { MUTATIONS, getSession } from '../apollo';
 import Button from './Button';
+import { validateFormDetails } from '../utils/validateDetails';
 
-const AddFundsButton = props => {
+const SellButton = props => {
   const [session, setSession] = useState(null);
-  const [addfunds] = useMutation(MUTATIONS.ADD_FUNDS);
+  const [sell] = useMutation(MUTATIONS.SELL);
+  const [addPaymentMethods] = useMutation(
+    MUTATIONS.INSERT_PROPOSAL_PAYMENT_METHOD,
+  );
   const [load, setLoad] = useState(false);
-  const { variables } = props;
+  const { variables, paymentVars } = props;
+
   function validateForm(
     offerAmount,
     requestAmount,
     paymentMethod,
-    offerAsset,
+    requestAsset,
     country,
     other,
   ) {
     const offeredValidate = offerAmount > 0;
     const requiredValidate = requestAmount > 0;
     const paymentValidate = paymentMethod !== '';
-    const currencyValidate = offerAsset !== '';
+    const currencyValidate = requestAsset !== '';
     const selectBank = paymentMethod === 'BN';
     const selectOther = paymentMethod === 'OT';
     const countryValidate = country !== '';
@@ -107,40 +112,102 @@ const AddFundsButton = props => {
 
     const variables = {};
     variables['makerId'] = session.id;
-    variables['requestAsset'] = 'native';
+    variables['requestAsset'] = data.requestAsset;
     variables['offerAmount'] = parseFloat(offerAmount);
-    variables['offerAsset'] = data.offerAsset;
+    variables['offerAsset'] = 'native';
     variables['requestAmount'] = parseFloat(requestAmount);
     variables['timestamp'] = date;
     variables['juryPool'] = '';
     variables['challengeStake'] = 0.001;
     variables['paymentMethod'] = data.paymentMethod;
-    variables['localCurrency'] = data.offerAsset;
+    variables['localCurrency'] = data.requestAsset;
 
     return variables;
   };
 
-  const sendAddFunds = async () => {
+  const sendSell = async () => {
     setLoad(true);
     const validation = validateForm(
       variables.offerAmount,
       variables.requestAmount,
       variables.paymentMethod,
-      variables.offerAsset,
+      variables.requestAsset,
       variables.country,
       variables.other,
     );
 
+    const paymentMethod = variables.paymentMethod;
+    const name = paymentVars.name;
+    const lastName = paymentVars.lastName;
+    const email = paymentVars.email;
+    const address = paymentVars.address;
+    const phone = paymentVars.phone;
+    const bankData = paymentVars.bankData;
+    const accountNumber = paymentVars.accountNumber;
+
+   
+
     if (validation.isValid) {
-      try {
-        setLoad(true);
-        const send = mapData(variables, session);
-        await addfunds({ variables: send });
-        props.actionAddFunds();
-      } catch (error) {
+      const isValid = validateFormDetails(
+        name,
+        lastName,
+        email,
+        bankData,
+        address,
+        accountNumber,
+        phone,
+        paymentMethod,
+      );
+
+      if (!isValid) {
         setLoad(false);
-        Alert.alert('Warning', `Error: ${error}`);
-        throw new Error(error);
+        return Alert.alert(
+          'Cannot contain empty fields',
+          'Please enter the information requested in the form before continuing',
+        );
+      } else {
+        try {
+          setLoad(true);
+          const send = mapData(variables, session);
+          const { data } = await sell({ variables: send });
+          const {id} = data.sell
+
+          if (data.sell !== null) {
+            const { data } = await addPaymentMethods({
+              variables: {
+                userId: session.id,
+                proposalId: id,
+                name,
+                email,
+                lastName,
+                address,
+                phone,
+                bankData,
+                accountNumber,
+                paymentMethod,
+              },
+            });
+            if (data.addPaymentMethod.PaymentMethod !== null) {
+              return props.actionSell();
+            } else {
+              setLoad(false);
+              Alert.alert(
+                'Something went wrong!',
+                'Failed to send payment details',
+              );
+            }
+          } else {
+            setLoad(false);
+            Alert.alert(
+              'Something went wrong!',
+              'Failed to send data',
+            );
+          }
+        } catch (error) {
+          setLoad(false);
+          Alert.alert('Warning', `Error: ${error}`);
+          throw new Error(error);
+        }
       }
     } else {
       setLoad(false);
@@ -149,7 +216,7 @@ const AddFundsButton = props => {
   };
 
   useEffect(() => {
-    set()
+    set();
   }, []);
 
   async function set() {
@@ -158,7 +225,7 @@ const AddFundsButton = props => {
   }
 
   return !load ? (
-    <Button label={props.label} sylect={props.style} action={sendAddFunds} />
+    <Button label={props.label} sylect={props.style} action={sendSell} />
   ) : (
     <View style={styles.text}>
       <ActivityIndicator size="small" color="black" />
@@ -173,4 +240,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddFundsButton;
+export default SellButton;

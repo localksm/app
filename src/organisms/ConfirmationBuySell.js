@@ -5,12 +5,13 @@ import { FooterWhite } from '../molecules';
 
 const ConfirmationBuySell = props => {
   const {
+    offerAsset,
     requestAsset,
     requestAmount,
     offerAmount,
     operationType,
   } = props.route.params.body;
-
+ 
   const valueKSM = 1 * offerAmount / requestAmount
 
   return (
@@ -35,7 +36,7 @@ const ConfirmationBuySell = props => {
           </View>
           <View>
             <Text style={styles.textColumOneRowTwo}>
-              {offerAmount} {requestAsset}
+              {offerAmount} {operationType === 'buy' || operationType === 'add_funds' ? offerAsset : requestAsset}
             </Text>
           </View>
         </View>
@@ -50,21 +51,12 @@ const ConfirmationBuySell = props => {
         <View style={styles.conversion}>
           <View>
             <Text style={styles.conversionText}>
-              1 KSM = $ {valueKSM} {requestAsset}
+              1 KSM = $ {valueKSM} {operationType === 'buy' || operationType === 'add_funds' ? offerAsset : requestAsset}
             </Text>
           </View>
         </View>
         <View style={styles.link}>
           <Link label="Cancel" color="#CC5741" />
-          {/* <Link
-            label="Confirmed"
-            color="#CC5741"
-            action={() =>
-              props.navigation.navigate('Confirmed', {
-                type: props.route.params.typeOffer,
-              })
-            }
-          /> */}
         </View>
       </FooterWhite>
     </View>

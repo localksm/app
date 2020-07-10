@@ -25,7 +25,7 @@ const FormCreateOfferBuy = props => {
     requestAmount: required,
     paymentMethod: paymentMethod,
     country: country,
-    requestAsset: currency,
+    offerAsset: currency,
     other: other,
     operationType: 'add_funds',
   };

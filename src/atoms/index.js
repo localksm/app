@@ -17,3 +17,4 @@ export { default as ProposalTypeImages } from './ProposalTypeImages';
 export { default as ConfirmSentBuyButton } from './ConfirmSentBuyButton';
 export { default as ConfirmReceivedButton } from './ConfirmReceivedButton';
 export { default as TWLoginButton } from './TwitterButton';
+export { default as SellButton } from './SellButton';

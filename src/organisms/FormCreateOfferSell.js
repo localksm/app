@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
   InputText,
@@ -7,6 +7,8 @@ import {
   DropdownPaymentMethods,
   DropdownCountries,
   DropdownCurrencies,
+  SellButton,
+  PaymentForm,
 } from '../atoms';
 import { FooterWhite } from '../molecules';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -14,56 +16,81 @@ import { ScrollView } from 'react-native-gesture-handler';
 const FormCreateOfferSell = () => {
   const [offered, setOffered] = useState('');
   const [required, setRequired] = useState('');
-  const [paymentMethods, setPaymentmethod] = useState('');
+  const [paymentMethod, setPaymentmethod] = useState('');
   const [country, setCountry] = useState('');
   const [currency, setCurrency] = useState('');
   const [other, setOther] = useState('');
-  const variables = {
-    offered: offered,
-    required: required,
-    paymentMethods: paymentMethods,
-    country: country,
-    currency: currency,
-    other: other,
-  }
+  const [paymentVars, setPaymentVars] = useState({});
   const navigation = useNavigation();
+  const variables = {
+    offerAmount: offered,
+    requestAmount: required,
+    paymentMethod: paymentMethod,
+    country: country,
+    requestAsset: currency,
+    other: other,
+    operationType: 'withdraw_funds',
+  };
+  const valueKSM = (1 * required) / offered;
+  const screenHeight = Math.round(Dimensions.get('window').height);
+
+  const handleText = (name, value) => {
+    setPaymentVars(data => ({ ...data, [name]: value }));
+  };
+
   return (
-    <View>
-      <ScrollView>
+    <View style={{ flex: screenHeight <= 683 ? 0.8 : 0.9 }}>
+      <ScrollView
+        style={{
+          overflow: 'hidden',
+          maxHeight:
+            screenHeight <= 683 ? 480 : screenHeight >= 700 ? 560 : 500,
+        }}>
         <View style={styles.container}>
           <Text style={styles.text}>Offered Currency</Text>
           <InputText
             name="Amount"
-            keyboardType='numeric'
-            placeholder="Amount USD"
+            keyboardType="numeric"
+            placeholder="Amount XML"
             onChangeText={value => setOffered(value)}
           />
           <Text style={styles.textRequired}>Required Currency</Text>
           <DropdownCurrencies action={setCurrency} />
           <InputText
             name="Amount"
-            keyboardType='numeric'
-            placeholder="Amount KSM"
+            keyboardType="numeric"
+            placeholder={`Amount ${currency}`}
             onChangeText={value => setRequired(value)}
           />
           <DropdownPaymentMethods action={setPaymentmethod} />
-          {paymentMethods === 'BN' && <DropdownCountries action={setCountry} />}
-          {paymentMethods === 'OT' && (
+          {paymentMethod === 'BN' && <DropdownCountries action={setCountry} />}
+          {paymentMethod === 'OT' && (
             <InputText
               placeholder="Other"
               onChangeText={value => setOther(value)}
+            />
+          )}
+          {paymentMethod !== '' && paymentMethod !== null && (
+            <PaymentForm
+              show={true}
+              method={paymentMethod}
+              onChangeText={handleText}
             />
           )}
         </View>
       </ScrollView>
       <FooterWhite stylectContainer={styles.footerContainer}>
         <View style={styles.textFooter}>
-          <Text style={styles.footer}>1 XLM = $00.00 USD</Text>
+          <Text style={styles.footer}>
+            1 XLM = $ {valueKSM} {currency}
+          </Text>
         </View>
-        <Button
+        <SellButton
           label="Send"
-          action={() =>
-            navigation.navigate('Confirmation', { typeOffer: 'Sell', variables: variables })
+          variables={variables}
+          paymentVars={paymentVars}
+          actionSell={() =>
+            navigation.navigate('Confirmation', { body: variables })
           }
         />
       </FooterWhite>
@@ -74,6 +101,7 @@ const FormCreateOfferSell = () => {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: '7%',
+    marginBottom: '5%',
   },
   text: {
     paddingTop: '5%',
@@ -99,7 +127,9 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     paddingHorizontal: '5%',
-    paddingBottom: '25%',
+    paddingBottom: '20%',
+    height: '30%',
+    paddingTop: '5%',
   },
 });
 
