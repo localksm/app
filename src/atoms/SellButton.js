@@ -148,7 +148,7 @@ const SellButton = props => {
    
 
     if (validation.isValid) {
-      const isValid = validateFormDetails(
+      const resultValidator =validateFormDetails(
         name,
         lastName,
         email,
@@ -158,8 +158,9 @@ const SellButton = props => {
         phone,
         paymentMethod,
       );
-
-      if (!isValid) {
+      
+      props.handlerError(resultValidator);
+      if (!resultValidator.isValid) {
         setLoad(false);
         return Alert.alert(
           'Cannot contain empty fields',

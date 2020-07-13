@@ -10,7 +10,6 @@ export { default as ButtonSignIn } from './ButtonSignIn';
 export { default as DropdownPaymentMethods } from './DropdownPaymentMethods';
 export { default as DropdownCountries } from './DropdownCountries';
 export { default as DropdownCurrencies } from './DropdownCurrencies';
-export { default as PaymentForm} from './PaymentForm'
 export { default as AddFundsButton } from './AddFundsButton';
 export { default as QrWallet } from './QrCode';
 export { default as ProposalTypeImages } from './ProposalTypeImages'; 
@@ -18,3 +17,4 @@ export { default as ConfirmSentBuyButton } from './ConfirmSentBuyButton';
 export { default as ConfirmReceivedButton } from './ConfirmReceivedButton';
 export { default as TWLoginButton } from './TwitterButton';
 export { default as SellButton } from './SellButton';
+export { default as InputLayout} from './InputLayout';

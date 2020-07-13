@@ -9,9 +9,11 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useMutation } from '@apollo/react-hooks';
-import { Link, Button, InputText, PaymentForm } from '../atoms';
-import { FooterWhite } from '../molecules';
+import { Link, Button } from '../atoms';
+import { PaymentForm } from '../molecules';
 import { withContext, getSession, MUTATIONS, QUERIES } from '../apollo';
+import {FormLayout} from '.';
+import { validateFormDetails } from '../utils/validateDetails';
 
 function mapPaymentMethod(method) {
   const methods = {
@@ -30,6 +32,7 @@ function mapPaymentMethod(method) {
 }
 
 const OfferDetails = props => {
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('');
   const [paymentDataform, setPaymentDataform] = useState(false);
@@ -77,6 +80,26 @@ const OfferDetails = props => {
   };
 
   const actionSendAcceptance = async () => {
+
+    const resultValidator = validateFormDetails(
+      name,
+      lastName,
+      email,
+      bankData,
+      address,
+      accountNumber,
+      phone,
+      paymentMethod,
+    );
+
+    setErrors(resultValidator);
+    if (!resultValidator.isValid) {
+      return Alert.alert(
+        'Cannot contain empty fields',
+        'Please enter the information requested in the form before continuing',
+      );
+    }
+    
     setLoading(true);
     try {
       await sendAcceptance({
@@ -237,62 +260,60 @@ const OfferDetails = props => {
   };
 
   return (
-    <>
-      <View style={{flex: 1}}>
-          <View style={{flex: screenHeight <= 683?0.8 : 0.9}}>
-          <ScrollView style={{ overflow: 'hidden', maxHeight: screenHeight <= 683?480: screenHeight >= 700?560:500 }}>            
-              <View style={styles.container}>
-                <View style={styles.form}>
-                  <View style={styles.row}>
-                    <View style={styles.left}>
-                      <Text style={styles.text}>{mapPaymentMethod(paymentMethod)}</Text>
-                      <Text style={styles.textSecond}>{props.route.params.body.usernameMaker}</Text>
-                    </View>
-                    <View style={styles.right}>
-                      <Text style={styles.textAmount}>
-                        $ {props.route.params.body.offerAmount} {props.route.params.body.offerAsset} -> KSM
-                      </Text>
-                    </View>
+    <FormLayout.Content>
+      <FormLayout.Body>
+        <ScrollView >
+            <View style={styles.container}>
+              <View style={styles.form}>
+                <View style={styles.row}>
+                  <View style={styles.left}>
+                    <Text style={styles.text}>{mapPaymentMethod(paymentMethod)}</Text>
+                    <Text style={styles.textSecond}>{props.route.params.body.usernameMaker}</Text>
+                  </View>
+                  <View style={styles.right}>
+                    <Text style={styles.textAmount}>
+                      $ {props.route.params.body.offerAmount} {props.route.params.body.offerAsset} -> KSM
+                    </Text>
                   </View>
                 </View>
-                <View style={styles.form}>
-                  {/* use expected with apollo implementation */}
-                  <PaymentForm
-                    show={paymentDataform}
-                    method={paymentMethod}
-                    onChangeText={handleTextChange}
-                  />
-                </View>
-              </View>                  
-          </ScrollView> 
-          </View>
-          <View style={{flex: screenHeight <= 683? 0.2 :0.1}}>
-          <FooterWhite stylectContainer={ screenHeight <= 683? styles.containerButtonsSmall: styles.containerButtons}>
-            {
-              loading ?
-              <View style={styles.textLoad}>
-                <View style={styles.textLoad}>
-                  <ActivityIndicator size='small' color="black" />
-                </View>
-                  <Text style={styles.textLoad}>Please wait...</Text>
               </View>
-              :
-              <Button
-                label="Confirm"
-                action={actionSendAcceptance}
-                stylect={styles.buttonConfirm}
-              />
-            }
-              <Link
-                label="Cancel"
-                color="#cc5741"
-                stylect={styles.linkText}
-                action={() => {}}
-              />
-          </FooterWhite>
-          </View>
-      </View>        
-    </>
+              <View style={styles.form}>
+                {/* use expected with apollo implementation */}
+                <PaymentForm
+                  show={paymentDataform}
+                  method={paymentMethod}
+                  onChangeText={handleTextChange}
+                  errors={errors}
+                />
+              </View>
+            </View>                  
+        </ScrollView> 
+      </FormLayout.Body>
+      <FormLayout.Footer>
+        <View style={{ flex: 1, marginTop: '3%'}}>          
+          {loading ?
+            <View style={styles.textLoad} >              
+                <ActivityIndicator size='small' color="black" />
+                <Text style={styles.textLoad}>Please wait...</Text>
+            </View>
+            :
+            <Button
+              label="Confirm"
+              action={actionSendAcceptance}
+              stylect={styles.buttonConfirm}
+            />
+          }          
+          {loading === false &&           
+          <Link
+            label="Cancel"
+            color="#cc5741"
+            stylect={styles.linkText}
+            action={() => {}}
+          />}          
+        </View>
+      </FormLayout.Footer>
+    </FormLayout.Content>
+   
   );
 };
 
@@ -300,10 +321,9 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     marginHorizontal: 30,
-    paddingBottom: '70%',
-    paddingTop: '20%',
     zIndex: 1,
     elevation: 1,
+    paddingBottom: 20
   },
   containerButtons: {
     paddingBottom: '40%',
@@ -344,8 +364,7 @@ const styles = StyleSheet.create({
   },
   textLoad:{
     alignItems: 'center',
-    color: 'black',
-    paddingBottom: 10
+    color: 'black',    
   },
   text: {
     marginVertical: 5,

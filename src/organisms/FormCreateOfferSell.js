@@ -7,13 +7,13 @@ import {
   DropdownPaymentMethods,
   DropdownCountries,
   DropdownCurrencies,
-  SellButton,
-  PaymentForm,
+  SellButton
 } from '../atoms';
-import { FooterWhite } from '../molecules';
+import { FooterWhite, PaymentForm } from '../molecules';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const FormCreateOfferSell = () => {
+  const [errors, setErrors] = useState({});
   const [offered, setOffered] = useState('');
   const [required, setRequired] = useState('');
   const [paymentMethod, setPaymentmethod] = useState('');
@@ -75,6 +75,7 @@ const FormCreateOfferSell = () => {
               show={true}
               method={paymentMethod}
               onChangeText={handleText}
+              errors={errors}
             />
           )}
         </View>
@@ -89,6 +90,7 @@ const FormCreateOfferSell = () => {
           label="Send"
           variables={variables}
           paymentVars={paymentVars}
+          handlerError={setErrors}
           actionSell={() =>
             navigation.navigate('Confirmation', { body: variables })
           }

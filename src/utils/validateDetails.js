@@ -61,8 +61,7 @@ export const validateFormDetails = (
 
   const validatorForm = new FormValidator(validationObject);
   const validation = validatorForm.validate(fieldsToValidate);
-  console.log(validation);
   
-  return validation.isValid;
+  return validation;
 
 }
