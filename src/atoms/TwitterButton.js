@@ -70,7 +70,7 @@ const TWLoginButton = props => {
     authToken,
     authTokenSecret,
     userID,
-  ) => {
+  ) => {    
     const response = await client.mutate({
       mutation: MUTATIONS.LOGIN,
       variables: {
@@ -96,13 +96,13 @@ const TWLoginButton = props => {
     const twData = await RNTwitterSignIn.logIn();
 
     try {
-      const { email, authToken, authTokenSecret, userID, name } = twData;
-      const { emailExists, nameExists } = await validateEmail(email, name);
+      const { email, authToken, authTokenSecret, userID, userName } = twData;      
+      const { emailExists, nameExists } = await validateEmail(email, userName);
 
       if (emailExists && nameExists) {
         const { login } = await loginTwitter(
           email,
-          name,
+          userName,
           authToken,
           authTokenSecret,
           userID,
@@ -114,7 +114,7 @@ const TWLoginButton = props => {
       } else {
         const { success } = await signupTwitter(
           email,
-          name,
+          userName,
           authToken,
           authTokenSecret,
           userID,
@@ -122,7 +122,7 @@ const TWLoginButton = props => {
         if (success) {
           const { login } = await loginTwitter(
             email,
-            name,
+            userName,
             authToken,
             authTokenSecret,
             userID,
