@@ -35,11 +35,10 @@ const OnboardingImage = props => {
       }
 
       const result = await getSession();
-     
       if (result === null) {
          return navigation.navigate('SignIn');  
             
-      }else if(result.session !== null){      
+      }else{      
         return navigation.navigate('Drawer');
       }
 
