@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import { InputText, Button } from '../atoms';
+import { InputText, SendWithdrawButton } from '../atoms';
 import { getBalance, validateAddress } from '../utils/ksm';
 import { QUERIES, client, withContext, getSession } from '../apollo';
 
@@ -17,14 +17,22 @@ const Withdraw = () => {
   const [amount, setAmount] = useState(0);
   const [address, setAddress] = useState('');
   const [total, setTotalBalance] = useState(0);
+  const [free, setFreeBalance] = React.useState(0);
   const [show, showBalance] = useState(false);
-
+  const [id, setId] = useState(null)
+  const variables = {
+    amount: parseFloat(amount),
+    address: address,
+    total: parseFloat(total),
+    id: id,
+  }
   useEffect(() => {
     set();
   }, []);
 
   async function set() {
     const { session } = await getSession();
+    setId(session.id)
 
     try {
       const res = await client.query({
@@ -38,7 +46,8 @@ const Withdraw = () => {
     }
   }
 
-  function setResponse(totalBalance) {
+  function setResponse(freeBalance, totalBalance) {
+    setFreeBalance(() => freeBalance.toString());
     setTotalBalance(() => totalBalance.toString());
     showBalance(true);
   }
@@ -67,40 +76,12 @@ const Withdraw = () => {
               noReturn
             />
           </View>
-          {total === '0' ? (
-            <Button
+            <SendWithdrawButton
+              variables={variables}
               label="Submit"
               stylect={styles.button}
-              action={() =>
-                Alert.alert(
-                  'Warning!',
-                  'You do not have enough balance to carry out this transaction',
-                )
-              }
             />
-          ) : (
-            <Button
-              label="Submit"
-              stylect={styles.button}
-              action={() => {
-                // Currently we are just validating the address, this should be also implemented into the mutation component
-                const isValidAddress = validateAddress(address);
-
-                if (isValidAddress) {
-                  // Perform the send action...
-                  Alert.alert(
-                    'Valid Address',
-                    `Please verify this is the correct address before sending:\n ${address}`,
-                  );
-                } else {
-                  Alert.alert(
-                    'Warning!',
-                    'This seems to be an invalid kusama address. Kusama addresses always start with a capital letter like C, D, F, G, H, J...',
-                  );
-                }
-              }}
-            />
-          )}
+          
         </View>
       </TouchableWithoutFeedback>
     </ScrollView>

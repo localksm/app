@@ -28,11 +28,9 @@ function getValidationArray(paymentMethod) {
   return validationObjects[paymentMethod];
 }
 
-function buildValidationObject(fields = {}, validation= {}) {
-  console.log(validation, fields);
-  
-  const fieldsToValidate = {};
-  validation.forEach((i) => {
+function buildValidationObject(fields = {}, validation = {}) {
+    const fieldsToValidate = {};
+    validation.forEach(i => {
     fieldsToValidate[i.field] = fields[i.field];
   });
   return fieldsToValidate;
@@ -48,20 +46,13 @@ export const validateFormDetails = (
   phone,
   paymentMethod,
 ) => {
-
   const validationObject = getValidationArray(paymentMethod);
   const fieldsToValidate = buildValidationObject(
-    {name,
-  lastName,
-  email,
-  bankData,
-  address,
-  accountNumber,
-  phone} ,validationObject);
+    { name, lastName, email, bankData, address, accountNumber, phone },
+    validationObject,
+  );
 
   const validatorForm = new FormValidator(validationObject);
   const validation = validatorForm.validate(fieldsToValidate);
-  
-  return validation;
-
-}
+  return validation.isValid;
+};

@@ -226,30 +226,39 @@ export const SEND_DISBURSEMENT_SELLER = gql`
 `;
 
 export const SELL = gql`
-mutation sell(
-  $makerId: Int
-  $offerAsset: String
-  $offerAmount: Float
-  $requestAsset: String
-  $requestAmount: Float
-  $timestamp: String
-  $juryPool: String
-  $paymentMethod: PaymentMethods!
-  $localCurrency: CurrencyEnum
-
-){
-  sell(
-    makerId: $makerId
-    offerAsset: $offerAsset
-    offerAmount: $offerAmount
-    requestAsset: $requestAsset
-    requestAmount: $requestAmount
-    timestamp: $timestamp
-    juryPool: $juryPool
-    paymentMethod: $paymentMethod
-    localCurrency: $localCurrency
-    node: makerBuyer
-  ){
-    id
+  mutation sell(
+    $makerId: Int
+    $offerAsset: String
+    $offerAmount: Float
+    $requestAsset: String
+    $requestAmount: Float
+    $timestamp: String
+    $juryPool: String
+    $paymentMethod: PaymentMethods!
+    $localCurrency: CurrencyEnum
+  ) {
+    sell(
+      makerId: $makerId
+      offerAsset: $offerAsset
+      offerAmount: $offerAmount
+      requestAsset: $requestAsset
+      requestAmount: $requestAmount
+      timestamp: $timestamp
+      juryPool: $juryPool
+      paymentMethod: $paymentMethod
+      localCurrency: $localCurrency
+      node: makerBuyer
+    ) {
+      id
+    }
   }
-}`;
+`;
+
+export const WITHDRAW = gql`
+  mutation withdraw($senderId: Int!, $to: String!, $amount: Float!) {
+    withdraw(senderId: $senderId, to: $to, amount: $amount) {
+      success
+      error
+    }
+  }
+`;
