@@ -3,7 +3,7 @@ import { HeaderLayout } from '../molecules';
 
 const HomeLayout = (props) => {
     return (
-        <HeaderLayout>
+        <HeaderLayout rightChildren={props.rightChildren}>
             {props.children}
         </HeaderLayout>      
     );

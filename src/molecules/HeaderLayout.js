@@ -1,5 +1,5 @@
 import  React from 'react';
-import { Header, Left, Body, Button, Icon } from 'native-base';
+import { Header, Left, Body, Button, Icon, Right } from 'native-base';
 import { StatusBar, View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -17,7 +17,10 @@ const HeaderLayout = (props) => {
             </Button>
           </Left>
           <Body>            
-          </Body>        
+          </Body>
+          <Right>
+            {props.rightChildren}
+          </Right>        
         </Header> 
           <View >
               {props.children}

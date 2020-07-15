@@ -8,8 +8,8 @@ import { Button } from '../atoms';
 const Offers = props => {
   backHandlerOffer(props)
   return (
-    <HomeLayout>
-      <View style={styleBackground.container}>
+    <HomeLayout 
+      rightChildren={
         <View style={styles.buttonFilter}>
           <Button
             label="Filter"
@@ -17,6 +17,8 @@ const Offers = props => {
             action={() => props.navigation.navigate('Filter')}
           />
         </View>
+      }>
+      <View style={styleBackground.container}>       
         <OfferList {...props} />
       </View>
     </HomeLayout>
