@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { MultiView, FooterWhite } from '../molecules';
+import { MultiView } from '../molecules';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Link, Button, ConfirmReceivedButton } from '../atoms';
+import { FormLayout } from '.';
 
 function mapPaymentMethod(method) {
   const methods = {
@@ -78,31 +79,36 @@ const DisburseBuy = props => {
   const exchange = `$ ${offerAmount} ${offerAsset}`;
   
   return (
-    <View>
-      <ScrollView>
-        <MultiView
-          title={title}
-          exchange={exchange}
-          details={details}
-          stylect={styles.container}
-        />
-      </ScrollView>
-      <FooterWhite stylectContainer={styles.textContainer}>
-        <Text style={styles.text}>
-          Please confirm that you receive the correct amount
-        </Text>
+    <FormLayout.Content>
+      <FormLayout.Body hpBody="60%">
+        <ScrollView>
+          <MultiView
+            title={title}
+            exchange={exchange}
+            details={details}
+            stylect={styles.container}
+          />
+        </ScrollView>
+      </FormLayout.Body>
+      <FormLayout.Footer hpFooter="40%">
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>
+            Please confirm that you receive the correct amount
+          </Text>
 
-        <ConfirmReceivedButton
-          variables={variables}
-          label="Confirm Sent"
-          actionConfirmSent={() => props.navigation.navigate('TransactionCompleted',{...props.route.params})}
-        />
-        <View style={styles.link} >
-          <Link label="Report a problem" color="#cc5741" action={()=> props.navigation.navigate('ReportAProblem',{...props.route.params})} />
+          <ConfirmReceivedButton
+            variables={variables}
+            label="Confirm Sent"
+            actionConfirmSent={() => props.navigation.navigate('TransactionCompleted',{...props.route.params})}
+          />
+          <View style={styles.link} >
+            <Link label="Report a problem" color="#cc5741" action={()=> props.navigation.navigate('ReportAProblem',{...props.route.params})} />
+          </View>
         </View>
-      </FooterWhite>
-    </View>
+      </FormLayout.Footer>
+    </FormLayout.Content>
   );
+
 };
 
 const styles = StyleSheet.create({
@@ -110,14 +116,15 @@ const styles = StyleSheet.create({
     paddingTop: '80%',
   },
   textContainer: {
-    paddingBottom: '20%',
-    paddingHorizontal: '10%',
+    flex: 1,
+    marginHorizontal: 20,
+    marginTop: 10
   },
   text: {
     fontSize: 14,
     fontFamily: 'Poppins-SemiBold',
     textAlign: 'center',
-    paddingBottom: 20
+    marginBottom: 10
   },
   link:{
     paddingHorizontal: '25%',

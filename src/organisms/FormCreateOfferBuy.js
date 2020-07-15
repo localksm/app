@@ -10,9 +10,11 @@ import {
   DropdownCountries,
   DropdownCurrencies,
   InputLayout,
+  Button,
 } from '../atoms';
-import { FormLayout } from '.';
 import { splitAmount } from '../utils/splitAmount';
+import { FormLayout } from '.';
+
 
 const FormCreateOfferBuy = props => {
   const [errors, setErrors] = useState({});
@@ -82,7 +84,7 @@ const FormCreateOfferBuy = props => {
       </ScrollView>
       </FormLayout.Body>
       <FormLayout.Footer hpFooder="35%" >
-      <View style={{ flex: 1, marginHorizontal: 30, paddingTop:'5%'}}>
+      <View style={{ flex: 1, marginHorizontal: 30, paddingTop:'5%'}}>            
           <Fees 
             container={"jury"}
             amount={offered?offered: 0 }

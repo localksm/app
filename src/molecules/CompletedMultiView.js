@@ -1,32 +1,35 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { FormLayout } from '../organisms';
 
 const CompletedMultiView = props => {
   return (
-    <View>
-      <View style={styles.container}>
-             <Image
-              source={require('../../assets/check3.png')}
-              style={{resizeMode: 'contain'}}
-            />
+    <FormLayout.Content>
+      <FormLayout.Body>
+        <View style={styles.container}>
+              <Image
+                source={require('../../assets/check3.png')}
+                style={{resizeMode: 'contain'}}
+              />
 
-        <View style={styles.title}>
-          <Text style={styles.textTitle}>Transaction completed</Text>
-          
-        </View>
-       
-          <Text style={styles.text}>{props.title}</Text>
+          <View style={styles.title}>
+            <Text style={styles.textTitle}>Transaction completed</Text>
+            
+          </View>
         
-        <View style={styles.details}>
-          <Text style={styles.text}>{props.details}</Text>
+            <Text style={styles.text}>{props.title}</Text>
+          
+          <View style={styles.details}>
+            <Text style={styles.text}>{props.details}</Text>
+          </View>
         </View>
-      </View>
-      <View style={[styles.flex, props.stylect]}>
-        <View style={styles.containerFooter}>
-          <View style={styles.footer}>{props.children}</View>
+      </FormLayout.Body>
+      <FormLayout.Footer>
+        <View style={styles.footer}>
+          {props.children}
         </View>
-      </View>
-    </View>
+      </FormLayout.Footer>
+    </FormLayout.Content>
   );
 };
 
@@ -60,27 +63,10 @@ const styles = StyleSheet.create({
     borderTopColor: 'white',
     paddingBottom: '20%',
   },
-  containerFooter: {
-    flexDirection: 'column',
-    borderTopRightRadius: 50,
-    borderTopLeftRadius: 50,
-    justifyContent: 'center',
-    marginTop: '20%',
-    backgroundColor: 'white',
-    width: '100%',
-  },
   footer: {
+    flex: 1,
     marginHorizontal: '7%',
-    justifyContent: 'center',
-    textAlign: 'center',
-    marginVertical: '10%',
-    paddingBottom: '10%',
-  },
-  flex: {
-    width: '100%',
-    position: 'absolute',
-    top: '75%',
-  },
+  }
 });
 
 export default CompletedMultiView;

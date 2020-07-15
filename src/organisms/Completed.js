@@ -80,8 +80,7 @@ const Completed = props => {
         details={details}
         stylect={styles.container}>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>
-              
+          <Text style={styles.text}>              
             {/* here the information of the FEE will be placed */}
           </Text>
         </View>

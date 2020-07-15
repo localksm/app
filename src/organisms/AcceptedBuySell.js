@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MultiView, FooterWhite } from '../molecules';
 import { Link, Button } from '../atoms';
+import { FormLayout } from '.';
 
 function mapPaymentMethod(method) {
   const methods = {
@@ -71,37 +72,79 @@ const AcceptedBuySell = props => {
   const exchange = `$ ${offerAmount} ${offerAsset}`;
 
   return (
-    <View>
-      <MultiView
-        title={title}
-        exchange={exchange}
-        details={details}
-        stylect={styles.container}>
-        {operationType === 'withdraw_funds' && <Button label="Confirm sent" />}
-        <View style={styles.buttons}>
-          <Link
-            label="Report a problem"
-            color="#cc5741"
-            action={() => props.navigation.navigate('ReportAProblem')}
-          />
+    <FormLayout.Content>
+      <FormLayout.Body>
+      <View style={styles.container}>
+        <View style={styles.title}>
+          <Text style={styles.textTitle}>{title}</Text>
         </View>
-      </MultiView>
-    </View>
+        <View style={styles.exchange}>
+          <Text style={styles.text}>{exchange}</Text>
+        </View>
+        <View style={styles.details}>
+          <Text style={styles.text}>{details}</Text>
+        </View>
+      </View>
+      </FormLayout.Body>
+      <FormLayout.Footer>
+        <View style={{ flex: 1, marginTop: 10, marginHorizontal:20 }}>
+          {operationType === 'withdraw_funds' && <Button label="Confirm sent" />}
+          <View style={styles.buttons}>
+            <Link
+              label="Report a problem"
+              color="#cc5741"
+              action={() => props.navigation.navigate('ReportAProblem')}
+            />
+          </View>
+        </View>
+      </FormLayout.Footer>
+    </FormLayout.Content>
+
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: '25%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   text: {
     fontSize: 14,
     fontFamily: 'Poppins-SemiBold',
   },
   buttons: {
     alignItems: 'center',
+    marginTop: 20
+  },
+
+  container: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    alignItems: 'center',
+    paddingTop: '5%',
+    marginHorizontal: '10%',
+    paddingBottom: ' 5%',
+  },
+  textTitle: {
+    textAlign: 'center',
+    fontSize: 17,
+    fontFamily: 'Poppins-SemiBold',
+    color: 'white',
+  },
+  text: {
+    textAlign: 'center',
+    margin: '10%',
+    color: 'white',
+    fontFamily: 'Poppins-Regular',
+  },
+  exchange: {
+    paddingHorizontal: '10%',
+    borderWidth: 1,
+    borderColor: '#2D2D2D',
+    borderBottomColor: 'white',
+  },
+  details: {
+    paddingHorizontal: '20%',
+    paddingBottom: '0%',
   },
 });
 
