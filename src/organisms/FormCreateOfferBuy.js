@@ -9,10 +9,14 @@ import {
   DropdownPaymentMethods,
   DropdownCountries,
   DropdownCurrencies,
+  InputLayout,
 } from '../atoms';
 import { FooterWhite } from '../molecules';
+import { FormLayout } from '.';
+
 
 const FormCreateOfferBuy = props => {
+  const [errors, setErrors] = useState({});
   const [offered, setOffered] = useState('0');
   const [required, setRequired] = useState('0');
   const [paymentMethod, setPaymentmethod] = useState('');
@@ -30,65 +34,84 @@ const FormCreateOfferBuy = props => {
     operationType: 'add_funds',
   };
 
-  const valueKSM = 1 * offered / required
+  const valueKSM = offered && required? 1 * offered / required : '...';
   
   return (
-    <View>
+    <FormLayout.Content>
+      <FormLayout.Body hpBody="65%">
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.text}>Offered Currency</Text>
-          <DropdownCurrencies action={setCurrency} />
-          <InputText
-            name="Amount"
-            keyboardType="numeric"
-            placeholder={`Amount ${currency}`}
-            onChangeText={value => setOffered(value)}
-          />
-          <Text style={styles.textRequired}>Required Currency</Text>
-          <InputText
-            name="Amount"
-            keyboardType="numeric"
-            placeholder="Amount KSM"
-            onChangeText={value => setRequired(value)}
-          />
-          <DropdownPaymentMethods action={setPaymentmethod} />
-          {paymentMethod === 'BN' && <DropdownCountries action={setCountry} />}
-          {paymentMethod === 'OT' && (
+          <InputLayout element="localCurrency" resultValidator={errors} >
+            <DropdownCurrencies action={setCurrency} />
+          </InputLayout>
+          <InputLayout element="currency" resultValidator={errors} >
             <InputText
-              placeholder="Other"
-              onChangeText={value => setOther(value)}
+              name="Amount"
+              keyboardType="numeric"
+              placeholder={`Amount ${currency}`}
+              onChangeText={value => setOffered(value)}
             />
+          </InputLayout>
+          <Text style={styles.textRequired}>Required Currency</Text>
+          <InputLayout element="requiredCurrency" resultValidator={errors} >
+            <InputText
+              name="Amount"
+              keyboardType="numeric"
+              placeholder="Amount KSM"
+              onChangeText={value => setRequired(value)}
+            />
+          </InputLayout>
+          <InputLayout element="paymentMethod" resultValidator={errors} >
+            <DropdownPaymentMethods action={setPaymentmethod} />
+          </InputLayout>
+          {paymentMethod === 'BN' && (
+            <InputLayout element="country" resultValidator={errors}> 
+              <DropdownCountries action={setCountry} /> 
+            </InputLayout>
+          )}
+          {paymentMethod === 'OT' && (
+            <InputLayout element="other" resultValidator={errors} >
+              <InputText
+                placeholder="Other"
+                onChangeText={value => setOther(value)}
+              />
+            </InputLayout>
           )}
           
         </View>
       </ScrollView>
-      <FooterWhite stylectContainer={styles.footerContainer}>
-        <Fees 
+      </FormLayout.Body>
+      <FormLayout.Footer hpFooder="35%" >
+      <View style={{ flex: 1, marginHorizontal: 30, paddingTop:'5%'}}>
+          <Fees 
             container={"jury"}
-            amount={offered}
+            amount={offered?offered: 0 }
             />
-        <View style={styles.textFooter}>
-          <Text style={styles.footer}>
-            1 KSM = $ {valueKSM} {currency}
-          </Text>
+            <View style={styles.textFooter}>
+              <Text style={styles.footer}>
+                1 KSM = $ {valueKSM} {currency}
+              </Text>
+            </View>
+            <AddFundsButton
+              variables={variables}
+              label="Send"
+              handlerError={setErrors}
+              actionAddFunds={() =>
+                navigation.navigate('Confirmation', { body: variables })
+              }
+            />
         </View>
-        <AddFundsButton
-          variables={variables}
-          label="Send"
-          actionAddFunds={() =>
-            navigation.navigate('Confirmation', { body: variables })
-          }
-        />
-      </FooterWhite>
-    </View>
+      </FormLayout.Footer>
+    </FormLayout.Content>    
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    marginHorizontal: 30,
-    marginVertical: 10,
+    marginHorizontal: 30,    
+    marginBottom: 20
   },
   text: {
     paddingTop: '1%',
@@ -107,8 +130,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     fontSize: 14,
-    fontFamily: 'Poppins-SemiBold',
-    paddingBottom: 10,
+    fontFamily: 'Poppins-SemiBold'    
   },
   footerContainer: {
     paddingHorizontal: '5%',

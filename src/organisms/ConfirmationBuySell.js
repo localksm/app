@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Link } from '../atoms';
-import { FooterWhite } from '../molecules';
+import { FormLayout } from '.';
 
 const ConfirmationBuySell = props => {
   const {
@@ -15,7 +15,8 @@ const ConfirmationBuySell = props => {
   const valueKSM = 1 * offerAmount / requestAmount
 
   return (
-    <View>
+    <FormLayout.Content>
+    <FormLayout.Body hpBody="40%">
       <View style={styles.container}>
         <View>
           <Image source={require('../../assets/submitted.png')} />
@@ -29,8 +30,10 @@ const ConfirmationBuySell = props => {
           <Text style={styles.text}>Please wait until someone accepts it.</Text>
         </View>
       </View>
-      <FooterWhite stylectContainer={styles.containerColum}>
-        <View style={styles.colum}>
+    </FormLayout.Body>
+    <FormLayout.Footer hpFooder="60%" >
+      <View style={{ flex:1 }}>
+          <View style={styles.colum}>
           <View>
             <Text style={styles.textColumOneRowOne}>Offered</Text>
           </View>
@@ -58,8 +61,9 @@ const ConfirmationBuySell = props => {
         <View style={styles.link}>
           <Link label="Cancel" color="#CC5741" />
         </View>
-      </FooterWhite>
-    </View>
+      </View>
+    </FormLayout.Footer>
+  </FormLayout.Content>
   );
 };
 
@@ -70,23 +74,11 @@ const styles = StyleSheet.create({
     paddingTop: '8%',
     paddingBottom: '33%',
   },
-  containerColum: {
-    flexDirection: 'column',
-    borderTopRightRadius: 50,
-    borderTopLeftRadius: 50,
-    justifyContent: 'center',
-    marginVertical: '5%',
-    paddingTop: '5%',
-    paddingBottom: '10%',
-    backgroundColor: 'white',
-    height: '43%',
-    fontFamily: 'Poppins-Medium',
-  },
-  colum: {
-    flex: 1,
+  colum: {    
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    marginVertical: 20
   },
   textTitle: {
     color: 'white',

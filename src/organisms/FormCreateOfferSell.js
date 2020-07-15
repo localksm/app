@@ -7,7 +7,8 @@ import {
   DropdownPaymentMethods,
   DropdownCountries,
   DropdownCurrencies,
-  SellButton
+  SellButton,
+  InputLayout
 } from '../atoms';
 import { FooterWhite, PaymentForm } from '../molecules';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -48,27 +49,37 @@ const FormCreateOfferSell = () => {
         }}>
         <View style={styles.container}>
           <Text style={styles.text}>Offered Currency</Text>
-          <InputText
-            name="Amount"
-            keyboardType="numeric"
-            placeholder="Amount XML"
-            onChangeText={value => setOffered(value)}
-          />
-          <Text style={styles.textRequired}>Required Currency</Text>
-          <DropdownCurrencies action={setCurrency} />
-          <InputText
-            name="Amount"
-            keyboardType="numeric"
-            placeholder={`Amount ${currency}`}
-            onChangeText={value => setRequired(value)}
-          />
-          <DropdownPaymentMethods action={setPaymentmethod} />
-          {paymentMethod === 'BN' && <DropdownCountries action={setCountry} />}
-          {paymentMethod === 'OT' && (
+          <InputLayout element="currency" resultValidator={errors} >
             <InputText
-              placeholder="Other"
-              onChangeText={value => setOther(value)}
+              name="Amount"
+              keyboardType="numeric"
+              placeholder="Amount KSM"
+              onChangeText={value => setOffered(value)}
             />
+          </InputLayout>
+          <Text style={styles.textRequired}>Required Currency</Text>
+          <InputLayout element="localCurrency" resultValidator={errors} >
+            <DropdownCurrencies action={setCurrency} />
+          </InputLayout>
+          <InputLayout element="requiredCurrency" resultValidator={errors} >
+            <InputText
+              name="Amount"
+              keyboardType="numeric"
+              placeholder={`Amount ${currency}`}
+              onChangeText={value => setRequired(value)}
+            />
+          </InputLayout>
+          <InputLayout element="paymentMethod" resultValidator={errors} >
+            <DropdownPaymentMethods action={setPaymentmethod} />
+          </InputLayout>
+          {paymentMethod === 'BN' && <InputLayout element="country" resultValidator={errors} ><DropdownCountries action={setCountry} /></InputLayout>}
+          {paymentMethod === 'OT' && (
+            <InputLayout element="other" resultValidator={errors} >
+              <InputText
+                placeholder="Other"
+                onChangeText={value => setOther(value)}
+              />
+            </InputLayout>
           )}
           {paymentMethod !== '' && paymentMethod !== null && (
             <PaymentForm

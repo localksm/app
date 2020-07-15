@@ -429,7 +429,7 @@ const styles = StyleSheet.create({
   linkText: {
     alignItems: 'center',
     fontFamily: 'Poppins-Regular',
-    paddingTop: 30,
+    paddingTop: 10,
   },
 });
 

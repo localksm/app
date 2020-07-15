@@ -17,15 +17,40 @@ const AddFundsButton = props => {
     country,
     other,
   ) {
+    
     const offeredValidate = offerAmount > 0;
     const requiredValidate = requestAmount > 0;
-    const paymentValidate = paymentMethod !== '';
-    const currencyValidate = offerAsset !== '';
+    const paymentValidate = paymentMethod !== '' && paymentMethod !== null;
+    const currencyValidate = offerAsset !== '' && offerAsset !== null;
     const selectBank = paymentMethod === 'BN';
     const selectOther = paymentMethod === 'OT';
     const countryValidate = country !== '';
     const otherValidate = other !== '';
     const validation = {
+      currency:{
+        isInvalid: false,
+        message:''
+      },
+      requiredCurrency:{
+        isInvalid: false,
+        message:''
+      },
+      paymentMethod:{
+        isInvalid: false,
+        message:''
+      },
+      localCurrency:{
+        isInvalid: false,
+        message:''
+      },
+      other:{
+        isInvalid: false,
+        message:''
+      },
+      country:{
+        isInvalid: false,
+        message:''
+      },
       isValid: false,
       message: '',
     };
@@ -37,18 +62,18 @@ const AddFundsButton = props => {
         !currencyValidate ||
         !countryValidate
       ) {
+        
         validation['isValid'] = false;
-        validation['message'] = !offeredValidate
-          ? 'Offered currency cannot be empty'
-          : !requiredValidate
-          ? 'Required currency cannot be empty'
-          : !paymentValidate
-          ? 'Please select the payment method of your preference'
-          : !currencyValidate
-          ? 'Please select your local currency'
-          : !countryValidate
-          ? 'Please select a country'
-          : '';
+        validation['currency']['isInvalid']= !offeredValidate;
+        validation['currency']['message']= "Offered currency cannot be empty";
+        validation['requiredCurrency']['isInvalid']= !requiredValidate;
+        validation['requiredCurrency']['message']= "Required currency cannot be empty";
+        validation['paymentMethod']['isInvalid']= !paymentValidate;
+        validation['paymentMethod']['message']= "Please select the payment method of your preference";
+        validation['localCurrency']['isInvalid']= !currencyValidate;
+        validation['localCurrency']['message']= "Please select your local currency";        
+        validation['country']['isInvalid']= !countryValidate;
+        validation['country']['message']= "Please select a country";
 
         return validation;
       }
@@ -61,17 +86,16 @@ const AddFundsButton = props => {
         !otherValidate
       ) {
         validation['isValid'] = false;
-        validation['message'] = !offeredValidate
-          ? 'Offered currency cannot be empty'
-          : !requiredValidate
-          ? 'Required currency cannot be empty'
-          : !paymentValidate
-          ? 'Please select the payment method of your preference'
-          : !currencyValidate
-          ? 'Please select your local currency'
-          : !otherValidate
-          ? 'The Other input cannot be empty'
-          : '';
+        validation['currency']['isInvalid']= !offeredValidate;
+        validation['currency']['message']= "Offered currency cannot be empty";
+        validation['requiredCurrency']['isInvalid']= !requiredValidate;
+        validation['requiredCurrency']['message']= "Required currency cannot be empty";
+        validation['paymentMethod']['isInvalid']= !paymentValidate;
+        validation['paymentMethod']['message']= "Please select the payment method of your preference";
+        validation['localCurrency']['isInvalid']= !currencyValidate;
+        validation['localCurrency']['message']= "Please select your local currency";        
+        validation['other']['isInvalid']= !otherValidate;
+        validation['other']['message']= "The Other input cannot be empty";
 
         return validation;
       }
@@ -82,15 +106,14 @@ const AddFundsButton = props => {
       !currencyValidate
     ) {
       validation['isValid'] = false;
-      validation['message'] = !offeredValidate
-        ? 'Offered currency cannot be empty'
-        : !requiredValidate
-        ? 'Required currency cannot be empty'
-        : !paymentValidate
-        ? 'Please select the payment method of your preference'
-        : !currencyValidate
-        ? 'Please select your local currency'
-        : '';
+      validation['currency']['isInvalid']= !offeredValidate;
+      validation['currency']['message']= "Offered currency cannot be empty";
+      validation['requiredCurrency']['isInvalid']= !requiredValidate;
+      validation['requiredCurrency']['message']= "Required currency cannot be empty";
+      validation['paymentMethod']['isInvalid']= !paymentValidate;
+      validation['paymentMethod']['message']= "Please select the payment method of your preference";
+      validation['localCurrency']['isInvalid']= !currencyValidate;
+      validation['localCurrency']['message']= "Please select your local currency";
 
       return validation;
     } else {
@@ -131,6 +154,8 @@ const AddFundsButton = props => {
       variables.other,
     );
 
+    props.handlerError(validation);
+
     if (validation.isValid) {
       try {
         setLoad(true);
@@ -144,7 +169,10 @@ const AddFundsButton = props => {
       }
     } else {
       setLoad(false);
-      Alert.alert('Something went wrong!', validation.message);
+      return Alert.alert(
+        'Cannot contain empty fields',
+        'Please enter the information requested in the form before continuing',
+      );
     }
   };
 
