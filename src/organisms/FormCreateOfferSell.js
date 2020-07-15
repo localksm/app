@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
   InputText,
-  Button,
   DropdownPaymentMethods,
   DropdownCountries,
   DropdownCurrencies,
@@ -12,6 +11,7 @@ import {
 } from '../atoms';
 import { FooterWhite, PaymentForm } from '../molecules';
 import { ScrollView } from 'react-native-gesture-handler';
+import { FormLayout } from '.';
 
 const FormCreateOfferSell = () => {
   const [errors, setErrors] = useState({});
@@ -40,7 +40,8 @@ const FormCreateOfferSell = () => {
   };
 
   return (
-    <View style={{ flex: screenHeight <= 683 ? 0.8 : 0.9 }}>
+    <FormLayout.Content>
+      <FormLayout.Body>
       <ScrollView
         style={{
           overflow: 'hidden',
@@ -91,23 +92,26 @@ const FormCreateOfferSell = () => {
           )}
         </View>
       </ScrollView>
-      <FooterWhite stylectContainer={styles.footerContainer}>
-        <View style={styles.textFooter}>
-          <Text style={styles.footer}>
-            1 KSM = $ {valueKSM} {currency}
-          </Text>
+      </FormLayout.Body>
+      <FormLayout.Footer>
+        <View style={styles.footerContainer}>          
+          <View style={styles.textFooter}>
+            <Text style={styles.footer}>
+              1 KSM = $ {valueKSM} {currency}
+            </Text>
+          </View>
+          <SellButton
+            label="Send"
+            variables={variables}
+            paymentVars={paymentVars}
+            handlerError={setErrors}
+            actionSell={() =>
+              navigation.navigate('Confirmation', { body: variables })
+            }
+          />
         </View>
-        <SellButton
-          label="Send"
-          variables={variables}
-          paymentVars={paymentVars}
-          handlerError={setErrors}
-          actionSell={() =>
-            navigation.navigate('Confirmation', { body: variables })
-          }
-        />
-      </FooterWhite>
-    </View>
+      </FormLayout.Footer>
+    </FormLayout.Content>    
   );
 };
 
@@ -122,14 +126,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Poppins-SemiBold',
   },
-
   textRequired: {
     paddingTop: '12%',
     color: 'white',
     fontSize: 18,
     fontFamily: 'Poppins-SemiBold',
   },
-
   textFooter: {
     alignItems: 'center',
   },
@@ -139,9 +141,8 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   footerContainer: {
-    paddingHorizontal: '5%',
-    paddingBottom: '20%',
-    height: '30%',
+    flex: 1,
+    paddingHorizontal: '5%',    
     paddingTop: '5%',
   },
 });
