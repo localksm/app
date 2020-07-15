@@ -32,7 +32,7 @@ const FormCreateOfferSell = () => {
     other: other,
     operationType: 'withdraw_funds',
   };
-  const valueKSM = (1 * required) / offered;
+  const valueKSM = required && offered ? (1 * required) / offered : '...';
   const screenHeight = Math.round(Dimensions.get('window').height);
 
   const handleText = (name, value) => {
@@ -94,7 +94,7 @@ const FormCreateOfferSell = () => {
       <FooterWhite stylectContainer={styles.footerContainer}>
         <View style={styles.textFooter}>
           <Text style={styles.footer}>
-            1 XLM = $ {valueKSM} {currency}
+            1 KSM = $ {valueKSM} {currency}
           </Text>
         </View>
         <SellButton

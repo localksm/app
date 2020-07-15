@@ -54,5 +54,5 @@ export const validateFormDetails = (
 
   const validatorForm = new FormValidator(validationObject);
   const validation = validatorForm.validate(fieldsToValidate);
-  return validation.isValid;
+  return validation;
 };
