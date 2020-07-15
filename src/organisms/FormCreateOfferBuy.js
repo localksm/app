@@ -11,9 +11,8 @@ import {
   DropdownCurrencies,
   InputLayout,
 } from '../atoms';
-import { FooterWhite } from '../molecules';
 import { FormLayout } from '.';
-
+import { splitAmount } from '../utils/splitAmount';
 
 const FormCreateOfferBuy = props => {
   const [errors, setErrors] = useState({});
@@ -34,7 +33,7 @@ const FormCreateOfferBuy = props => {
     operationType: 'add_funds',
   };
 
-  const valueKSM = offered && required? 1 * offered / required : '...';
+  const valueKSM = offered && required ? 1 * offered / required : NaN;  
   
   return (
     <FormLayout.Content>
@@ -90,7 +89,7 @@ const FormCreateOfferBuy = props => {
             />
             <View style={styles.textFooter}>
               <Text style={styles.footer}>
-                1 KSM = $ {valueKSM} {currency}
+                1 KSM = $ {splitAmount( Number.isNaN(valueKSM)? 0 : valueKSM )} {currency}
               </Text>
             </View>
             <AddFundsButton
