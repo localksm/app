@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   textBalance: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 15,
     fontFamily: 'Poppins-Medium',
   },
   offerList: {
