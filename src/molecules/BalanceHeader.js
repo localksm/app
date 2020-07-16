@@ -38,7 +38,7 @@ function BalanceHeader() {
 
   return session !== null ? (
     <View style={styles.container}>
-      <Text style={{ ...styles.textBalance, paddingBottom: '5%' }}>
+      <Text style={{ ...styles.textBalance}}>
         Balance
       </Text>
       <Balance

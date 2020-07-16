@@ -16,7 +16,8 @@ const OfferList = () => {
 };
 const styles = StyleSheet.create({
   containerHeader: {
-    height: '14%'
+    height: '14%',
+    minHeight:'14%'
   },
   textBalance: {
     color: 'white',

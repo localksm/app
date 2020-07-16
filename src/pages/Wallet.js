@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { WalletView, HomeLayout, Withdraw } from '../organisms';
 import { styleBackground } from '../utils/styles';
 import { Button } from '../atoms';
@@ -31,7 +32,11 @@ const Wallet = props => {
             action={() => setSelect(true)}
           />
         </View>
-        {!select ? <WalletView />: <Withdraw />}
+        <View style={ styles.elements}>
+          <ScrollView>
+            {!select ? <WalletView />: <Withdraw />}
+          </ScrollView>
+        </View>
       </View>
     </HomeLayout>
   );
@@ -40,7 +45,9 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: '20%',
+    height: hp('10%'),
+    minHeight: hp('10%'),
+    alignItems:'center',
   },
   deposit: {
     borderWidth: 1,
@@ -49,6 +56,11 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginLeft: 10,
   },
+  elements:{
+    marginTop:'5%',
+    height: hp('90%'),
+    minHeight: hp('90%'),
+  }
 });
 
 export default Wallet;
