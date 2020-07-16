@@ -27,11 +27,16 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>fb544089053145539</string>
 				<string>com.googleusercontent.apps.514153515531-srjm0vkiu1va0nmuvkk5kpl2fn1ge6q8</string>
 				<string>twitterkit-wwOBrFV2MyEOG7D0DgibC4vNU</string>
 			</array>
 		</dict>
 	</array>
+	<key>FacebookAppID</key>
+	<string>544089053145539</string>
+	<key>LocalKSM</key>
+	<string>LocalKSM</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -55,7 +60,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Poppins-Black.ttf</string>

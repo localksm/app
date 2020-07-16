@@ -68,12 +68,12 @@ const FormSignIn = props => {
             actionLogin={() => navigation.navigate('Drawer')}
           />
         </View>
-        {/* <View style={styles.buttons}>
+        <View style={styles.buttons}>
           <FBLoginButton
             actionLogin={() => navigation.navigate('Drawer')}
             type={'signin'}
           />
-        </View> */}
+        </View>
         <View style={styles.buttons}>
           <TWLoginButton
             label="Login with Twitter"
