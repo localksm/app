@@ -39,7 +39,7 @@ const FormCreateOfferBuy = props => {
   
   return (
     <FormLayout.Content>
-      <FormLayout.Body hpBody="65%">
+      <FormLayout.Body hpBody="66%">
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.text}>Offered Currency</Text>
@@ -83,7 +83,7 @@ const FormCreateOfferBuy = props => {
         </View>
       </ScrollView>
       </FormLayout.Body>
-      <FormLayout.Footer hpFooder="35%" >
+      <FormLayout.Footer hpFooder="34%" >
       <View style={{ flex: 1, marginHorizontal: 30, paddingTop:'5%'}}>            
           <Fees 
             container={"jury"}

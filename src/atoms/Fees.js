@@ -49,8 +49,9 @@ const styles = StyleSheet.create({
     container:{ 
         backgroundColor: '#eaeaea',
         alignItems:'center', 
-        borderRadius: 10, 
-        paddingHorizontal: 20 
+        borderRadius: 10,
+        paddingHorizontal: '6%',
+        paddingVertical: '2%'
     },
     groupItem:{ 
         flexDirection: 'row', 
@@ -58,7 +59,8 @@ const styles = StyleSheet.create({
         width:'100%' 
     },
     text:{
-        fontSize: 10 ,fontFamily: 'Poppins-SemiBold'
+        fontSize: 11 ,
+        fontFamily: 'Poppins-SemiBold'
     }
 });
 
