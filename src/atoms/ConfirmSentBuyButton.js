@@ -39,7 +39,7 @@ const ConfirmSentBuyButton = props => {
       return props.actionConfirmSent();
     } catch (error) {
       setLoad(false);
-      Alert.alert('Confirmed');
+      Alert.alert('Warning!', 'Unexpected error');
       throw new Error(error);
     }
   };

@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { MultiView, FooterWhite } from '../molecules';
-import { Link, Button } from '../atoms';
+import { View, Text, StyleSheet, Alert } from 'react-native';
+import { Link, ConfirmSentBuyButton } from '../atoms';
 import { FormLayout } from '.';
 
 function mapPaymentMethod(method) {
@@ -22,12 +21,13 @@ function mapPaymentMethod(method) {
 
 const AcceptedBuySell = props => {
   const [details, setDetails] = React.useState('');
+  const [send, setSend] = React.useState(false)
 
   React.useEffect(() => {
     const str = string();
     setDetails(() => str);
   }, []);
-  
+
   const {
     usernameMaker,
     offerAsset,
@@ -44,6 +44,7 @@ const AcceptedBuySell = props => {
     lastName,
     name,
     phone,
+    proposalId,
   } = props.route.params.body.paymentData;
 
   const obj = {
@@ -74,21 +75,31 @@ const AcceptedBuySell = props => {
   return (
     <FormLayout.Content>
       <FormLayout.Body>
-      <View style={styles.container}>
-        <View style={styles.title}>
-          <Text style={styles.textTitle}>{title}</Text>
+        <View style={styles.container}>
+          <View style={styles.title}>
+            <Text style={styles.textTitle}>{title}</Text>
+          </View>
+          <View style={styles.exchange}>
+            <Text style={styles.text}>{exchange}</Text>
+          </View>
+          <View style={styles.details}>
+            <Text style={styles.text}>{details}</Text>
+          </View>
         </View>
-        <View style={styles.exchange}>
-          <Text style={styles.text}>{exchange}</Text>
-        </View>
-        <View style={styles.details}>
-          <Text style={styles.text}>{details}</Text>
-        </View>
-      </View>
       </FormLayout.Body>
       <FormLayout.Footer>
-        <View style={{ flex: 1, marginTop: 10, marginHorizontal:20 }}>
-          {operationType === 'withdraw_funds' && <Button label="Confirm sent" />}
+        <View style={{ flex: 1, marginTop: 10, marginHorizontal: 20 }}>
+          {operationType === 'withdraw_funds' ||
+            (operationType === 'sell' && (
+              send ?
+              Alert.alert('Confirimed proposal',`Please wait for ${usernameMaker} to respond`)
+              : 
+              <ConfirmSentBuyButton
+                variables={proposalId}
+                label="Confirm sent"
+                actionConfirmSent={() => setSend(true)}
+              />
+            ))}
           <View style={styles.buttons}>
             <Link
               label="Report a problem"
@@ -99,7 +110,6 @@ const AcceptedBuySell = props => {
         </View>
       </FormLayout.Footer>
     </FormLayout.Content>
-
   );
 };
 
@@ -110,9 +120,8 @@ const styles = StyleSheet.create({
   },
   buttons: {
     alignItems: 'center',
-    marginTop: 20
+    marginTop: 20,
   },
-
   container: {
     flexDirection: 'column',
     justifyContent: 'center',

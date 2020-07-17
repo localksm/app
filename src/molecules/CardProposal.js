@@ -61,7 +61,7 @@ const CardProposal = props => {
 
   const { loading, error, data } = useQuery(QUERIES.QUERY_PROPOSALS, {
     variables: {userId: id},
-    pollInterval: 3000
+    pollInterval: 6000
   });
   if (loading) return <Loading />;
   if (error) return <Error error={error} />;
@@ -103,7 +103,7 @@ const CardProposal = props => {
                 offered={item.body.requestAmount}
                 requiered={item.body.offerAmount}
                 status={item.status}
-                currency={item.body.offerAsset}
+                currency={item.body.operationType === 'add_funds' || item.body.operationType === 'buy' ? item.body.offerAsset : item.body.requestAsset}
                 isOffer={true}
                 operationType={item.body.operationType}
               />

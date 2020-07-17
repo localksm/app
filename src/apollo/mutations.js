@@ -152,7 +152,7 @@ export const INSERT_PROPOSAL_PAYMENT_METHOD = gql`
 `;
 
 export const ADD_FUNDS = gql`
-  mutation addFunds(
+  mutation buy(
     $makerId: Int
     $offerAsset: String
     $offerAmount: Float
@@ -164,7 +164,7 @@ export const ADD_FUNDS = gql`
     $paymentMethod: PaymentMethods!
     $localCurrency: CurrencyEnum
   ) {
-    addFunds(
+    buy(
       makerId: $makerId
       offerAsset: $offerAsset
       offerAmount: $offerAmount

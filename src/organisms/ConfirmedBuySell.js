@@ -115,7 +115,7 @@ const ConfirmedBuySell = props => {
             status === 'confirmed' &&
             <Button
               label="Confirm received"
-              action={() => props.navigation.navigate('TransactionCompleted')}
+              action={() => {}}
             />
           )}
           <View style={styles.buttons}>

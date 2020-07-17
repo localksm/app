@@ -5,7 +5,6 @@ import {
   StyleSheet,
   ActivityIndicator,
   Alert,
-  Dimensions,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useMutation } from '@apollo/react-hooks';
@@ -63,7 +62,6 @@ const OfferDetails = props => {
     MUTATIONS.INSERT_PROPOSAL_PAYMENT_METHOD,
   );
 
-  const screenHeight = Math.round(Dimensions.get('window').height);
 
   useEffect(() => {
     _prepareData();
@@ -80,129 +78,209 @@ const OfferDetails = props => {
   };
 
   const actionSendAcceptance = async () => {
-    const resultValidator = validateFormDetails(
-      name,
-      lastName,
-      email,
-      bankData,
-      address,
-      accountNumber,
-      phone,
-      paymentMethod,
-    );
-
-    setErrors(resultValidator);
-    if (!resultValidator.isValid) {
-      return Alert.alert(
-        'Cannot contain empty fields',
-        'Please enter the information requested in the form before continuing',
-      );
-    }
-
-    setLoading(true);
-    try {
-      await sendAcceptance({
-        variables: {
-          proposalId: props.route.params.id,
-          takerId,
-          node: 'takerBuyer',
-        },
-      });
-    } catch (error) {
-      setLoading(false);
-      return Alert.alert(
-        'Error',
-        'Something went wrong during the acceptance. Please try again later.',
-        [{ text: 'OK' }],
-        { cancelable: false },
-      );
-    }
-
-    try {
-      await sendResolution({
-        variables: { proposalId: proposalId, takerId, node: 'makerSeller' },
-      });
-    } catch (error) {
-      setLoading(false);
-      return Alert.alert(
-        'Error',
-        'Something went wrong during the resolution. Please try again later.',
-        [{ text: 'OK' }],
-        { cancelable: false },
-      );
-    }
-
-    try {
-      await sendSettlement({
-        variables: {
-          proposalId: proposalId,
-          makerId: makerId,
-          takerId,
-          node: 'takerBuyer',
-        },
-      });
-    } catch (error) {
-      setLoading(false);
-      return Alert.alert(
-        'Error',
-        'Something went wrong during the settlement. Please try again later.',
-        [{ text: 'OK' }],
-        { cancelable: false },
-      );
-    }
-
-    try {
-      await sendFulfillment({
-        variables: { proposalId: proposalId, takerId, node: 'takerBuyer' },
-        refetchQueries: [
-          {
-            query: QUERIES.QUERY_PROPOSALS,
-            variables: { userId: takerId, offset: 0, limit: 100 },
+    if (
+      props.route.params.body.operationType === 'sell' ||
+      props.route.params.body.operationType === 'withdraw_funds'
+    ) {
+      setLoading(true);
+      try {
+        await sendAcceptance({
+          variables: {
+            proposalId: props.route.params.id,
+            takerId,
+            node: 'takerSeller',
           },
-          {
-            query: QUERIES.QUERY_USER_PROPOSALS,
-            variables: {
-              id: takerId,
-              offset: 0,
-              limit: 100,
+        });
+      } catch (error) {
+        setLoading(false);
+        return Alert.alert(
+          'Error',
+          'Something went wrong during the acceptance. Please try again later.',
+          [{ text: 'OK' }],
+          { cancelable: false },
+        );
+      }
+
+      try {
+        await sendResolution({
+          variables: {
+            proposalId: proposalId,
+            takerId,
+            node: 'makerBuyer',
+          },
+        });
+      } catch (error) {
+        setLoading(false);
+        return Alert.alert(
+          'Error',
+          'Something went wrong during the resolution. Please try again later.',
+          [{ text: 'OK' }],
+          { cancelable: false },
+        );
+      }
+
+      try {
+        await sendSettlement({
+          variables: {
+            proposalId: proposalId,
+            makerId: makerId,
+            takerId,
+            node: 'makerBuyer',
+          },
+        });
+      } catch (error) {
+        setLoading(false);
+        return Alert.alert(
+          'Error',
+          'Something went wrong during the settlement. Please try again later.',
+          [{ text: 'OK' }],
+          { cancelable: false },
+        );
+      }
+
+      try {
+        await sendFulfillment({
+          variables: { proposalId: proposalId, takerId, node: 'makerBuyer' },
+          refetchQueries: [
+            {
+              query: QUERIES.QUERY_PROPOSALS,
+              variables: { userId: takerId, offset: 0, limit: 100 },
             },
-          },
-        ],
-      });
-    } catch (error) {
-      setLoading(false);
-      return Alert.alert(
-        'Error',
-        'Something went wrong during the fulfillment. Please try again later.',
-        [{ text: 'OK' }],
-        { cancelable: false },
-      );
-    }
+            {
+              query: QUERIES.QUERY_USER_PROPOSALS,
+              variables: {
+                id: takerId,
+                offset: 0,
+                limit: 100,
+              },
+            },
+          ],
+        });
+      } catch (error) {
+        setLoading(false);
+        return Alert.alert(
+          'Error',
+          'Something went wrong during the fulfillment. Please try again later.',
+          [{ text: 'OK' }],
+          { cancelable: false },
+        );
+      }
 
-    try {
-      await addPaymentMethod({
-        variables: {
-          userId: takerId,
-          proposalId: proposalId,
-          name,
-          email,
-          lastName,
-          address,
-          phone,
-          bankData,
-          accountNumber,
-          paymentMethod,
-        },
-      });
-      setLoading(false);
-      props.navigation.navigate('AcceptedBuy', {
-        body: {
-          usernameMaker: props.route.params.body.usernameMaker,
-          offerAsset: props.route.params.body.offerAsset,
-          offerAmount: props.route.params.body.offerAmount,
-          paymentMethod: props.route.params.body.paymentMethod,
-          operationType: props.route.params.body.operationType,
-          paymentData: {
+      try {
+        setLoading(false);
+        props.navigation.navigate('AcceptedSell', {...props.route.params})
+      } catch (error) {
+        setLoading(false);
+        return Alert.alert(
+          'Error',
+          'Something went wrong during the fulfillment. Please try again later.',
+          [{ text: 'OK' }],
+          { cancelable: false },
+        );
+      }
+    } else {
+      const resultValidator = validateFormDetails(
+        name,
+        lastName,
+        email,
+        bankData,
+        address,
+        accountNumber,
+        phone,
+        paymentMethod,
+      );
+
+      setErrors(resultValidator);
+      if (!resultValidator.isValid) {
+        return Alert.alert(
+          'Cannot contain empty fields',
+          'Please enter the information requested in the form before continuing',
+        );
+      }
+
+      setLoading(true);
+      try {
+        await sendAcceptance({
+          variables: {
+            proposalId: props.route.params.id,
+            takerId,
+            node: 'takerBuyer',
+          },
+        });
+      } catch (error) {
+        setLoading(false);
+        return Alert.alert(
+          'Error',
+          'Something went wrong during the acceptance. Please try again later.',
+          [{ text: 'OK' }],
+          { cancelable: false },
+        );
+      }
+
+      try {
+        await sendResolution({
+          variables: { proposalId: proposalId, takerId, node: 'makerSeller' },
+        });
+      } catch (error) {
+        setLoading(false);
+        return Alert.alert(
+          'Error',
+          'Something went wrong during the resolution. Please try again later.',
+          [{ text: 'OK' }],
+          { cancelable: false },
+        );
+      }
+
+      try {
+        await sendSettlement({
+          variables: {
+            proposalId: proposalId,
+            makerId: makerId,
+            takerId,
+            node: 'takerBuyer',
+          },
+        });
+      } catch (error) {
+        setLoading(false);
+        return Alert.alert(
+          'Error',
+          'Something went wrong during the settlement. Please try again later.',
+          [{ text: 'OK' }],
+          { cancelable: false },
+        );
+      }
+
+      try {
+        await sendFulfillment({
+          variables: { proposalId: proposalId, takerId, node: 'takerBuyer' },
+          refetchQueries: [
+            {
+              query: QUERIES.QUERY_PROPOSALS,
+              variables: { userId: takerId, offset: 0, limit: 100 },
+            },
+            {
+              query: QUERIES.QUERY_USER_PROPOSALS,
+              variables: {
+                id: takerId,
+                offset: 0,
+                limit: 100,
+              },
+            },
+          ],
+        });
+      } catch (error) {
+        setLoading(false);
+        return Alert.alert(
+          'Error',
+          'Something went wrong during the fulfillment. Please try again later.',
+          [{ text: 'OK' }],
+          { cancelable: false },
+        );
+      }
+
+      try {
+        await addPaymentMethod({
+          variables: {
             userId: takerId,
             proposalId: proposalId,
             name,
@@ -214,20 +292,39 @@ const OfferDetails = props => {
             accountNumber,
             paymentMethod,
           },
-        },
-      });
-    } catch (error) {
-      setLoading(false);
-      return Alert.alert(
-        'Error',
-        'Something went wrong during the fulfillment. Please try again later.',
-        [{ text: 'OK' }],
-        { cancelable: false },
-      );
+        });
+        setLoading(false);
+        props.navigation.navigate('AcceptedBuy', {
+          body: {
+            usernameMaker: props.route.params.body.usernameMaker,
+            offerAsset: props.route.params.body.offerAsset,
+            offerAmount: props.route.params.body.offerAmount,
+            paymentMethod: props.route.params.body.paymentMethod,
+            operationType: props.route.params.body.operationType,
+            paymentData: {
+              userId: takerId,
+              proposalId: proposalId,
+              name,
+              email,
+              lastName,
+              address,
+              phone,
+              bankData,
+              accountNumber,
+              paymentMethod,
+            },
+          },
+        });
+      } catch (error) {
+        setLoading(false);
+        return Alert.alert(
+          'Error',
+          'Something went wrong during the fulfillment. Please try again later.',
+          [{ text: 'OK' }],
+          { cancelable: false },
+        );
+      }
     }
-
-    setLoading(false);
-    props.navigation.navigate('AcceptedBuy', { ...props.route.params });
   };
 
   const handleTextChange = (name, value) => {
@@ -281,10 +378,8 @@ const OfferDetails = props => {
                 </View>
               </View>
             </View>
-            {props.route.params.operationType !== 'sell' ||
-            props.route.params.operationType !== 'withdraw_funds' ? (
-              <View />
-            ) : (
+            {props.route.params.body.operationType !== 'sell' &&
+            props.route.params.body.operationType !== 'withdraw_funds' ? (
               <View style={styles.form}>
                 <PaymentForm
                   show={paymentDataform}
@@ -293,6 +388,8 @@ const OfferDetails = props => {
                   errors={errors}
                 />
               </View>
+            ) : (
+              <View />
             )}
           </View>
         </ScrollView>
