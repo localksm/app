@@ -52,6 +52,7 @@ const FormCreateOfferBuy = props => {
               keyboardType="numeric"
               placeholder={`Amount ${currency}`}
               onChangeText={value => setOffered(value)}
+              stylect={{  fontStyle:'normal', fontSize: 15 }}
             />
           </InputLayout>
           <Text style={styles.textRequired}>Required Currency</Text>
@@ -61,6 +62,7 @@ const FormCreateOfferBuy = props => {
               keyboardType="numeric"
               placeholder="Amount KSM"
               onChangeText={value => setRequired(value)}
+              stylect={{  fontStyle:'normal', fontSize: 15 }}
             />
           </InputLayout>
           <InputLayout element="paymentMethod" resultValidator={errors} >
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     paddingHorizontal: '5%',
-    paddingBottom: '25%',
+    paddingBottom: '25%',    
   },
 });
 

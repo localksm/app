@@ -44,9 +44,7 @@ const FormCreateOfferSell = () => {
       <FormLayout.Body>
       <ScrollView
         style={{
-          overflow: 'hidden',
-          maxHeight:
-            screenHeight <= 683 ? 480 : screenHeight >= 700 ? 560 : 500,
+          overflow: 'hidden'
         }}>
         <View style={styles.container}>
           <Text style={styles.text}>Offered Currency</Text>
@@ -56,6 +54,7 @@ const FormCreateOfferSell = () => {
               keyboardType="numeric"
               placeholder="Amount KSM"
               onChangeText={value => setOffered(value)}
+              stylect={{  fontStyle:'normal', fontSize: 15 }}
             />
           </InputLayout>
           <Text style={styles.textRequired}>Required Currency</Text>
@@ -68,6 +67,7 @@ const FormCreateOfferSell = () => {
               keyboardType="numeric"
               placeholder={`Amount ${currency}`}
               onChangeText={value => setRequired(value)}
+              stylect={{  fontStyle:'normal', fontSize: 15 }}
             />
           </InputLayout>
           <InputLayout element="paymentMethod" resultValidator={errors} >
