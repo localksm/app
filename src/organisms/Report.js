@@ -10,58 +10,61 @@ import Textarea from 'react-native-textarea';
 import { FilePicker, FooterWhite } from '../molecules';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button } from '../atoms';
+import { FormLayout } from '.';
 
 const Report = props => {
     
   return (
-    <View>
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.form}>
-            <Text style={styles.text}>User:</Text>
-            <Text style={styles.text}>Amount $</Text>
-            <Text style={styles.text}>Se epera el query</Text>
-          </View>
-          <Textarea
-            containerStyle={styles.textareaContainer}
-            style={styles.textarea}
-            onChangeText={() => {}}
-            defaultValue={''}
-            maxLength={120}
-            placeholder={'Description of the problem'}
-            placeholderTextColor={'white'}
-            underlineColorAndroid={'transparent'}
-            textColor={'white'}
-          />
-          <Text style={styles.textEvidence}>
-            Please add any evidence you have to help the jury evaluate your
-            case, such as the transaction receipt made using the selected
-            payment method.
-          </Text>
-          <FilePicker />
-          <View style={styles.gallery}>
-            <TouchableOpacity activeOpacity={0.5} onPress={() => {}}>
-              <Text style={styles.linkShowImages}>Show Images</Text>
-            </TouchableOpacity>
-            <Text style={styles.countItem}>4</Text>
-          </View>
+    <FormLayout.Content>
+      <FormLayout.Body>
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.form}>
+              <Text style={styles.text}>User:</Text>
+              <Text style={styles.text}>Amount $</Text>
+              <Text style={styles.text}>Se epera el query</Text>
+            </View>
+            <Textarea
+              containerStyle={styles.textareaContainer}
+              style={styles.textarea}
+              onChangeText={() => {}}
+              defaultValue={''}
+              maxLength={120}
+              placeholder={'Description of the problem'}
+              placeholderTextColor={'white'}
+              underlineColorAndroid={'transparent'}
+              textColor={'white'}
+            />
+            <Text style={styles.textEvidence}>
+              Please add any evidence you have to help the jury evaluate your
+              case, such as the transaction receipt made using the selected
+              payment method.
+            </Text>
+            <FilePicker />
+            <View style={styles.gallery}>
+              <TouchableOpacity activeOpacity={0.5} onPress={() => {}}>
+                <Text style={styles.linkShowImages}>Show Images</Text>
+              </TouchableOpacity>
+              <Text style={styles.countItem}>4</Text>
+            </View>
 
-          <View style={styles.feeContainer}>{/*here must be the FEE  */}</View>
+            <View style={styles.feeContainer}>{/*here must be the FEE  */}</View>
 
-          <ActivityIndicator size="large" color="#0000ff" />
-        </View>
-      </ScrollView>
-      <View>
-        <FooterWhite stylectContainer={styles.footer}  >
-          <Text style={styles.contentFooter}>
+            <ActivityIndicator size="large" color="white" />
+          </View>
+        </ScrollView>
+      </FormLayout.Body>
+      <FormLayout.Footer>
+        <View style={ styles.contentFooter}>
+          <Text style={styles.textContentFooter}>
             *You’ll be charged an extra fee of $0.00 XLM to pay a mediator to
             resolve the dispute. In case the transaction is resolved in your
             favor you’ll get back $0.00 XLM.
           </Text>
           <Button label='Submit' action={() => props.navigation.navigate('Mediation')} />
-        </FooterWhite>
-      </View>
-    </View>
+        </View>
+      </FormLayout.Footer>
+    </FormLayout.Content>
   );
 };
 
@@ -126,11 +129,16 @@ const styles = StyleSheet.create({
   footer: {
     paddingBottom: '40%',
   },
-  contentFooter: {
+  textContentFooter: {
     alignItems: 'center',
     fontSize: 10,
-    padding: '5%',
+    margin:10
   },
+  contentFooter:{
+    flex: 1, 
+    marginHorizontal:'6%', 
+    marginTop:'3%'
+  }
 });
 
 export default Report;

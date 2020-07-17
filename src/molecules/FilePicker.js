@@ -33,29 +33,29 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         height:60,
         width: '100%',
-        borderColor: 'white',      
-                
+        borderColor: 'white'
     },
     container:{
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',        
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        paddingHorizontal: 20
     },
     buttonText:{        
         fontSize: 16,
-        paddingLeft: 1,    
         fontFamily: "Poppins-Regular",
         color: 'white',      
     },
     containerPrincipal:{
-        width: '100%',
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        flexDirection:'column',
+        flex: 1
     },
     icon:{
         flexDirection: 'row',
         width: 50,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
     }
 
 });
