@@ -72,7 +72,7 @@ const SendWithdrawButton = props => {
       }
     } catch (error) {
       setLoad(false);
-      Alert.alert('Warning', `Error: ${error}`);
+      Alert.alert('Warning', `Invalid decoded address`);
       throw new Error(error);
     }
   };
