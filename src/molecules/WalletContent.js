@@ -25,7 +25,7 @@ const WalletContent = ({ id, imageStyle, textKeyStyle, textCopyStyle }) => {
       </View>
       <Text style={textKeyStyle}>{data.publicKeys.ksm}</Text>
       <View style={imageStyle}>
-        <Link label='Coppy Address' style={textCopyStyle} action={copy}/>
+        <Link label='Copy Address' style={textCopyStyle} action={copy}/>
       </View>
     </>
   );
