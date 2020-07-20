@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import {
   InputText,
@@ -7,10 +14,9 @@ import {
   DropdownCountries,
   DropdownCurrencies,
   SellButton,
-  InputLayout
+  InputLayout,
 } from '../atoms';
-import { FooterWhite, PaymentForm } from '../molecules';
-import { ScrollView } from 'react-native-gesture-handler';
+import { PaymentForm } from '../molecules';
 import { FormLayout } from '.';
 
 const FormCreateOfferSell = () => {
@@ -33,7 +39,6 @@ const FormCreateOfferSell = () => {
     operationType: 'withdraw_funds',
   };
   const valueKSM = required && offered ? (1 * required) / offered : '...';
-  const screenHeight = Math.round(Dimensions.get('window').height);
 
   const handleText = (name, value) => {
     setPaymentVars(data => ({ ...data, [name]: value }));
@@ -41,60 +46,66 @@ const FormCreateOfferSell = () => {
 
   return (
     <FormLayout.Content>
-      <FormLayout.Body>
-      <ScrollView
-        style={{
-          overflow: 'hidden'
-        }}>
-        <View style={styles.container}>
-          <Text style={styles.text}>Offered Currency</Text>
-          <InputLayout element="currency" resultValidator={errors} >
-            <InputText
-              name="Amount"
-              keyboardType="numeric"
-              placeholder="Amount KSM"
-              onChangeText={value => setOffered(value)}
-              stylect={{  fontStyle:'normal', fontSize: 15 }}
-            />
-          </InputLayout>
-          <Text style={styles.textRequired}>Required Currency</Text>
-          <InputLayout element="localCurrency" resultValidator={errors} >
-            <DropdownCurrencies action={setCurrency} />
-          </InputLayout>
-          <InputLayout element="requiredCurrency" resultValidator={errors} >
-            <InputText
-              name="Amount"
-              keyboardType="numeric"
-              placeholder={`Amount ${currency}`}
-              onChangeText={value => setRequired(value)}
-              stylect={{  fontStyle:'normal', fontSize: 15 }}
-            />
-          </InputLayout>
-          <InputLayout element="paymentMethod" resultValidator={errors} >
-            <DropdownPaymentMethods action={setPaymentmethod} />
-          </InputLayout>
-          {paymentMethod === 'BN' && <InputLayout element="country" resultValidator={errors} ><DropdownCountries action={setCountry} /></InputLayout>}
-          {paymentMethod === 'OT' && (
-            <InputLayout element="other" resultValidator={errors} >
-              <InputText
-                placeholder="Other"
-                onChangeText={value => setOther(value)}
-              />
-            </InputLayout>
-          )}
-          {paymentMethod !== '' && paymentMethod !== null && (
-            <PaymentForm
-              show={true}
-              method={paymentMethod}
-              onChangeText={handleText}
-              errors={errors}
-            />
-          )}
-        </View>
-      </ScrollView>
-      </FormLayout.Body>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <FormLayout.Body>
+          <ScrollView
+            style={{
+              overflow: 'hidden',
+            }}>
+            <View style={styles.container}>
+              <Text style={styles.text}>Offered Currency</Text>
+              <InputLayout element="currency" resultValidator={errors}>
+                <InputText
+                  name="Amount"
+                  keyboardType="numeric"
+                  placeholder="Amount KSM"
+                  onChangeText={value => setOffered(value)}
+                  stylect={{ fontStyle: 'normal', fontSize: 15 }}
+                />
+              </InputLayout>
+              <Text style={styles.textRequired}>Required Currency</Text>
+              <InputLayout element="localCurrency" resultValidator={errors}>
+                <DropdownCurrencies action={setCurrency} />
+              </InputLayout>
+              <InputLayout element="requiredCurrency" resultValidator={errors}>
+                <InputText
+                  name="Amount"
+                  keyboardType="numeric"
+                  placeholder={`Amount ${currency}`}
+                  onChangeText={value => setRequired(value)}
+                  stylect={{ fontStyle: 'normal', fontSize: 15 }}
+                />
+              </InputLayout>
+              <InputLayout element="paymentMethod" resultValidator={errors}>
+                <DropdownPaymentMethods action={setPaymentmethod} />
+              </InputLayout>
+              {paymentMethod === 'BN' && (
+                <InputLayout element="country" resultValidator={errors}>
+                  <DropdownCountries action={setCountry} />
+                </InputLayout>
+              )}
+              {paymentMethod === 'OT' && (
+                <InputLayout element="other" resultValidator={errors}>
+                  <InputText
+                    placeholder="Other"
+                    onChangeText={value => setOther(value)}
+                  />
+                </InputLayout>
+              )}
+              {paymentMethod !== '' && paymentMethod !== null && (
+                <PaymentForm
+                  show={true}
+                  method={paymentMethod}
+                  onChangeText={handleText}
+                  errors={errors}
+                />
+              )}
+            </View>
+          </ScrollView>
+        </FormLayout.Body>
+      </TouchableWithoutFeedback>
       <FormLayout.Footer>
-        <View style={styles.footerContainer}>          
+        <View style={styles.footerContainer}>
           <View style={styles.textFooter}>
             <Text style={styles.footer}>
               1 KSM = $ {valueKSM} {currency}
@@ -111,7 +122,7 @@ const FormCreateOfferSell = () => {
           />
         </View>
       </FormLayout.Footer>
-    </FormLayout.Content>    
+    </FormLayout.Content>
   );
 };
 
@@ -142,7 +153,7 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     flex: 1,
-    paddingHorizontal: '5%',    
+    paddingHorizontal: '5%',
     paddingTop: '5%',
   },
 });

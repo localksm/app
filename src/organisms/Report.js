@@ -57,9 +57,9 @@ const Report = props => {
       <FormLayout.Footer>
         <View style={ styles.contentFooter}>
           <Text style={styles.textContentFooter}>
-            *You’ll be charged an extra fee of $0.00 XLM to pay a mediator to
+            *You’ll be charged an extra fee of $0.00 KSM to pay a mediator to
             resolve the dispute. In case the transaction is resolved in your
-            favor you’ll get back $0.00 XLM.
+            favor you’ll get back $0.00 KSM.
           </Text>
           <Button label='Submit' action={() => props.navigation.navigate('Mediation')} />
         </View>

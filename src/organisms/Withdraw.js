@@ -7,10 +7,9 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
   ActivityIndicator,
-  Alert,
 } from 'react-native';
 import { InputText, SendWithdrawButton } from '../atoms';
-import { getBalance, validateAddress } from '../utils/ksm';
+import { getBalance } from '../utils/ksm';
 import { QUERIES, client, withContext, getSession } from '../apollo';
 
 const Withdraw = () => {

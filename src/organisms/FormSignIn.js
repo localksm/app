@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Image,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
   InputText,
@@ -13,8 +21,8 @@ import {
 const FormSignIn = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorEmail, setErrorEmail] = useState(false)
-  const [errorPass, setErrorPass] = useState(false)
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [errorPass, setErrorPass] = useState(false);
   const navigation = useNavigation();
   const dataSession = {
     email: email,
@@ -22,75 +30,78 @@ const FormSignIn = props => {
   };
 
   return (
-    <View style={styles.wrapper}>
-      <View key="logo" style={styles.secction_logo}>
-        <Image
-          style={styles.logo}
-          source={require('../../assets/logoKSMNoText.png')}
-        />
-      </View>
-      <View style={styles.container}>
-        <InputText
-          name="email"
-          keyboardType="email-address"
-          placeholder="Email"
-          autoCapitalize="none"
-          onChangeText={value => {setErrorEmail(false),setEmail(value)}}
-          stylect={errorEmail && styles.error}
-          
-        />
-        <InputText
-          name="password"
-          placeholder="Password"
-          secureTextEntry={true}
-          onChangeText={value => {setErrorPass(false),setPassword(value)}}
-          stylect={errorPass && styles.error}
-        />
-        <TouchableOpacity>
-          <Text style={styles.textForgot}>Forgot password?</Text>
-        </TouchableOpacity>
-        <View style={styles.buttons}>
-          <ButtonSignIn
-            label="Login"
-            stylect={{ backgroundColor: '#DB5A3A' }}
-            actionSignIn={() => navigation.navigate('Drawer')}
-            variables={dataSession}
-            actionErrorEmail={() => setErrorEmail(true)}
-            actionErrorPass={() => setErrorPass(true)}
-            
-            
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.wrapper}>
+        <View key="logo" style={styles.secction_logo}>
+          <Image
+            style={styles.logo}
+            source={require('../../assets/logoKSMNoText.png')}
           />
         </View>
-        <View style={styles.buttons}>
-          <GoogleButton
-            label="Login with Google"
-            stylect={{ backgroundColor: '#6BA3FA' }}
-            actionLogin={() => navigation.navigate('Drawer')}
+        <View style={styles.container}>
+          <InputText
+            name="email"
+            keyboardType="email-address"
+            placeholder="Email"
+            autoCapitalize="none"
+            onChangeText={value => {
+              setErrorEmail(false), setEmail(value);
+            }}
+            stylect={errorEmail && styles.error}
           />
-        </View>
-        <View style={styles.buttons}>
-          <FBLoginButton
-            actionLogin={() => navigation.navigate('Drawer')}
-            type={'signin'}
+          <InputText
+            name="password"
+            placeholder="Password"
+            secureTextEntry={true}
+            onChangeText={value => {
+              setErrorPass(false), setPassword(value);
+            }}
+            stylect={errorPass && styles.error}
           />
-        </View>
-        <View style={styles.buttons}>
-          <TWLoginButton
-            label="Login with Twitter"
-            stylect={{ backgroundColor: '#58C5FA' }}
-            actionLogin={() => navigation.navigate('Drawer')}
-          />
-        </View>
+          <TouchableOpacity>
+            <Text style={styles.textForgot}>Forgot password?</Text>
+          </TouchableOpacity>
+          <View style={styles.buttons}>
+            <ButtonSignIn
+              label="Login"
+              stylect={{ backgroundColor: '#DB5A3A' }}
+              actionSignIn={() => navigation.navigate('Drawer')}
+              variables={dataSession}
+              actionErrorEmail={() => setErrorEmail(true)}
+              actionErrorPass={() => setErrorPass(true)}
+            />
+          </View>
+          <View style={styles.buttons}>
+            <GoogleButton
+              label="Login with Google"
+              stylect={{ backgroundColor: '#6BA3FA' }}
+              actionLogin={() => navigation.navigate('Drawer')}
+            />
+          </View>
+          <View style={styles.buttons}>
+            <FBLoginButton
+              actionLogin={() => navigation.navigate('Drawer')}
+              type={'signin'}
+            />
+          </View>
+          <View style={styles.buttons}>
+            <TWLoginButton
+              label="Login with Twitter"
+              stylect={{ backgroundColor: '#58C5FA' }}
+              actionLogin={() => navigation.navigate('Drawer')}
+            />
+          </View>
 
-        <View style={styles.styleLink}>
-          <Link
-            label="New user? Register"
-            action={() => navigation.navigate('SignUp')}
-            color="#ffffff"
-          />
+          <View style={styles.styleLink}>
+            <Link
+              label="New user? Register"
+              action={() => navigation.navigate('SignUp')}
+              color="#ffffff"
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -133,8 +144,7 @@ const styles = StyleSheet.create({
   error: {
     borderColor: 'red',
     borderBottomWidth: 1,
-    color: 'red'
-    
+    color: 'red',
   },
 });
 
