@@ -87,6 +87,8 @@ target 'localksm' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'react-native-image-resizer', :path => '../node_modules/react-native-image-resizer'
+
   target 'localksmTests' do
     inherit! :complete
     # Pods for testing

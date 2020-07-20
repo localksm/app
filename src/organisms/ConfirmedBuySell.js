@@ -126,7 +126,7 @@ const ConfirmedBuySell = props => {
           />
           )}
           <View style={styles.buttons}>
-            <Link label="Report a problem" color="#cc5741" />
+            <Link label="Report a problem" color="#cc5741" action={() => props.navigation.navigate('ReportAProblem')} />
           </View>
         </View>
       </FormLayout.Footer>
