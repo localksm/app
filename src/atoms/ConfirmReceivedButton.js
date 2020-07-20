@@ -13,7 +13,7 @@ const ConfirmReceivedButton = props => {
   );
   const [load, setLoad] = useState(false);
   const [id, setId] = useState(null);
-  const { proposalId, takerId } = props.variables;
+  const { proposalId, takerId, operationType } = props.variables;
 
   useEffect(() => {
     set();
@@ -27,37 +27,78 @@ const ConfirmReceivedButton = props => {
   const confirmSent = async () => {
     try {
       setLoad(true);
-      const response = await sendDisbursementBuyer({
-        variables: {
-          proposalId: proposalId,
-          takerId: takerId,
-          node: 'takerBuyer',
-        },
-      });
-      const { success } = response.data.sendDisbursementBuyer;
-      if (success) {
-        setLoad(true);
-        await sendDisbursementSeller({
+      if (operationType === 'sell' || operationType === 'withdraw_funds') {
+        const response = await sendDisbursementBuyer({
           variables: {
             proposalId: proposalId,
             takerId: takerId,
-            node: 'makerSeller',
+            node: 'makerBuyer',
           },
-          refetchQueries: [
-            {
-              query: QUERIES.QUERY_PROPOSALS,
-              variables: { userId: id, offset: 0, limit: 100 },
-            },
-            {
-              query: QUERIES.QUERY_USER_PROPOSALS,
-              variables: { id: id, offset: 0, limit: 100 },
-            },
-          ],
         });
-        return props.actionConfirmSent();
+        const { success } = response.data.sendDisbursementBuyer;
+        if (success) {
+          setLoad(true);
+          await sendDisbursementSeller({
+            variables: {
+              proposalId: proposalId,
+              takerId: takerId,
+              node: 'takerSeller',
+            },
+            refetchQueries: [
+              {
+                query: QUERIES.QUERY_PROPOSALS,
+                variables: { userId: id, offset: 0, limit: 100 },
+              },
+              {
+                query: QUERIES.QUERY_USER_PROPOSALS,
+                variables: { id: id, offset: 0, limit: 100 },
+              },
+            ], 
+          });
+          return props.actionConfirmSent();
+        } else {
+          setLoad(false);
+          return Alert.alert(
+            'Warning',
+            'Something went wrong, contact support',
+          );
+        }
       } else {
-        setLoad(false);
-        return Alert.alert('Warning', 'Something went wrong, contact support');
+        const response = await sendDisbursementBuyer({
+          variables: {
+            proposalId: proposalId,
+            takerId: takerId,
+            node: 'takerBuyer',
+          },
+        });
+        const { success } = response.data.sendDisbursementBuyer;
+        if (success) {
+          setLoad(true);
+          await sendDisbursementSeller({
+            variables: {
+              proposalId: proposalId,
+              takerId: takerId,
+              node: 'makerSeller',
+            },
+            refetchQueries: [
+              {
+                query: QUERIES.QUERY_PROPOSALS,
+                variables: { userId: id, offset: 0, limit: 100 },
+              },
+              {
+                query: QUERIES.QUERY_USER_PROPOSALS,
+                variables: { id: id, offset: 0, limit: 100 },
+              },
+            ],
+          });
+          return props.actionConfirmSent();
+        } else {
+          setLoad(false);
+          return Alert.alert(
+            'Warning',
+            'Something went wrong, contact support',
+          );
+        }
       }
     } catch (error) {
       setLoad(false);

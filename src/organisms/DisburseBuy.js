@@ -35,7 +35,8 @@ const DisburseBuy = props => {
     offerAsset,
     offerAmount,
     paymentMethod,
-    takerId
+    takerId,
+    operationType,
   } = props.route.params.body;
 
   const {
@@ -52,7 +53,9 @@ const DisburseBuy = props => {
   const variables ={
     proposalId: proposalId,
     takerId: takerId,
+    operationType: operationType,
   }
+  
   const obj = {
     'Acount number': accountNumber,
     Address: address,

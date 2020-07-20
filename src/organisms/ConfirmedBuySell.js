@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
-import { Link, Button, ConfirmSentBuyButton } from '../atoms';
+import { Link, ConfirmSentBuyButton, ConfirmReceivedButton } from '../atoms';
 import FormLayout from './FormLayout';
 
 function mapPaymentMethod(method) {
@@ -35,6 +35,7 @@ const ConfirmedBuySell = props => {
     offerAmount,
     paymentMethod,
     operationType,
+    takerId,
   } = props.route.params.body;
 
   const {
@@ -48,6 +49,11 @@ const ConfirmedBuySell = props => {
     proposalId,
   } = props.route.params.body.paymentData;
   const { status } = props.route.params;
+  const variables ={
+    proposalId: proposalId,
+    takerId: takerId,
+    operationType: operationType,
+  }
 
   const obj = {
     'Acount number': accountNumber,
@@ -113,10 +119,11 @@ const ConfirmedBuySell = props => {
             )
           ) : (
             status === 'confirmed' &&
-            <Button
-              label="Confirm received"
-              action={() => {}}
-            />
+            <ConfirmReceivedButton
+            variables={variables}
+            label="Confirm Received"
+            actionConfirmSent={() => props.navigation.navigate('TransactionCompleted',{...props.route.params})}
+          />
           )}
           <View style={styles.buttons}>
             <Link label="Report a problem" color="#cc5741" />
