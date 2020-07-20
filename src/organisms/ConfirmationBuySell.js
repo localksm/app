@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Link } from '../atoms';
 import { FormLayout } from '.';
+import { splitAmount } from '../utils/splitAmount';
 
 const ConfirmationBuySell = props => {
   const {
@@ -54,7 +55,7 @@ const ConfirmationBuySell = props => {
         <View style={styles.conversion}>
           <View>
             <Text style={styles.conversionText}>
-              1 KSM = $ {valueKSM} {operationType === 'buy' || operationType === 'add_funds' ? offerAsset : requestAsset}
+              1 KSM = $ {splitAmount(valueKSM)} {operationType === 'buy' || operationType === 'add_funds' ? offerAsset : requestAsset}
             </Text>
           </View>
         </View>
