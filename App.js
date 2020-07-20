@@ -1,5 +1,4 @@
 import React from 'react';
-import {SafeAreaView,ScrollView } from 'react-native';
 import AppNavigator from './src/routes/AppNavigator';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { client, ContextProvider, state } from './src/apollo';
