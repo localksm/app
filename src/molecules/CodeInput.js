@@ -32,7 +32,7 @@ const CodeInput = props =>{
         if (currentEmptyIndex !== -1 && currentEmptyIndex < index) {
           return _setFocus(currentEmptyIndex);
         }
-        for (const i in newCodeArr) {
+        for (let i in newCodeArr) {
           if (i >= index) {
             newCodeArr[i] = '';
           }
@@ -47,9 +47,8 @@ const CodeInput = props =>{
         const { codeLength, onCodeChange } = props;
         let newCodeArr = codeArr;
         newCodeArr[index] = character;
-        if (index == codeLength - 1) {            
-            _blur(currentIndex);
-            //setCurrentIndex(0);
+        if (index === codeLength - 1) {            
+            _blur(currentIndex);            
           } else {
             _setFocus(currentIndex + 1);
           }

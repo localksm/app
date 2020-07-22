@@ -6,9 +6,8 @@ import { Button } from '../atoms';
 const EnterPin = (props) => {
     const [disabled, setDisabled] = useState(true);
     const [pinCode, setPinCode] = useState('');
-    useEffect(() => {  
-        console.log(pinCode);      
-        setDisabled(!(pinCode.length == 6));
+    useEffect(() => {
+        setDisabled(!(pinCode.length === 6));
     });
 
     return (
