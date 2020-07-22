@@ -1,4 +1,5 @@
 import { Form } from 'native-base';
+import { from } from 'apollo-link';
 
 export { default as Offers } from './Offers';
 export { default as DetailsOffer } from './DetailsOffer';
@@ -22,3 +23,4 @@ export { default as MyOffers} from './MyOffers';
 export { default as Filter } from './Filter';
 export { default as Onboarding } from './Onboarding';
 export { default as Help } from './Help';
+export { default as CreatePin} from './CreatePin';

@@ -27,6 +27,7 @@ import {
    Filter,
    Onboarding,
    Help,
+   CreatePin
   } from '../pages'
 
 
@@ -126,7 +127,9 @@ const MenuDrawer = () => {
 export default function AppNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName= 'Onboarding' >
+      <Stack.Navigator initialRouteName= 'Starting' >
+        <Stack.Screen name='CreatePin' component={CreatePin} options={{headerShown: false}}  />
+        <Stack.Screen name='Starting' component={StartingApp} options={{headerShown: false}}  />
         <Stack.Screen name='Onboarding' component={Onboarding} options={{headerShown: false}} />
         <Stack.Screen name='SignIn' component={SignIn} options={{headerShown: false}}  />
         <Stack.Screen name='SignUp' component={SignUp} options={{headerShown: false}}  />     

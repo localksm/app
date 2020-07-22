@@ -23,3 +23,5 @@ export { default as OnboardingImage } from './OnboardingImage';
 export { default as HelpView } from './HelpView';
 export { default as FormLayout} from './FormLayout';
 export {default as Withdraw } from './Withdraw';
+export { default as FormCreatePin } from './FormCreatePin';
+export { default as EnterPin } from './EnterPin';
