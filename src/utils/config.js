@@ -1,3 +1,7 @@
+import {JWT_SECRET} from "@env"
+
+
+export const ENV_VARS = {JWT_SECRET}
 
 export const sessionModel = {
   token: null,
