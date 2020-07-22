@@ -1,6 +1,3 @@
-import { Form } from 'native-base';
-import { from } from 'apollo-link';
-
 export { default as Offers } from './Offers';
 export { default as DetailsOffer } from './DetailsOffer';
 export { default as StartingApp } from './StartingApp';
