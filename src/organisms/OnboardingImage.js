@@ -46,7 +46,7 @@ const OnboardingImage = props => {
     
 
     return(
-        <View style={{ flex: 1}}>
+        <View style={{ flex: 1, backgroundColor: '#2D2D2D',}}>
             <AppIntroSlider 
                 renderItem={_renderItem} 
                 data={UserData} 
