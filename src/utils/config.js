@@ -14,12 +14,12 @@ export const sessionModel = {
 
 export const GRAPHQL_ENDPOINT =
   process.env.NODE_ENV == 'development'
-    ? 'https://app.localksm.com/'
+    ? 'http://ec2-3-16-152-82.us-east-2.compute.amazonaws.com:4041/'
     : 'https://app.localksm.com/';
 
 export const GRAPHQL_SUBSCRIPTIONS_ENDPOINT =
 process.env.NODE_ENV == 'development'
-? 'ws://ec2-3-133-85-207.us-east-2.compute.amazonaws.com:4041/graphql'
+? 'ws://ec2-3-16-152-82.us-east-2.compute.amazonaws.com:4041/graphql'
 : 'ws://app.localksm.com/graphql';
 
 
