@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,16 +11,20 @@ import Textarea from 'react-native-textarea';
 import {Button, Icon} from 'native-base';
 import { FilePicker } from '../molecules';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Button as ButtonAt  } from '../atoms';
+import { SendAdjudicationButton  } from '../atoms';
 import { FormLayout } from '.';
 import { withContext } from '../apollo';
 
+
 const Report = props => {
+  const {usernameMaker, offerAmount} = props.route.params.body
+  const {proposalId} = props.route.params.body.paymentData
   const [galleryImages, setGalleryImages] = useState([]);
   const [chosenItemsCount, setChosenItemsCount] = useState(0);
   const [showImages, setShowImages] = useState(false);
-
-
+  const [description, setDescription] = useState('');
+  
+  
   const onChangeFile = async images =>{
     const evidence = await props.state.getData('SELECTED_IMAGES');
     const newGalleryImages = [...galleryImages];
@@ -32,6 +36,11 @@ const Report = props => {
     setChosenItemsCount(newGalleryImages.length);
     
   }
+  const variables ={
+    proposalId,
+    galleryImages,
+    description,
+  }
     
   return (
     <>
@@ -41,13 +50,13 @@ const Report = props => {
           <ScrollView>
             <View style={styles.container}>
               <View style={styles.form}>
-                <Text style={styles.text}>User:</Text>
-                <Text style={styles.text}>Amount $</Text>                
+               <Text style={styles.text}>User: {usernameMaker}</Text>
+              <Text style={styles.text}>Amount ${offerAmount}</Text>                
               </View>
               <Textarea
                 containerStyle={styles.textareaContainer}
                 style={styles.textarea}
-                onChangeText={() => {}}
+                onChangeText={value => setDescription(value)}
                 defaultValue={''}
                 maxLength={120}
                 placeholder={'Description of the problem'}
@@ -83,7 +92,7 @@ const Report = props => {
               resolve the dispute. In case the transaction is resolved in your
               favor you’ll get back $0.01 KSM.
             </Text>
-            <ButtonAt label='Submit' action={() => props.navigation.navigate('Mediation')} />
+            <SendAdjudicationButton variables={variables} label='Submit' actionMediation={() => props.navigation.navigate('Mediation')} />
           </View>
         </FormLayout.Footer>
       </FormLayout.Content>

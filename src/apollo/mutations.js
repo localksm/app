@@ -262,3 +262,22 @@ export const WITHDRAW = gql`
     }
   }
 `;
+
+
+export const SEND_ADJUDICATION = gql`
+mutation sendAdjudication(
+  $proposalId: Int!
+  $images: [String!]
+  $createdBy: Int!
+  $comment:String!
+) {
+  sendAdjudication(
+    proposalId: $proposalId
+    images: $images
+    node: jury
+    createdBy: $createBy
+    comment: $comment
+  ) {
+    id
+  }
+}`;

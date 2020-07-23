@@ -44,7 +44,9 @@ const OfferStack = () => {
       <Stack.Screen name='Disburse' component={Disburse} options={{headerShown: false}} />
       <Stack.Screen name='TransactionCompleted' component={TransactionCompleted} options={{headerShown: false}} />
       <Stack.Screen name='Filter' component={Filter} options={{headerShown: false}} />
-      <Stack.Screen name='ReportAProblem' component={ReportAProblemStack} options={{headerShown: false}} />
+      <Stack.Screen name='ReportAProblem' component={ReportAProblem} options={{headerShown: false}} />
+      <Stack.Screen name='Mediation' component={Mediation} options={{headerShown: false}} />
+      <Stack.Screen name='WonMediation' component={WonMediation} options={{headerShown: false}} />
     </Stack.Navigator>
   )
 }
@@ -61,7 +63,9 @@ const MyOffersStack = () => {
       <Stack.Screen name='Disburse' component={Disburse} options={{headerShown: false}} />
       <Stack.Screen name='TransactionCompleted' component={TransactionCompleted} options={{headerShown: false}} />
       <Stack.Screen name='CreateOfferSell' component={CreateOfferSell} options={{headerShown: false}} />
-      <Stack.Screen name='ReportAProblem' component={ReportAProblemStack} options={{headerShown: false}} />
+      <Stack.Screen name='ReportAProblem' component={ReportAProblem} options={{headerShown: false}} />
+      <Stack.Screen name='Mediation' component={Mediation} options={{headerShown: false}} />
+      <Stack.Screen name='WonMediation' component={WonMediation} options={{headerShown: false}} />
     </Stack.Navigator>
 
   )
@@ -79,15 +83,6 @@ const MyOffersStack = () => {
     <Stack.Navigator>
      <Stack.Screen name='CreateOfferSell' component={CreateOfferSell} options={{headerShown: false}} />
      <Stack.Screen name='Confirmation' component={Confirmation} options={{headerShown: false}} />
-    </Stack.Navigator>
-  )
-}
-const ReportAProblemStack = () => {
-  return(
-    <Stack.Navigator initialRouteName='ReportAProblem'>
-      <Stack.Screen name='ReportAProblem' component={ReportAProblem} options={{headerShown: false}} />
-      <Stack.Screen name='Mediation' component={Mediation} options={{headerShown: false}} />
-      <Stack.Screen name='WonMediation' component={WonMediation} options={{headerShown: false}} />
     </Stack.Navigator>
   )
 }

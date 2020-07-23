@@ -19,3 +19,4 @@ export { default as TWLoginButton } from './TwitterButton';
 export { default as SellButton } from './SellButton';
 export { default as InputLayout} from './InputLayout';
 export { default as SendWithdrawButton } from './SendWithdrawButton';
+export { default as SendAdjudicationButton } from './SendAdjudicationButton';

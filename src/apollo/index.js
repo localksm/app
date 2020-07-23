@@ -30,6 +30,7 @@ import {
   SEND_DISBURSEMENT_SELLER,
   SELL,
   WITHDRAW,
+  SEND_ADJUDICATION,
 } from './mutations';
 import {
   VERIFY_USER,
@@ -137,6 +138,7 @@ export const MUTATIONS = {
   SEND_DISBURSEMENT_SELLER,
   SELL,
   WITHDRAW,
+  SEND_ADJUDICATION,
 };
 
 export const SUBSCRIPTIONS = {};

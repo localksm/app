@@ -104,7 +104,7 @@ const AcceptedBuySell = props => {
             <Link
               label="Report a problem"
               color="#cc5741"
-              action={() => props.navigation.navigate('ReportAProblem')}
+              action={() => props.navigation.navigate('ReportAProblem',{...props.route.params})}
             />
           </View>
         </View>
