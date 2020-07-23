@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Platform,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Button from './Button';
 import { sessionModel as session, twitterConfig } from '../utils/config';
 import { client, setSession, MUTATIONS, QUERIES } from '../apollo';
@@ -15,6 +16,7 @@ import { client, setSession, MUTATIONS, QUERIES } from '../apollo';
 const { RNTwitterSignIn } = NativeModules;
 
 const TWLoginButton = props => {
+  const navigation = useNavigation();
   const [loading, setloading] = useState(false);
 
   const mapUser = data => {
@@ -47,21 +49,16 @@ const TWLoginButton = props => {
     authTokenSecret,
     userID,
   ) => {
-    const response = await client.mutate({
-      mutation: MUTATIONS.SIGNUP,
-      variables: {
-        name: name,
-        email: email ? email : 'null',
-        type: 'twitter',
-        token: authToken,
-        authTokenSecret: authTokenSecret,
-        userTWID: userID,
-        platform: Platform.OS === 'ios' ? 'ios' : 'android',
-      },
+    // Navigate to CreatePin Screen
+    navigation.navigate('CreatePin', {
+      name: name,
+      email: email ? email : 'null',
+      type: 'twitter',
+      token: authToken,
+      authTokenSecret: authTokenSecret,
+      userTWID: userID,
+      platform: Platform.OS === 'ios' ? 'ios' : 'android',
     });
-
-    const { success } = response.data.signup !== null && response.data.signup;
-    return { success };
   };
 
   const loginTwitter = async (
@@ -70,7 +67,7 @@ const TWLoginButton = props => {
     authToken,
     authTokenSecret,
     userID,
-  ) => {    
+  ) => {
     const response = await client.mutate({
       mutation: MUTATIONS.LOGIN,
       variables: {
@@ -96,7 +93,7 @@ const TWLoginButton = props => {
     const twData = await RNTwitterSignIn.logIn();
 
     try {
-      const { email, authToken, authTokenSecret, userID, userName } = twData;      
+      const { email, authToken, authTokenSecret, userID, userName } = twData;
       const { emailExists, nameExists } = await validateEmail(email, userName);
 
       if (emailExists && nameExists) {

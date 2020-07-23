@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { Alert, View, ActivityIndicator, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useMutation } from '@apollo/react-hooks';
 import validator from 'validator';
 import Button from './Button';
 import { sessionModel } from '../utils/config';
-import { client, MUTATIONS, QUERIES, setSession } from '../apollo';
+import { client, QUERIES } from '../apollo';
 
 const ButtonSignUp = props => {
   const [loading, setLoading] = useState(false);
-  const [loginWithEmail] = useMutation(MUTATIONS.LOGIN);
-  const [signupWithEmail] = useMutation(MUTATIONS.SIGNUP);
   const navigation = useNavigation();
 
   const mapUser = data => {
@@ -39,12 +36,8 @@ const ButtonSignUp = props => {
     setLoading(true);
     const { email, username, password, confirmPassword } = props.variables;
     const { emailExists } = await verifyUser(email);
-    const payloadLogin = {
-      email: email,
-      password: password,
-      type: 'email',
-      platform: Platform.OS === 'ios' ? 'ios' : 'android',
-    };
+
+    // Prepare signup payload
     const payloadSugnUp = {
       name: username,
       email: email,
@@ -77,15 +70,8 @@ const ButtonSignUp = props => {
         return props.errorConfirm();
       }
       if (!emailExists) {
-        const { data } = await signupWithEmail({ variables: payloadSugnUp });
-        const { success } = data.signup;
-
-        if (success) {
-          const { data } = await loginWithEmail({ variables: payloadLogin });
-          const session = mapUser(data.login);
-          setSession({ session });
-          return props.actionSignUp();
-        }
+        // Navigate to CreatePin passing signup params
+        navigation.navigate('CreatePin', { ...payloadSugnUp });
       } else {
         setLoading(false);
         return Alert.alert('Warning!', 'The email is already registered', [

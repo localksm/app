@@ -4,11 +4,13 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-community/google-signin';
+import { useNavigation } from '@react-navigation/native';
 import { sessionModel, googleConfig } from '../utils/config';
 import { client, MUTATIONS, QUERIES, setSession } from '../apollo';
 import Button from './Button';
 
-const GoogleButton = (props) => {
+const GoogleButton = props => {
+  const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -58,22 +60,6 @@ const GoogleButton = (props) => {
     return { login };
   };
 
-  const signupGoogle = async (email, idToken) => {
-    const response = await client.mutate({
-      mutation: MUTATIONS.SIGNUP,
-      variables: {
-        name: email,
-        email: email,
-        token: idToken,
-        type: 'google',
-        platform: Platform.OS === 'ios' ? 'ios' : 'android',
-      },
-    });
-
-    const { success } = response.data.signup !== null && response.data.signup;
-    return { success };
-  };
-
   const signup = async () => {
     setLoading(true);
     try {
@@ -82,6 +68,8 @@ const GoogleButton = (props) => {
       const { email } = userInfo.user;
       const { idToken } = userInfo;
       const { emailExists } = await verifyUser(email);
+
+      // If email exists then login user normally
       if (emailExists) {
         const { login } = await loginGoogle(email, idToken);
         const session = mapUser(login);
@@ -89,14 +77,14 @@ const GoogleButton = (props) => {
         setLoading(false);
         return props.actionLogin();
       } else {
-        const { success } = await signupGoogle(email, idToken);
-        if (success) {
-          const { login } = await loginGoogle(email, idToken);
-          const session = mapUser(login);
-          setSession({ session });
-          setLoading(false);
-          return props.actionLogin();
-        }
+        // If not then navigate to the CreatePin screen passing the payload to signup
+        navigation.navigate('CreatePin', {
+          name: email,
+          email: email,
+          token: idToken,
+          type: 'google',
+          platform: Platform.OS === 'ios' ? 'ios' : 'android',
+        });
       }
     } catch (error) {
       setLoading(false);
@@ -119,12 +107,12 @@ const GoogleButton = (props) => {
     <View>
       {!loading ? (
         <Button label={props.label} action={signup} stylect={props.stylect} />
-       ) : (
-         <View style={styles.text}>
-           <ActivityIndicator size='small' color="white" />
-           <Text style={styles.text}>Please wait...</Text>
-         </View>
-       )}
+      ) : (
+        <View style={styles.text}>
+          <ActivityIndicator size="small" color="white" />
+          <Text style={styles.text}>Please wait...</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -132,7 +120,7 @@ const GoogleButton = (props) => {
 const styles = StyleSheet.create({
   text: {
     alignItems: 'center',
-    color: 'white'
+    color: 'white',
   },
 });
 
