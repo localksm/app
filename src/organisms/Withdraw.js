@@ -11,6 +11,7 @@ import {
 import { InputText, SendWithdrawButton } from '../atoms';
 import { getBalance } from '../utils/ksm';
 import { QUERIES, client, withContext, getSession } from '../apollo';
+import { getPin } from '../utils/JWT';
 
 const Withdraw = () => {
   const [amount, setAmount] = useState(0);
@@ -30,13 +31,14 @@ const Withdraw = () => {
   }, []);
 
   async function set() {
+    const pin = await getPin()
     const { session } = await getSession();
     setId(session.id)
 
     try {
       const res = await client.query({
         query: QUERIES.PUBLIC_KEY,
-        variables: { id: session.id },
+        variables: { id: session.id, pin },
       });
       const address = res.data.publicKeys.ksm;
       await getBalance(address, setResponse);

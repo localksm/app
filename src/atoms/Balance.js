@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, ActivityIndicator } from 'react-native';
 import { getBalance, getAverageCost } from '../utils/ksm';
 import { QUERIES, client, withContext } from '../apollo';
+import { getPin } from '../utils/JWT';
 
 function Balance(props) {
   const [free, setFreeBalance] = React.useState(0);
@@ -15,9 +16,11 @@ function Balance(props) {
 
   async function set() {
     try {
+      const pin = await getPin();
+
       const res = await client.query({
         query: QUERIES.PUBLIC_KEY,
-        variables: { id: props.id },
+        variables: { id: props.id, pin },
       });
       const address = res.data.publicKeys.ksm;
       await getBalance(address, setResponse);
