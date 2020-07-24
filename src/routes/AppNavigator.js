@@ -27,7 +27,8 @@ import {
    Filter,
    Onboarding,
    Help,
-   CreatePin
+   CreatePin,
+   QuickTour
   } from '../pages'
 
 
@@ -105,6 +106,7 @@ const MainStack = () => {
     <Stack.Screen name='Wallet' component={WalletStack} options={{headerShown: false}} />
     <Stack.Screen name='MyOffers' component={MyOffersStack} options={{headerShown: false}} />
     <Stack.Screen name='Help' component={Help} options={{headerShown: false}} />
+    <Stack.Screen name='QuickTour' component={QuickTour} options={{headerShown: false}} />
   </Stack.Navigator>
   )
 }
@@ -122,7 +124,7 @@ const MenuDrawer = () => {
 export default function AppNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName= 'Starting' >
+      <Stack.Navigator initialRouteName= 'Onboarding' >
         <Stack.Screen name='CreatePin' component={CreatePin} options={{headerShown: false}}  />
         <Stack.Screen name='Starting' component={StartingApp} options={{headerShown: false}}  />
         <Stack.Screen name='Onboarding' component={Onboarding} options={{headerShown: false}} />

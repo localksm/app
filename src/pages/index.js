@@ -21,3 +21,4 @@ export { default as Filter } from './Filter';
 export { default as Onboarding } from './Onboarding';
 export { default as Help } from './Help';
 export { default as CreatePin} from './CreatePin';
+export { default as QuickTour } from './QuickTour';
