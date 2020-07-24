@@ -15,7 +15,7 @@ export const sessionModel = {
 export const GRAPHQL_ENDPOINT =
   process.env.NODE_ENV == 'development'
     ? 'http://ec2-3-16-152-82.us-east-2.compute.amazonaws.com:4041/'
-    : 'https://app.localksm.com/';
+    : 'http://ec2-3-16-152-82.us-east-2.compute.amazonaws.com:4041/'
 
 export const GRAPHQL_SUBSCRIPTIONS_ENDPOINT =
 process.env.NODE_ENV == 'development'

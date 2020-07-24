@@ -9,19 +9,75 @@ import {
   Keyboard,
   Platform,
   Switch,
+  Alert,
 } from 'react-native';
 import { InputText, Button } from '../atoms';
+import { MUTATIONS } from '../apollo';
+import { useMutation } from '@apollo/react-hooks';
+import { storePin } from '../utils/JWT';
 
 const FormCreatePin = props => {
+  console.log(props.route.params);
   const [isSelected, setSelected] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [valuePin, setValuePin] = useState('');
   const [confirmValuePin, setConfirmValuePin] = useState('');
+  const { email, name, password, platform, type } = props.route.params;
+  const [signup] = useMutation(MUTATIONS.SIGNUP);
+  const [login] = useMutation(MUTATIONS.LOGIN);
 
   useEffect(() => {
     setDisabled(!(valuePin !== '' && confirmValuePin !== '' && isSelected));
   });
 
+  const handleSave = () => {
+    try {
+      if (valuePin === confirmValuePin) {
+        storePin(valuePin, async token => {
+          console.log('es el token====>', token);
+          const { data } = await signup({
+            variables: {
+              email: email,
+              name: name,
+              password: password,
+              platform: platform,
+              type: type,
+              pin: token,
+            },
+          });
+          const { success } = data.signup;
+          if (success) {
+            const { data } = await login({
+              variables: {
+                email: email,
+                password: password,
+                platform: platform,
+                type: type,
+              },
+            });
+            const { success } = data.login;
+            if (success) {
+              return props.navigation.navigate('Drawer');
+            } else {
+              return Alert.alert(
+                'Warning!',
+                'An unexpected error occurred while starting session',
+              );
+            }
+          } else {
+            return Alert.alert(
+              'Warning!',
+              'An unexpected error occurred while registering the user',
+            );
+          }
+        });
+      } else {
+        return Alert.alert('Warning!', 'The pin does not match');
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

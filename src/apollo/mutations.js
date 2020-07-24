@@ -3,7 +3,7 @@ import { gql } from 'apollo-boost';
 export const SIGNUP = gql`
   mutation signup(
     $name: String!
-    $email: String!
+    $email: String
     $type: SessionType!
     $token: String
     $userFBID: String
@@ -11,6 +11,7 @@ export const SIGNUP = gql`
     $platform: Platform!
     $authTokenSecret: String
     $userTWID: String
+    $pin: String!
   ) {
     signup(
       name: $name
@@ -22,6 +23,7 @@ export const SIGNUP = gql`
       platform: $platform
       authTokenSecret: $authTokenSecret
       userTWID: $userTWID
+      pin: $pin
     ) {
       success
       error
