@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import Button from './Button';
 import { sessionModel as session, twitterConfig } from '../utils/config';
 import { client, setSession, MUTATIONS, QUERIES } from '../apollo';
+import { fetchBalacnce } from '../utils/ksm';
 
 const { RNTwitterSignIn } = NativeModules;
 
@@ -84,6 +85,10 @@ const TWLoginButton = props => {
     return { login };
   };
 
+  const applyFetchBalacnce= () =>{
+    fetchBalacnce();
+  }
+
   const signIn = async () => {
     setloading(true);
     RNTwitterSignIn.init(
@@ -107,6 +112,7 @@ const TWLoginButton = props => {
         const session = mapUser(login);
         setSession({ session });
         setloading(false);
+        applyFetchBalacnce();
         return props.actionLogin();
       } else {
         const { success } = await signupTwitter(
@@ -127,6 +133,7 @@ const TWLoginButton = props => {
           const session = mapUser(login);
           setSession({ session });
           setloading(false);
+          applyFetchBalacnce();
           return props.actionLogin();
         }
       }

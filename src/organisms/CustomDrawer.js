@@ -5,7 +5,7 @@ import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { Text, Drawer } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { getSession, setSession } from '../apollo';
+import { getSession, setSession, cleanBalance } from '../apollo';
 import Balance from '../atoms/Balance';
 
 export default function CustomDrawerContent(props) {
@@ -21,7 +21,8 @@ export default function CustomDrawerContent(props) {
   }
 
   const logout = props => {
-      setSession({session: null})
+      setSession({session: null});
+      cleanBalance();
       props.navigation.dispatch(
         CommonActions.reset({
           index: 1,

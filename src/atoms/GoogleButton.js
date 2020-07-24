@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { sessionModel, googleConfig } from '../utils/config';
 import { client, MUTATIONS, QUERIES, setSession } from '../apollo';
 import Button from './Button';
+import { fetchBalacnce } from '../utils/ksm';
 
 const GoogleButton = props => {
   const navigation = useNavigation();
@@ -75,16 +76,18 @@ const GoogleButton = props => {
         const session = mapUser(login);
         setSession({ session });
         setLoading(false);
+        fetchBalacnce();
         return props.actionLogin();
       } else {
-        // If not then navigate to the CreatePin screen passing the payload to signup
-        navigation.navigate('CreatePin', {
-          name: email,
-          email: email,
-          token: idToken,
-          type: 'google',
-          platform: Platform.OS === 'ios' ? 'ios' : 'android',
-        });
+        const { success } = await signupGoogle(email, idToken);
+        if (success) {
+          const { login } = await loginGoogle(email, idToken);
+          const session = mapUser(login);
+          setSession({ session });
+          setLoading(false);
+          fetchBalacnce();
+          return props.actionLogin();
+        }
       }
     } catch (error) {
       setLoading(false);

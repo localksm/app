@@ -7,6 +7,7 @@ import {
   APOLLO_NAVIGATION,
   SELECTED_IMAGES,
   TOKEN,
+  GET_BALANCE_KSM
 } from './localQueries';
 
 const QUERIES = {
@@ -16,6 +17,7 @@ const QUERIES = {
   APOLLO_NAVIGATION,
   SELECTED_IMAGES,
   TOKEN,
+  GET_BALANCE_KSM
 };
 
 const mutation = async (payload, type = null) => {

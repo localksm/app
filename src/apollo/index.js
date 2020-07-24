@@ -152,7 +152,17 @@ const initialState = {
   navigation: null,
   evidenceImages: null,
   token: null,
+  polkadot: null
 };
 cache.writeData({ data: initialState });
 
 export const state = ApolloState;
+
+export const cleanBalance = async ()=>{
+  await ApolloState.mutation({
+    polkadot: {
+      balanceKSM:  null,
+      __typename: null,
+    },
+  });
+}

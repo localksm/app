@@ -23,9 +23,8 @@ const styles = StyleSheet.create({
   },
 });
 
-function BalanceHeader() {
+function BalanceHeader( ) {
   const [session, setSession] = React.useState(null);
-  const [show, showBalance] = React.useState(false);
 
   React.useEffect(() => {
     set();
@@ -35,14 +34,13 @@ function BalanceHeader() {
     const { session } = await getSession();
     setSession(session);
   }
-
+    
   return session !== null ? (
     <View style={styles.container}>
       <Text style={{ ...styles.textBalance}}>
         Balance
       </Text>
       <Balance
-        id={session.id}
         styleTotal={{ ...styles.textBalance, fontSize: 20 }}
         styleFree={{ ...styles.textBalance, fontSize: 10 }}
         styleText={{ ...styles.textBalance, fontSize: 14 }}

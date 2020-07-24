@@ -88,4 +88,12 @@ export const TOKEN = gql`
       jwt
     }
   }
-`
+`;
+
+export const GET_BALANCE_KSM = gql`
+  query GetBalanceKSM {
+    polkadot @client {
+      balanceKSM
+    }
+  }
+`;

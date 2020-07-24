@@ -16,17 +16,18 @@ function Balance(props) {
 
   async function set() {
     try {
-      const pin = await getPin();
-
-      const res = await client.query({
-        query: QUERIES.PUBLIC_KEY,
-        variables: { id: props.id, pin },
-      });
-      const address = res.data.publicKeys.ksm;
-      await getBalance(address, setResponse);
-
-      if (!props.isDrawer) {
-        await getAverageCost(setCostResponse);
+      const balance = await props.state.getData('GET_BALANCE_KSM');
+      if (balance.polkadot !== null && balance.polkadot.balanceKSM !== null) {
+        const obj = JSON.parse(balance.polkadot.balanceKSM);
+        setResponse(obj.fee, obj.total);
+        if (!props.isDrawer) {
+          setCostResponse(obj.averageCost);
+        }
+      }
+      if (balance.polkadot === null || balance.polkadot.balanceKSM === null) {
+        setTimeout(() => {
+          set();
+        }, 2700);
       }
     } catch (e) {
       throw new Error(e);
