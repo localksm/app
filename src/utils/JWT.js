@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import jwt from 'react-native-pure-jwt';
 import { ENV_VARS } from './config';
 
-export const storePin = value => {
+export const storePin = (value, callback) => {
   try {
     jwt
       .sign(
@@ -18,6 +18,7 @@ export const storePin = value => {
       .then(async token => {
         await AsyncStorage.removeItem('pin'); // Remove any previous token before saving
         await AsyncStorage.setItem('pin', token);
+        await callback(token)
       })
       .catch(error => {
         throw new Error(error);

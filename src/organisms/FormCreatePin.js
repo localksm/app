@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, CheckBox, Image, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  CheckBox,
+  Image,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Platform,
+  Switch,
+} from 'react-native';
 import { InputText, Button } from '../atoms';
 
 const FormCreatePin = props => {
@@ -8,72 +18,72 @@ const FormCreatePin = props => {
   const [valuePin, setValuePin] = useState('');
   const [confirmValuePin, setConfirmValuePin] = useState('');
 
-  useEffect(() => {    
-    setDisabled(!(valuePin!=='' && confirmValuePin!=='' && isSelected));
+  useEffect(() => {
+    setDisabled(!(valuePin !== '' && confirmValuePin !== '' && isSelected));
   });
-  
-  const handleSave = () => {
-    alert('Hola');
-  };
+
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-    <View>
-      <View style={styles.secction_logo}>
-        <Image
-          style={styles.logo}
-          source={require('../../assets/logoKSMNoText.png')}
-        />
-      </View>
-      <View style={styles.secction_body}>
-        <View style={{ alignItems: 'center' }}>
-          <Text style={styles.title}>Please create your PIN code</Text>
-          <View style={{ marginHorizontal: 20 }}>
-            <InputText
-              name="Ping"
-              keyboardType="numeric"
-              placeholder="6 digit-PIN"
-              onChangeText={setValuePin}
-              stylect={styles.inputStyle}
-            />
-            <InputText
-              name="PingConfirm"
-              keyboardType="numeric"
-              placeholder="Confirm 6 digit-PIN"
-              onChangeText={setConfirmValuePin}
-              stylect={styles.inputStyle}
-            />
-            <View style={styles.card}>
-              <Text style={styles.textCard}>
-                WARNING: Make sure to write down your pin and keep it in a safe
-                place, if you reinstall the application or delete your phone
-                cache you will be asked to enter your pin again. We don’t store
-                your pin, and we’ll not be able to restore it in case you forget
-                it, only you are able to unlock and decrypt your wallet.
-              </Text>
-            </View>
-
-            <View style={{ flexDirection: 'row', marginBottom: 20 }}>
-              <CheckBox
-                value={isSelected}
-                onValueChange={setSelected}
-                style={styles.checkbox}
-                tintColors={{ true: 'white', false: 'white' }}
+      <View>
+        <View style={styles.secction_logo}>
+          <Image
+            style={styles.logo}
+            source={require('../../assets/logoKSMNoText.png')}
+          />
+        </View>
+        <View style={styles.secction_body}>
+          <View style={{ alignItems: 'center' }}>
+            <Text style={styles.title}>Please create your PIN code</Text>
+            <View style={{ marginHorizontal: 20 }}>
+              <InputText
+                name="Ping"
+                keyboardType="numeric"
+                placeholder="6 digit-PIN"
+                onChangeText={setValuePin}
+                stylect={styles.inputStyle}
               />
-              <Text style={styles.label}>
-                I confirm that I kept my pin in a safe place
-              </Text>
+              <InputText
+                name="PingConfirm"
+                keyboardType="numeric"
+                placeholder="Confirm 6 digit-PIN"
+                onChangeText={setConfirmValuePin}
+                stylect={styles.inputStyle}
+              />
+              <View style={styles.card}>
+                <Text style={styles.textCard}>
+                  WARNING: Make sure to write down your pin and keep it in a
+                  safe place, if you reinstall the application or delete your
+                  phone cache you will be asked to enter your pin again. We
+                  don’t store your pin, and we’ll not be able to restore it in
+                  case you forget it, only you are able to unlock and decrypt
+                  your wallet.
+                </Text>
+              </View>
+
+              <View style={{ flexDirection: 'row', marginBottom: 20 }}>
+                {Platform.OS === 'android' ? (
+                  <CheckBox
+                    value={isSelected}
+                    onValueChange={setSelected}
+                    style={styles.checkbox}
+                    tintColors={{ true: 'white', false: 'white' }}
+                  />
+                ) : <Switch value={isSelected} onValueChange={setSelected} />}
+                <Text style={styles.label}>
+                  I confirm that I kept my pin in a safe place
+                </Text>
+              </View>
+              <Button
+                label="Create PIN"
+                stylect={!disabled ? styles.button : styles.buttonDisable}
+                action={() => handleSave()}
+                disabled={disabled}
+              />
             </View>
-            <Button
-              label="Create PIN"
-              stylect={!disabled ? styles.button : styles.buttonDisable}
-              action={handleSave}
-              disabled={disabled}
-            />
           </View>
         </View>
       </View>
-    </View>
     </TouchableWithoutFeedback>
   );
 };
@@ -132,10 +142,10 @@ const styles = StyleSheet.create({
     color: 'white',
     marginTop: '5%',
   },
-  inputStyle:{
+  inputStyle: {
     fontStyle: 'normal',
-    fontSize: 15
-  }
+    fontSize: 15,
+  },
 });
 
 export default FormCreatePin;

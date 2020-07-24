@@ -93,12 +93,14 @@ export const SEND_SETTLEMENT = gql`
     $proposalId: Int!
     $makerId: Int!
     $takerId: Int!
+    $pin: String!
     $node: NodeTypes!
   ) {
     sendSettlement(
       proposalId: $proposalId
       makerId: $makerId
       takerId: $takerId
+      pin: $pin
       node: $node
     ) {
       id

@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ActivityIndicator,
-  Alert,
-} from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useMutation } from '@apollo/react-hooks';
 import { Link, Button } from '../atoms';
@@ -13,6 +7,8 @@ import { PaymentForm } from '../molecules';
 import { withContext, getSession, MUTATIONS, QUERIES } from '../apollo';
 import { FormLayout } from '.';
 import { validateFormDetails } from '../utils/validateDetails';
+import { getPin } from '../utils/JWT';
+import EnterPin from './EnterPin';
 
 function mapPaymentMethod(method) {
   const methods = {
@@ -46,6 +42,9 @@ const OfferDetails = props => {
   const [bankData, setBankData] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
 
+  const [pin, setPin] = useState(null);
+  const [enterPinScreen, showEnterPinScreen] = useState(false);
+
   /**
    * Propiedades que nose de donde sacar
    */
@@ -62,22 +61,33 @@ const OfferDetails = props => {
     MUTATIONS.INSERT_PROPOSAL_PAYMENT_METHOD,
   );
 
-
   useEffect(() => {
+    // Get the user pin on screen load
+    async function getPinFromStorage() {
+      const storedPin = await getPin();
+      setPin(storedPin);
+    }
     _prepareData();
+    getPinFromStorage();
   }, []);
 
   const _prepareData = async () => {
     const { session } = await getSession();
-    await setTakerId(session.id);
+    setTakerId(session.id);
     const params = props.route.params;
-    await setPaymentMethod(params.body.paymentMethod);
-    await setPaymentDataform(true);
-    await setProposalId(params.id);
-    await setMakerId(params.body.makerId);
+    setPaymentMethod(params.body.paymentMethod);
+    setPaymentDataform(true);
+    setProposalId(params.id);
+    setMakerId(params.body.makerId);
   };
 
   const actionSendAcceptance = async () => {
+    // Let's check if pin is already stored, if not show the EnterPin screen and stop execution...
+    if (pin === null) {      
+      showEnterPinScreen(true);
+      return;
+    }
+
     if (
       props.route.params.body.operationType === 'sell' ||
       props.route.params.body.operationType === 'withdraw_funds'
@@ -125,6 +135,7 @@ const OfferDetails = props => {
             proposalId: proposalId,
             makerId: makerId,
             takerId,
+            pin,
             node: 'makerBuyer',
           },
         });
@@ -168,7 +179,7 @@ const OfferDetails = props => {
 
       try {
         setLoading(false);
-        props.navigation.navigate('AcceptedSell', {...props.route.params})
+        props.navigation.navigate('AcceptedSell', { ...props.route.params });
       } catch (error) {
         setLoading(false);
         return Alert.alert(
@@ -237,6 +248,7 @@ const OfferDetails = props => {
             proposalId: proposalId,
             makerId: makerId,
             takerId,
+            pin,
             node: 'takerBuyer',
           },
         });
@@ -355,7 +367,7 @@ const OfferDetails = props => {
     }
   };
 
-  return (
+  return !enterPinScreen ? (
     <FormLayout.Content>
       <FormLayout.Body>
         <ScrollView>
@@ -419,6 +431,18 @@ const OfferDetails = props => {
         </View>
       </FormLayout.Footer>
     </FormLayout.Content>
+  ) : (
+    <View style={styles.enterPinWrapper}>
+      <EnterPin
+        action={token => {
+          // Set token to local state
+          setPin(token);
+
+          // Hide enter pin screen
+          showEnterPinScreen(false);
+        }}
+      />
+    </View>
   );
 };
 
@@ -535,6 +559,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontFamily: 'Poppins-Regular',
     paddingTop: 10,
+  },
+  enterPinWrapper: {
+    backgroundColor: '#2D2D2D',
   },
 });
 
