@@ -221,3 +221,63 @@ export const detailOfferVE = [
     },
    
   ];
+
+  export const createPinValidations =[
+
+    {
+      field: 'pin',
+      method: 'isEmpty',
+      validWhen: false,
+      message: 'The input pin cannot be empty',
+    },
+    {
+      field: 'pin',
+      method: 'isLength',
+      args: [{min:6, max: undefined}],
+      validWhen: true,
+      message: 'You must enter 6 numbers',
+    },
+    {
+      field: 'pin',
+      method: 'isInt',      
+      validWhen: true,
+      message: 'The pin can only be numbers',
+    },
+    {
+      field: 'pinConfirm',
+      method: 'isEmpty',
+      validWhen: false,
+      message: 'The input last pinConfirm cannot be empty',
+    },
+    {
+      field: 'pinConfirm',
+      method: 'isLength',
+      args: [{min:6, max: undefined}],
+      validWhen: true,
+      message: 'You must enter 6 numbers',
+    },
+    {
+      field: 'pinConfirm',
+      method: 'isInt',      
+      validWhen: true,
+      message: 'The pinConfirm can only be numbers',
+    }
+      
+  ];
+
+  export const PinFormValidations =[
+
+    {
+      field: 'pin',
+      method: 'isEmpty',
+      validWhen: false,
+      message: 'The input pin cannot be empty',
+    },
+    {
+      field: 'pin',
+      method: 'isLength',
+      args: [{min:6, max: undefined}],
+      validWhen: true,
+      message: 'You must enter 6 numbers',
+    }      
+  ];

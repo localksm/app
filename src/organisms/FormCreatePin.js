@@ -7,34 +7,77 @@ import {
   Image,
   TouchableWithoutFeedback,
   Keyboard,
-  Platform,
   Switch,
-  Alert,
+  Platform,
+  ActivityIndicator,
 } from 'react-native';
-import { InputText, Button } from '../atoms';
-import { MUTATIONS } from '../apollo';
 import { useMutation } from '@apollo/react-hooks';
+import { InputText, Button, InputLayout } from '../atoms';
+import FormValidator from '../utils/validator';
+import { createPinValidations } from '../utils/validations';
+import { MUTATIONS, setSession } from '../apollo';
 import { storePin } from '../utils/JWT';
+import { sessionModel } from '../utils/config';
+import { fetchBalacnce } from '../utils/ksm';
+import eye from '../../assets/eye.png';
+import eyeOff from '../../assets/eye-off.png';
 
 const FormCreatePin = props => {
-  console.log(props.route.params);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [signup] = useMutation(MUTATIONS.SIGNUP);
+  const [login] = useMutation(MUTATIONS.LOGIN);
   const [isSelected, setSelected] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [valuePin, setValuePin] = useState('');
-  const [confirmValuePin, setConfirmValuePin] = useState('');
+  const [confirmPinValue, setConfirmPinValue] = useState('');
+  const [secure, setSecure] = React.useState(true);
+  const [secureConfirm, setSecureConfirm] = React.useState(true);
   const { email, name, password, platform, type } = props.route.params;
-  const [signup] = useMutation(MUTATIONS.SIGNUP);
-  const [login] = useMutation(MUTATIONS.LOGIN);
 
   useEffect(() => {
-    setDisabled(!(valuePin !== '' && confirmValuePin !== '' && isSelected));
+    setDisabled(!(valuePin !== '' && confirmPinValue !== '' && isSelected));
   });
 
+  const validateForm = variables => {
+    const formValidator = new FormValidator(createPinValidations);
+    let validation = formValidator.validate(variables);
+
+    if (validation.isValid) {
+      validation = {
+        pinConfirm: {
+          isInvalid: valuePin !== confirmPinValue,
+          message: 'The PIN confirmation does not match',
+        },
+        isValid: valuePin === confirmPinValue,
+      };
+    }
+
+    return validation;
+  };
+
+  const mapUser = data => {
+    sessionModel['token'] = data.token;
+    sessionModel['id'] = data.id;
+    sessionModel['name'] = data.name;
+    sessionModel['email'] = data.email;
+    sessionModel['sessionType'] = 'email';
+    sessionModel['__typename'] = 'session';
+
+    return sessionModel;
+  };
+
   const handleSave = () => {
-    try {
-      if (valuePin === confirmValuePin) {
+    const validator = validateForm({
+      pin: valuePin,
+      pinConfirm: confirmPinValue,
+    });
+
+    setErrors(validator);
+    if (validator.isValid) {
+      setLoading(true);
+      try {
         storePin(valuePin, async token => {
-          console.log('es el token====>', token);
           const { data } = await signup({
             variables: {
               email: email,
@@ -57,25 +100,28 @@ const FormCreatePin = props => {
             });
             const { success } = data.login;
             if (success) {
+              const session = await mapUser(data.login);
+              setSession({ session });
+              fetchBalacnce();
               return props.navigation.navigate('Drawer');
             } else {
+              setLoading(false);
               return Alert.alert(
                 'Warning!',
                 'An unexpected error occurred while starting session',
               );
             }
           } else {
+            setLoading(false);
             return Alert.alert(
               'Warning!',
               'An unexpected error occurred while registering the user',
             );
           }
         });
-      } else {
-        return Alert.alert('Warning!', 'The pin does not match');
+      } catch (error) {
+        throw new Error(error);
       }
-    } catch (error) {
-      throw new Error(error);
     }
   };
 
@@ -92,20 +138,47 @@ const FormCreatePin = props => {
           <View style={{ alignItems: 'center' }}>
             <Text style={styles.title}>Please create your PIN code</Text>
             <View style={{ marginHorizontal: 20 }}>
-              <InputText
-                name="Ping"
-                keyboardType="numeric"
-                placeholder="6 digit-PIN"
-                onChangeText={setValuePin}
-                stylect={styles.inputStyle}
-              />
-              <InputText
-                name="PingConfirm"
-                keyboardType="numeric"
-                placeholder="Confirm 6 digit-PIN"
-                onChangeText={setConfirmValuePin}
-                stylect={styles.inputStyle}
-              />
+              <InputLayout element="pin" resultValidator={errors}>
+                <View style={styles.groups}>
+                  <InputText
+                    name="Ping"
+                    keyboardType="numeric"
+                    placeholder="6 digit-PIN"
+                    secureTextEntry={secure}
+                    value={valuePin}
+                    onChangeText={setValuePin}
+                    maxLength={6}
+                    stylect={styles.inputStyle}
+                  />
+                  <TouchableWithoutFeedback onPress={() => setSecure(!secure)}>
+                    <Image
+                      style={styles.inputIco}
+                      source={secure ? eye : eyeOff}
+                    />
+                  </TouchableWithoutFeedback>
+                </View>
+              </InputLayout>
+              <InputLayout element="pinConfirm" resultValidator={errors}>
+                <View style={styles.groups}>
+                  <InputText
+                    name="PingConfirm"
+                    keyboardType="numeric"
+                    placeholder="Confirm 6 digit-PIN"
+                    secureTextEntry={secureConfirm}
+                    value={confirmPinValue}
+                    onChangeText={setConfirmPinValue}
+                    stylect={styles.inputStyle}
+                    maxLength={6}
+                  />
+                  <TouchableWithoutFeedback
+                    onPress={() => setSecureConfirm(!secureConfirm)}>
+                    <Image
+                      style={styles.inputIco}
+                      source={secureConfirm ? eye : eyeOff}
+                    />
+                  </TouchableWithoutFeedback>
+                </View>
+              </InputLayout>
               <View style={styles.card}>
                 <Text style={styles.textCard}>
                   WARNING: Make sure to write down your pin and keep it in a
@@ -125,17 +198,25 @@ const FormCreatePin = props => {
                     style={styles.checkbox}
                     tintColors={{ true: 'white', false: 'white' }}
                   />
-                ) : <Switch value={isSelected} onValueChange={setSelected} />}
+                ) : (
+                  <Switch value={isSelected} onValueChange={setSelected} />
+                )}
                 <Text style={styles.label}>
                   I confirm that I kept my pin in a safe place
                 </Text>
               </View>
-              <Button
-                label="Create PIN"
-                stylect={!disabled ? styles.button : styles.buttonDisable}
-                action={() => handleSave()}
-                disabled={disabled}
-              />
+              {!loading ? (
+                <Button
+                  label="Create PIN"
+                  stylect={!disabled ? styles.button : styles.buttonDisable}
+                  action={handleSave}
+                  disabled={disabled}
+                />
+              ) : (
+                <View style={styles.text}>
+                  <ActivityIndicator size="large" color="white" />
+                </View>
+              )}
             </View>
           </View>
         </View>
@@ -201,6 +282,19 @@ const styles = StyleSheet.create({
   inputStyle: {
     fontStyle: 'normal',
     fontSize: 15,
+    width: '100%',
+  },
+  inputIco: {
+    position: 'absolute',
+    color: 'white',
+    right: 0,
+    top: '40%',
+    maxWidth: 32,
+    maxHeight: 32,
+  },
+  groups: {
+    width: '100%',
+    flexDirection: 'row',
   },
 });
 

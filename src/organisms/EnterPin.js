@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Image,
-} from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
 import { CodeInput } from '../molecules';
-import { Button } from '../atoms';
-import { storePin } from '../utils/JWT';
-
+import { Button, InputLayout } from '../atoms';
+import FormValidator from '../utils/validator';
+import { PinFormValidations } from '../utils/validations';
+import { storePin } from '../utils/JWT'
 const EnterPin = props => {
+  const [errors, setErrors] = useState({});
   const [disabled, setDisabled] = useState(true);
   const [pinCode, setPinCode] = useState('');
-  useEffect(() => {
-    setDisabled(!(pinCode.length === 6));
-  });
 
-  function savePin() {
-    storePin(pinCode, props.action);
-  }
+  const validateForm = variables => {
+    const formValidator = new FormValidator(PinFormValidations);
+    let validation = formValidator.validate(variables);
+    return validation;
+  };
+
+  const savePin = () => {
+    const validator = validateForm({
+      pin: pinCode,
+    });
+    setErrors(validator);
+    if (validator.isValid) {
+      storePin(pinCode, props.action);
+    }
+  };
 
   return (
     <View>
@@ -34,7 +38,15 @@ const EnterPin = props => {
         <View style={styles.containerBody}>
           <Text style={styles.title}>Enter your PIN code</Text>
           <View style={styles.container_codeInput}>
-            <CodeInput codeLength={6} onCodeChange={setPinCode} />
+            <InputLayout element="pin" resultValidator={errors}>
+              <CodeInput
+                codeLength={6}
+                onCodeChange={value => {
+                  setPinCode(value);
+                  setDisabled(!(value.length === 6));
+                }}
+              />
+            </InputLayout>
           </View>
           <Button
             label="Accept"
