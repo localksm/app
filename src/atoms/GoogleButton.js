@@ -80,15 +80,8 @@ const GoogleButton = props => {
 
   const signup = async () => {
     setLoading(true);
-    const pin = await getPin();
-    console.log(pin);
-    if (pin === null || pin === '') {
-      setLoading(false);
-      props.actionPin();
-      return;
-    }
-
     try {
+      const pin = await getPin();
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       const { email } = userInfo.user;
@@ -101,13 +94,18 @@ const GoogleButton = props => {
         const session = mapUser(login);
         setSession({ session });
         setLoading(false);
-        fetchBalacnce();
+        if (pin === null || pin === '') {
+          setLoading(false);
+          props.actionPin();
+          return;
+        }
         const { isValid } = await verifyPin(session.id, pin);
         if (!isValid) {
           return props.actionPin();
-        } else {
-          return props.actionLogin();
-        }        
+        }
+
+        fetchBalacnce();
+        return props.actionLogin();
       } else {
         // If not then navigate to the CreatePin screen passing the payload to signup
         navigation.navigate('CreatePin', {
