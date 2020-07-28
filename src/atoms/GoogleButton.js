@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  StyleSheet,
+  Platform,
+} from 'react-native';
 import {
   GoogleSignin,
   statusCodes,
@@ -9,6 +15,7 @@ import { sessionModel, googleConfig } from '../utils/config';
 import { client, MUTATIONS, QUERIES, setSession } from '../apollo';
 import Button from './Button';
 import { fetchBalacnce } from '../utils/ksm';
+import { getPin } from '../utils/JWT';
 
 const GoogleButton = props => {
   const navigation = useNavigation();
@@ -47,6 +54,16 @@ const GoogleButton = props => {
     return { emailExists };
   };
 
+  const verifyPin = async (id, pin) => {
+    const response = await client.query({
+      query: QUERIES.VERIFY_PIN,
+      variables: { id: id, pin: pin },
+    });
+
+    const { isValid } = response.data.validatePin;
+    return { isValid };
+  };
+
   const loginGoogle = async (email, idToken) => {
     const response = await client.mutate({
       mutation: MUTATIONS.LOGIN,
@@ -63,6 +80,14 @@ const GoogleButton = props => {
 
   const signup = async () => {
     setLoading(true);
+    const pin = await getPin();
+    console.log(pin);
+    if (pin === null || pin === '') {
+      setLoading(false);
+      props.actionPin();
+      return;
+    }
+
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
@@ -77,17 +102,24 @@ const GoogleButton = props => {
         setSession({ session });
         setLoading(false);
         fetchBalacnce();
-        return props.actionLogin();
-      } else {
-        const { success } = await signupGoogle(email, idToken);
-        if (success) {
-          const { login } = await loginGoogle(email, idToken);
-          const session = mapUser(login);
-          setSession({ session });
-          setLoading(false);
-          fetchBalacnce();
+        const { isValid } = await verifyPin(session.id, pin);
+        if (!isValid) {
+          return props.actionPin();
+        } else {
           return props.actionLogin();
-        }
+        }        
+      } else {
+        // If not then navigate to the CreatePin screen passing the payload to signup
+        navigation.navigate('CreatePin', {
+          payload: {
+            name: email,
+            email: email,
+            token: idToken,
+            type: 'google',
+            platform: Platform.OS === 'ios' ? 'ios' : 'android',
+          },
+        });
+        setLoading(false);
       }
     } catch (error) {
       setLoading(false);

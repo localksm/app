@@ -100,6 +100,7 @@ const FormSignIn = props => {
               label="Login with Google"
               stylect={{ backgroundColor: '#6BA3FA' }}
               actionLogin={() => navigation.navigate('Drawer')}
+              actionPin={() => setVeriFyPin(true)}
             />
           </View>
 
@@ -117,7 +118,6 @@ const FormSignIn = props => {
               stylect={{ backgroundColor: '#58C5FA' }}
               init={launchStartTwitter && currentLogin === 'Twitter'}
               actionPin={() => setVeriFyPin(true)}
-
               actionLogin={() => navigation.navigate('Drawer')}
             />
           </View>
