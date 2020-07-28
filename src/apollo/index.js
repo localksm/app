@@ -41,6 +41,7 @@ import {
   PUBLIC_KEY,
   QUERY_PROPOSALS,
   QUERY_USER_PROPOSALS,
+  VERIFY_PIN,
 } from './queries';
 
 const httpLink = new HttpLink({
@@ -122,6 +123,7 @@ export const QUERIES = {
   PUBLIC_KEY,
   QUERY_PROPOSALS,
   QUERY_USER_PROPOSALS,
+  VERIFY_PIN
 };
 
 export const MUTATIONS = {

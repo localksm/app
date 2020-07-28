@@ -7,10 +7,11 @@ import { Text, Drawer } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { getSession, setSession, cleanBalance } from '../apollo';
 import Balance from '../atoms/Balance';
+import { removePin } from '../utils/JWT';
 
 export default function CustomDrawerContent(props) {
   const [user, setUser] = useState(null);
-  
+
   useEffect(() => {
     set();
   }, []);
@@ -20,18 +21,17 @@ export default function CustomDrawerContent(props) {
     setUser(session);
   }
 
-  const logout = props => {
-      setSession({session: null});
-      cleanBalance();
-      props.navigation.dispatch(
-        CommonActions.reset({
-          index: 1,
-          routes: [{ name: 'SignIn' }],
-        }),
-      );
-    };
-    
-  
+  const logout = async props => {
+    await removePin();
+    setSession({ session: null });
+    cleanBalance();
+    props.navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: 'SignIn' }],
+      }),
+    );
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -40,14 +40,17 @@ export default function CustomDrawerContent(props) {
           <View style={styles.userInfoSection}>
             <View style={{ paddingBottom: '5%', alignItems: 'center' }}>
               <Icon name="person" style={styles.icon} />
-              <Text style={styles.text}>
-                {user !== null && user.name}
-              </Text>
+              <Text style={styles.text}>{user !== null && user.name}</Text>
             </View>
             <View>
               <Text style={styles.text}>Balance</Text>
               {user !== null ? (
-                <Balance styleTotal={styles.text} styleFree={styles.text} id={user.id} isDrawer />
+                <Balance
+                  styleTotal={styles.text}
+                  styleFree={styles.text}
+                  id={user.id}
+                  isDrawer
+                />
               ) : (
                 <ActivityIndicator />
               )}
@@ -78,7 +81,8 @@ export default function CustomDrawerContent(props) {
           <TouchableOpacity onPress={() => props.navigation.navigate('Help')}>
             <DrawerItem label="Help" labelStyle={styles.labelStyle} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => props.navigation.navigate('QuickTour')}>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('QuickTour')}>
             <DrawerItem label="Quick Tour" labelStyle={styles.labelStyle} />
           </TouchableOpacity>
         </Drawer.Section>
@@ -87,7 +91,7 @@ export default function CustomDrawerContent(props) {
         <DrawerItem
           label="Logout"
           labelStyle={{ color: 'white', fontSize: 18 }}
-          onPress={() => logout(props)}
+          onPress={async () => await logout(props)}
         />
       </Drawer.Section>
     </View>

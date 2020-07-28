@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Platform, Alert } from 'react-native';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { useNavigation } from '@react-navigation/native';
@@ -9,6 +9,7 @@ import { sessionModel as session } from '../utils/config';
 import { setSession, client } from '../apollo';
 import { VERIFY_USER } from '../apollo/queries';
 import { fetchBalacnce } from '../utils/ksm';
+import { getPin } from '../utils/JWT';
 
 validateEmail = async (email, name) => {
   const response = await client.query({
@@ -27,6 +28,13 @@ const FBLoginButton = props => {
   const navigation = useNavigation();
   const [loading, setloading] = useState(false);
   const [loginFacebook] = useMutation(LOGIN);
+
+  useEffect(() => {
+    if (props.init) {
+      props.actionPin(false);
+      _signIn();
+    }
+  }, []);
 
   const applyFetchBalacnce= () =>{
     fetchBalacnce();
@@ -51,17 +59,20 @@ const FBLoginButton = props => {
 
     const fbRes = await fbResProxy.json();
     const { email, name, id } = fbRes;
+    const pin = await getPin();
+
     const payload = {
       email: email,
       type: 'facebook',
       userFBID: id,
       token,
       platform: Platform.OS === 'ios' ? 'ios' : 'android',
+      pin: pin
     };
 
     const { emailExists } = await validateEmail(email, name);
     setloading(true);
-    if (!emailExists) {
+    if (!emailExists) {      
       const resultSignUp = await _registerUser(token);
       const {
         data: { signup },
@@ -71,6 +82,10 @@ const FBLoginButton = props => {
         alert('Try later');
         return;
       }
+    }
+        
+    if (pin === null) {
+      return props.actionPin(true);
     }
 
     const result = await loginFacebook({ variables: payload });
@@ -151,7 +166,7 @@ const FBLoginButton = props => {
       };
 
       // Navigate to CreatePin Screen
-      navigation.navigate('CreatePin', { ...payload });
+      navigation.navigate('CreatePin', { payload });
     }
   };
 

@@ -18,7 +18,7 @@ export const storePin = (value, callback) => {
       .then(async token => {
         await AsyncStorage.removeItem('pin'); // Remove any previous token before saving
         await AsyncStorage.setItem('pin', token);
-        await callback(token)
+        await callback(token);
       })
       .catch(error => {
         throw new Error(error);
@@ -32,4 +32,8 @@ export const getPin = async () => {
   const response = await AsyncStorage.getItem('pin');
 
   return response;
+};
+
+export const removePin = async () => {
+  await AsyncStorage.removeItem('pin');
 };

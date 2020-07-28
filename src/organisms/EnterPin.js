@@ -16,13 +16,15 @@ const EnterPin = props => {
     return validation;
   };
 
-  const savePin = () => {
+  const savePin = async () => {
     const validator = validateForm({
       pin: pinCode,
     });
     setErrors(validator);
     if (validator.isValid) {
-      storePin(pinCode, props.action);
+      storePin(pinCode, jwt => {
+        props.action(jwt);
+      });      
     }
   };
 

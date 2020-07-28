@@ -38,7 +38,7 @@ const ButtonSignUp = props => {
     const { emailExists } = await verifyUser(email);
 
     // Prepare signup payload
-    const payloadSugnUp = {
+    const payload = {
       name: username,
       email: email,
       password: password,
@@ -71,7 +71,7 @@ const ButtonSignUp = props => {
       }
       if (!emailExists) {
         // Navigate to CreatePin passing signup params
-        navigation.navigate('CreatePin', { ...payloadSugnUp });
+        navigation.navigate('CreatePin', { payload });
       } else {
         setLoading(false);
         return Alert.alert('Warning!', 'The email is already registered', [

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   NativeModules,
   StyleSheet,
@@ -13,12 +13,20 @@ import Button from './Button';
 import { sessionModel as session, twitterConfig } from '../utils/config';
 import { client, setSession, MUTATIONS, QUERIES } from '../apollo';
 import { fetchBalacnce } from '../utils/ksm';
+import { getPin } from '../utils/JWT';
 
 const { RNTwitterSignIn } = NativeModules;
 
 const TWLoginButton = props => {
   const navigation = useNavigation();
   const [loading, setloading] = useState(false);
+
+  useEffect(() => {
+    if (props.init) {
+      props.actionPin(false);
+      signIn();
+    }
+  }, []);
 
   const mapUser = data => {
     session['id'] = data.id;
@@ -52,13 +60,15 @@ const TWLoginButton = props => {
   ) => {
     // Navigate to CreatePin Screen
     navigation.navigate('CreatePin', {
-      name: name,
-      email: email ? email : 'null',
-      type: 'twitter',
-      token: authToken,
-      authTokenSecret: authTokenSecret,
-      userTWID: userID,
-      platform: Platform.OS === 'ios' ? 'ios' : 'android',
+      payload: {
+        name: name,
+        email: email ? email : 'null',
+        type: 'twitter',
+        token: authToken,
+        authTokenSecret: authTokenSecret,
+        userTWID: userID,
+        platform: Platform.OS === 'ios' ? 'ios' : 'android',
+      },
     });
   };
 
@@ -69,6 +79,7 @@ const TWLoginButton = props => {
     authTokenSecret,
     userID,
   ) => {
+    const pin = await getPin();    
     const response = await client.mutate({
       mutation: MUTATIONS.LOGIN,
       variables: {
@@ -79,18 +90,19 @@ const TWLoginButton = props => {
         authTokenSecret: authTokenSecret,
         userTWID: userID,
         platform: Platform.OS === 'ios' ? 'ios' : 'android',
+        pin: pin
       },
     });
     const { login } = response.data !== null && response.data;
     return { login };
   };
 
-  const applyFetchBalacnce= () =>{
+  const applyFetchBalacnce = () => {
     fetchBalacnce();
-  }
+  };
 
   const signIn = async () => {
-    setloading(true);
+    setloading(true);  
     RNTwitterSignIn.init(
       twitterConfig.consumer_key,
       twitterConfig.consumer_secret,
@@ -102,6 +114,10 @@ const TWLoginButton = props => {
       const { emailExists, nameExists } = await validateEmail(email, userName);
 
       if (emailExists && nameExists) {
+        const pin = await getPin();
+        if (pin === null) {
+          return props.actionPin(true);
+        }
         const { login } = await loginTwitter(
           email,
           userName,
@@ -115,27 +131,8 @@ const TWLoginButton = props => {
         applyFetchBalacnce();
         return props.actionLogin();
       } else {
-        const { success } = await signupTwitter(
-          email,
-          userName,
-          authToken,
-          authTokenSecret,
-          userID,
-        );
-        if (success) {
-          const { login } = await loginTwitter(
-            email,
-            userName,
-            authToken,
-            authTokenSecret,
-            userID,
-          );
-          const session = mapUser(login);
-          setSession({ session });
-          setloading(false);
-          applyFetchBalacnce();
-          return props.actionLogin();
-        }
+        signupTwitter(email, userName, authToken, authTokenSecret, userID);
+        setloading(false);
       }
     } catch (e) {
       setloading(false);

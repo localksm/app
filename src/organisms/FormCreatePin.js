@@ -33,7 +33,6 @@ const FormCreatePin = props => {
   const [confirmPinValue, setConfirmPinValue] = useState('');
   const [secure, setSecure] = React.useState(true);
   const [secureConfirm, setSecureConfirm] = React.useState(true);
-  const { email, name, password, platform, type } = props.route.params;
 
   useEffect(() => {
     setDisabled(!(valuePin !== '' && confirmPinValue !== '' && isSelected));
@@ -78,13 +77,14 @@ const FormCreatePin = props => {
       setLoading(true);
       try {
         storePin(valuePin, async token => {
+          console.log( {
+            ...props.route.params.payload,
+            pin: token,
+          })
+
           const { data } = await signup({
             variables: {
-              email: email,
-              name: name,
-              password: password,
-              platform: platform,
-              type: type,
+              ...props.route.params.payload,
               pin: token,
             },
           });
@@ -92,16 +92,13 @@ const FormCreatePin = props => {
           if (success) {
             const { data } = await login({
               variables: {
-                email: email,
-                password: password,
-                platform: platform,
-                type: type,
+                ...props.route.params.payload,
               },
             });
             const { success } = data.login;
             if (success) {
               const session = await mapUser(data.login);
-              setSession({ session });
+              await setSession({ session });
               fetchBalacnce();
               return props.navigation.navigate('Drawer');
             } else {

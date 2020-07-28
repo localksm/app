@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -17,19 +17,40 @@ import {
   ButtonSignIn,
   TWLoginButton,
 } from '../atoms';
+import { getPin } from '../utils/JWT';
+import EnterPin from './EnterPin';
 
 const FormSignIn = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorPass, setErrorPass] = useState(false);
+  const [requestPin, setRequestPin] = useState(false);
+  const [launchStartTwitter, setLaunchStartTwitter] = useState(false);
+  const [launchStartFacebook, setLaunchStartFacebook] = useState(false);
+  const [currentLogin, setCurrentLogin] = useState('');
+
+  const [pin, setPin] = useState('');
+  const [verifyPin, setVeriFyPin] = useState(false);
   const navigation = useNavigation();
+
   const dataSession = {
     email: email,
     password: password,
+    pin: pin,
   };
+  useEffect(() => {
+    async function newPin() {
+      const response = await getPin();
+      if (response !== null) {
+        return setPin(response);
+      }
+    }
+    newPin();
+  }, []);
 
-  return (
+
+  return !verifyPin ? (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.wrapper}>
         <View key="logo" style={styles.secction_logo}>
@@ -65,7 +86,10 @@ const FormSignIn = props => {
             <ButtonSignIn
               label="Login"
               stylect={{ backgroundColor: '#DB5A3A' }}
-              actionSignIn={() => navigation.navigate('Drawer')}
+              actionSignIn={() =>
+                pin !== null ? navigation.navigate('Drawer') : () => {}
+              }
+              actionPin={() => setVeriFyPin(true)}
               variables={dataSession}
               actionErrorEmail={() => setErrorEmail(true)}
               actionErrorPass={() => setErrorPass(true)}
@@ -78,16 +102,22 @@ const FormSignIn = props => {
               actionLogin={() => navigation.navigate('Drawer')}
             />
           </View>
+
           <View style={styles.buttons}>
             <FBLoginButton
-              actionLogin={() => navigation.navigate('Drawer')}
               type={'signin'}
+              init={launchStartFacebook && currentLogin === 'Facebook'}
+              actionPin={() => setVeriFyPin(true)}
+              actionLogin={() => navigation.navigate('Drawer')}
             />
           </View>
           <View style={styles.buttons}>
             <TWLoginButton
               label="Login with Twitter"
               stylect={{ backgroundColor: '#58C5FA' }}
+              init={launchStartTwitter && currentLogin === 'Twitter'}
+              actionPin={() => setVeriFyPin(true)}
+
               actionLogin={() => navigation.navigate('Drawer')}
             />
           </View>
@@ -102,6 +132,13 @@ const FormSignIn = props => {
         </View>
       </View>
     </TouchableWithoutFeedback>
+  ) : (
+    <EnterPin
+      action={token => {
+        setPin(token);
+        setVeriFyPin(false);
+      }}
+    />
   );
 };
 

@@ -1,6 +1,7 @@
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { Keyring } from '@polkadot/keyring';
 import { getSession, client, state, QUERIES } from '../apollo';
+import { getPin } from './JWT';
 
 export async function getBalance(address, callback) {
   const wsProvider = new WsProvider('wss://kusama-rpc.polkadot.io');
@@ -61,12 +62,14 @@ export function validateAddress(addr) {
 
 
 export const fetchBalacnce = async ()=>{
+  const pin = await getPin()
   const { session } = await getSession();
   const res = await client.query({
     query: QUERIES.PUBLIC_KEY,
-    variables: { id: session.id },
+    variables: { id: session.id, pin },
   });
   const address = res.data.publicKeys.ksm;
+
   const  balance = {
     fee: 0.01,
     total: 0,

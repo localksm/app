@@ -126,3 +126,10 @@ export const QUERY_USER_PROPOSALS = gql`
     }
   }
 `;
+
+export const VERIFY_PIN = gql`
+query validatePin($id: Int!, $pin: String!) {
+  validatePin(id: $id, pin: $pin) {
+    isValid
+  }
+}`;
