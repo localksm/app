@@ -77,11 +77,6 @@ const FormCreatePin = props => {
       setLoading(true);
       try {
         storePin(valuePin, async token => {
-          console.log( {
-            ...props.route.params.payload,
-            pin: token,
-          })
-
           const { data } = await signup({
             variables: {
               ...props.route.params.payload,

@@ -79,7 +79,7 @@ const TWLoginButton = props => {
     authTokenSecret,
     userID,
   ) => {
-    const pin = await getPin();    
+    const pin = await getPin();
     const response = await client.mutate({
       mutation: MUTATIONS.LOGIN,
       variables: {
@@ -90,7 +90,7 @@ const TWLoginButton = props => {
         authTokenSecret: authTokenSecret,
         userTWID: userID,
         platform: Platform.OS === 'ios' ? 'ios' : 'android',
-        pin: pin
+        pin: pin,
       },
     });
     const { login } = response.data !== null && response.data;
@@ -102,7 +102,7 @@ const TWLoginButton = props => {
   };
 
   const signIn = async () => {
-    setloading(true);  
+    setloading(true);
     RNTwitterSignIn.init(
       twitterConfig.consumer_key,
       twitterConfig.consumer_secret,
@@ -115,9 +115,7 @@ const TWLoginButton = props => {
 
       if (emailExists && nameExists) {
         const pin = await getPin();
-        if (pin === null) {
-          return props.actionPin(true);
-        }
+
         const { login } = await loginTwitter(
           email,
           userName,
@@ -128,6 +126,12 @@ const TWLoginButton = props => {
         const session = mapUser(login);
         setSession({ session });
         setloading(false);
+
+        // Check for pin before verifying and after setting session
+        if (pin === null || pin === '') {
+          return props.actionPin(true);
+        }
+
         applyFetchBalacnce();
         return props.actionLogin();
       } else {

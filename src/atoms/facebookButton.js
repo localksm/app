@@ -36,9 +36,9 @@ const FBLoginButton = props => {
     }
   }, []);
 
-  const applyFetchBalacnce= () =>{
+  const applyFetchBalacnce = () => {
     fetchBalacnce();
-  }
+  };
 
   const mapUser = data => {
     session['id'] = data.id;
@@ -67,12 +67,12 @@ const FBLoginButton = props => {
       userFBID: id,
       token,
       platform: Platform.OS === 'ios' ? 'ios' : 'android',
-      pin: pin
+      pin: pin,
     };
 
     const { emailExists } = await validateEmail(email, name);
     setloading(true);
-    if (!emailExists) {      
+    if (!emailExists) {
       const resultSignUp = await _registerUser(token);
       const {
         data: { signup },
@@ -83,10 +83,6 @@ const FBLoginButton = props => {
         return;
       }
     }
-        
-    if (pin === null) {
-      return props.actionPin(true);
-    }
 
     const result = await loginFacebook({ variables: payload });
     if (result.data) {
@@ -96,6 +92,12 @@ const FBLoginButton = props => {
       const sessionResult = mapUser(login);
       setloading(false);
       setSession({ session: sessionResult });
+
+      // Check for pin before verifying and after setting session
+      if (pin === null || pin === '') {
+        return props.actionPin(true);
+      }
+
       applyFetchBalacnce();
       props.actionLogin();
     } else {

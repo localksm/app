@@ -4,7 +4,8 @@ import { CodeInput } from '../molecules';
 import { Button, InputLayout } from '../atoms';
 import FormValidator from '../utils/validator';
 import { PinFormValidations } from '../utils/validations';
-import { storePin } from '../utils/JWT'
+import { storePin } from '../utils/JWT';
+import { getSession, client, QUERIES } from '../apollo';
 const EnterPin = props => {
   const [errors, setErrors] = useState({});
   const [disabled, setDisabled] = useState(true);
@@ -17,14 +18,30 @@ const EnterPin = props => {
   };
 
   const savePin = async () => {
+    const { session } = await getSession();
+
     const validator = validateForm({
       pin: pinCode,
     });
     setErrors(validator);
     if (validator.isValid) {
-      storePin(pinCode, jwt => {
+      storePin(pinCode, async jwt => {
+        const { data } = await client.query({
+          query: QUERIES.VERIFY_PIN,
+          variables: {
+            id: session.id,
+            pin: jwt,
+          },
+        });
+
+        const pinIsValid = data.validatePin.isValid;
+
+        if (!pinIsValid) {
+          return alert('Invalid Pin');
+        }
+        
         props.action(jwt);
-      });      
+      });
     }
   };
 

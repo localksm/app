@@ -68,12 +68,6 @@ const ButtonSignIn = props => {
         props.actionErrorPass();
         return Alert.alert('Warning!', 'Password is required');
       }
-      
-      if (pin === null || pin === '') {
-        setLoad(false);
-        props.actionPin();
-        return;
-      }
 
       if (!validator.isEmail(email)) {
         setLoad(false);
@@ -94,7 +88,16 @@ const ButtonSignIn = props => {
         const session = mapUser(data.login);
         setSession({ session });
         setLoad(false);
+           
+        // Check for pin before verifying and after setting session
+        if (pin === null || pin === '') {
+          setLoad(false);
+          props.actionPin();
+          return;
+        }
+
         fetchBalacnce();
+
         const { isValid } = await verifyPin(id, pin);
         if (!isValid) {
           return props.actionPin();
