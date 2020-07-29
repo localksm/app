@@ -166,6 +166,7 @@ export const ADD_FUNDS = gql`
     $juryPool: String
     $challengeStake: Float
     $paymentMethod: PaymentMethods!
+    $recipientAddress: String
     $localCurrency: CurrencyEnum
   ) {
     buy(
@@ -179,6 +180,7 @@ export const ADD_FUNDS = gql`
       challengeStake: $challengeStake
       paymentMethod: $paymentMethod
       localCurrency: $localCurrency
+      recipientAddress: $recipientAddress
       node: makerSeller
     ) {
       id
@@ -239,6 +241,7 @@ export const SELL = gql`
     $timestamp: String
     $juryPool: String
     $paymentMethod: PaymentMethods!
+    $recipientAddress: String
     $localCurrency: CurrencyEnum
   ) {
     sell(
@@ -251,6 +254,7 @@ export const SELL = gql`
       juryPool: $juryPool
       paymentMethod: $paymentMethod
       localCurrency: $localCurrency
+      recipientAddress: $recipientAddress
       node: makerBuyer
     ) {
       id

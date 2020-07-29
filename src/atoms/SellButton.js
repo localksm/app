@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, ActivityIndicator, Text, View, StyleSheet } from 'react-native';
 import { useMutation } from '@apollo/react-hooks';
-import { MUTATIONS, getSession } from '../apollo';
+import { MUTATIONS, getSession, client, QUERIES } from '../apollo';
 import Button from './Button';
 import { validateFormDetails } from '../utils/validateDetails';
+import { getPin } from '../utils/JWT';
 
 const SellButton = props => {
   const [session, setSession] = useState(null);
@@ -193,6 +194,20 @@ const SellButton = props => {
         try {
           setLoad(true);
           const send = mapData(variables, session);
+
+        // Get reciepient address
+        const pin = await getPin()
+        const recipientData = await client.query({
+          query: QUERIES.PUBLIC_KEY,
+          variables: {
+            id: session.id,
+            pin
+          }
+        })
+        const recipientAddress = recipientData.data.publicKeys.ksm
+  
+        send['recipientAddress'] = recipientAddress
+
           const { data } = await sell({ variables: send });
           const {id} = data.sell
 

@@ -35,7 +35,7 @@ const WalletContent = ({ id, imageStyle, textKeyStyle, textCopyStyle }) => {
       backgroundColor: 'white',
       textColor: 'black',
     });
-    Clipboard.setString('data.publicKeys.ksm');
+    Clipboard.setString(data.publicKeys.ksm);
   };
 
   return (
