@@ -13,7 +13,7 @@ const ConfirmReceivedButton = props => {
   );
   const [load, setLoad] = useState(false);
   const [id, setId] = useState(null);
-  const { proposalId, takerId, operationType } = props.variables;
+  const { proposalId, takerId, operationType, pin } = props.variables;
 
   useEffect(() => {
     set();
@@ -33,6 +33,7 @@ const ConfirmReceivedButton = props => {
             proposalId: proposalId,
             takerId: takerId,
             node: 'makerBuyer',
+            pin: pin
           },
         });
         const { success } = response.data.sendDisbursementBuyer;
@@ -43,6 +44,7 @@ const ConfirmReceivedButton = props => {
               proposalId: proposalId,
               takerId: takerId,
               node: 'takerSeller',
+              pin: pin
             },
             refetchQueries: [
               {
@@ -69,6 +71,7 @@ const ConfirmReceivedButton = props => {
             proposalId: proposalId,
             takerId: takerId,
             node: 'takerBuyer',
+            pin: pin
           },
         });
         const { success } = response.data.sendDisbursementBuyer;
@@ -79,6 +82,7 @@ const ConfirmReceivedButton = props => {
               proposalId: proposalId,
               takerId: takerId,
               node: 'makerSeller',
+              pin: pin
             },
             refetchQueries: [
               {

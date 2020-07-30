@@ -46,7 +46,7 @@ const EnterPin = props => {
   };
 
   return (
-    <View>
+    <View style={ props.stylect }>
       <View style={styles.secction_logo}>
         <Image
           style={styles.logo}

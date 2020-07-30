@@ -202,11 +202,13 @@ export const SEND_DISBURSEMENT_BUYER = gql`
     $proposalId: Int!
     $takerId: Int!
     $node: NodeTypes!
+    $pin: String!
   ) {
     sendDisbursementBuyer(
       proposalId: $proposalId
       takerId: $takerId
       node: $node
+      pin: $pin
     ) {
       success
       error
@@ -219,11 +221,13 @@ export const SEND_DISBURSEMENT_SELLER = gql`
     $proposalId: Int!
     $takerId: Int!
     $node: NodeTypes!
+    $pin: String!
   ) {
     sendDisbursementSeller(
       proposalId: $proposalId
       takerId: $takerId
       node: $node
+      pin: $pin
     ) {
       success
       error

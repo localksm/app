@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, ScrollView } from 'react-native';
 import { Link, ConfirmSentBuyButton, ConfirmReceivedButton } from '../atoms';
-import FormLayout from './FormLayout';
+import { EnterPin, FormLayout } from '.';
+import { client, QUERIES, getSession } from '../apollo';
+import { getPin } from '../utils/JWT';
 
 function mapPaymentMethod(method) {
   const methods = {
@@ -22,10 +24,13 @@ function mapPaymentMethod(method) {
 const ConfirmedBuySell = props => {
   const [send, setSend] = useState(false);
   const [details, setDetails] = React.useState('');
+  const [verifyPin, setVeriFyPin] = useState(false);
+  const [pin, setPin] = useState('');
 
   React.useEffect(() => {
     const str = string();
     setDetails(() => str);
+    handleVerifyPin();
   }, []);
 
   const {
@@ -53,6 +58,7 @@ const ConfirmedBuySell = props => {
     proposalId: proposalId,
     takerId: takerId,
     operationType: operationType,
+    pin: pin 
   }
 
   const obj = {
@@ -77,11 +83,26 @@ const ConfirmedBuySell = props => {
     return str;
   };
 
+  const handleVerifyPin = async () => {
+
+    const {session } = await getSession();
+    const pin = await getPin();
+    const response = await client.query({
+      query: QUERIES.VERIFY_PIN,
+      variables: { id: session.id, pin: pin },
+    });
+    const { isValid } = response.data.validatePin;
+    if (isValid) {
+      setPin(pin);
+    }
+    setVeriFyPin(!isValid);    
+  };
+
  
   const title = `${usernameTaker} has accepted your offer `;
   const exchange = `Please send \n $ ${offerAmount} ${offerAsset}`;
 
-  return (
+  return !verifyPin ? (
     <FormLayout.Content>
       <FormLayout.Body>
         <View style={styles.containerDetail}>
@@ -113,7 +134,7 @@ const ConfirmedBuySell = props => {
             status === 'accepted' && (
               <ConfirmSentBuyButton
                 variables={proposalId}
-                label="Confirm Sent"
+                label="Confirm received"                
                 actionConfirmSent={() => setSend(true)}
               />
             )
@@ -131,6 +152,18 @@ const ConfirmedBuySell = props => {
         </View>
       </FormLayout.Footer>
     </FormLayout.Content>
+  ):(
+    <ScrollView>
+      <EnterPin
+        action={token => {          
+          setPin(token);
+          setVeriFyPin(false);
+        }}
+        stylect ={{
+          marginTop: '10%',
+        }}
+      />
+    </ScrollView>
   );
 };
 
