@@ -8,7 +8,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import {
   InputText,
   Link,
@@ -49,6 +49,13 @@ const FormSignIn = props => {
     newPin();
   }, []);
 
+  const goToLogin = () =>
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: 'Drawer' }],
+      }),
+    );
 
   return !verifyPin ? (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -86,9 +93,7 @@ const FormSignIn = props => {
             <ButtonSignIn
               label="Login"
               stylect={{ backgroundColor: '#DB5A3A' }}
-              actionSignIn={() =>
-                pin !== null ? navigation.navigate('Drawer') : () => {}
-              }
+              actionSignIn={() => (pin !== null ? goToLogin() : () => {})}
               actionPin={() => setVeriFyPin(true)}
               variables={dataSession}
               actionErrorEmail={() => setErrorEmail(true)}
@@ -99,7 +104,7 @@ const FormSignIn = props => {
             <GoogleButton
               label="Login with Google"
               stylect={{ backgroundColor: '#6BA3FA' }}
-              actionLogin={() => navigation.navigate('Drawer')}
+              actionLogin={goToLogin}
               actionPin={() => setVeriFyPin(true)}
             />
           </View>
@@ -109,7 +114,7 @@ const FormSignIn = props => {
               type={'signin'}
               init={launchStartFacebook && currentLogin === 'Facebook'}
               actionPin={() => setVeriFyPin(true)}
-              actionLogin={() => navigation.navigate('Drawer')}
+              actionLogin={goToLogin}
             />
           </View>
           <View style={styles.buttons}>
@@ -118,7 +123,7 @@ const FormSignIn = props => {
               stylect={{ backgroundColor: '#58C5FA' }}
               init={launchStartTwitter && currentLogin === 'Twitter'}
               actionPin={() => setVeriFyPin(true)}
-              actionLogin={() => navigation.navigate('Drawer')}
+              actionLogin={goToLogin}
             />
           </View>
 
