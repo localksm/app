@@ -201,12 +201,14 @@ export const SEND_DISBURSEMENT_BUYER = gql`
   mutation sendDisbursementBuyer(
     $proposalId: Int!
     $takerId: Int!
+    $pin: String!
     $node: NodeTypes!
     $pin: String!
   ) {
     sendDisbursementBuyer(
       proposalId: $proposalId
       takerId: $takerId
+      pin: $pin
       node: $node
       pin: $pin
     ) {
@@ -220,12 +222,14 @@ export const SEND_DISBURSEMENT_SELLER = gql`
   mutation sendDisbursementSeller(
     $proposalId: Int!
     $takerId: Int!
+    $pin: String!
     $node: NodeTypes!
     $pin: String!
   ) {
     sendDisbursementSeller(
       proposalId: $proposalId
       takerId: $takerId
+      pin: $pin
       node: $node
       pin: $pin
     ) {
@@ -275,21 +279,21 @@ export const WITHDRAW = gql`
   }
 `;
 
-
 export const SEND_ADJUDICATION = gql`
-mutation sendAdjudication(
-  $proposalId: Int!
-  $images: [String!]
-  $createdBy: Int!
-  $comment:String!
-) {
-  sendAdjudication(
-    proposalId: $proposalId
-    images: $images
-    node: jury
-    createdBy: $createBy
-    comment: $comment
+  mutation sendAdjudication(
+    $proposalId: Int!
+    $images: [String!]
+    $createdBy: Int!
+    $comment: String!
   ) {
-    id
+    sendAdjudication(
+      proposalId: $proposalId
+      images: $images
+      node: jury
+      createdBy: $createBy
+      comment: $comment
+    ) {
+      id
+    }
   }
-}`;
+`;

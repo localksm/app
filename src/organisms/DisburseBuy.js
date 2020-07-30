@@ -4,6 +4,8 @@ import { MultiView } from '../molecules';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Link, Button, ConfirmReceivedButton } from '../atoms';
 import { FormLayout } from '.';
+import EnterPin from './EnterPin';
+import { storePin } from '../utils/JWT';
 
 function mapPaymentMethod(method) {
   const methods = {
@@ -23,12 +25,12 @@ function mapPaymentMethod(method) {
 
 const DisburseBuy = props => {
   const [details, setDetails] = React.useState('');
+  const [enterPin, showEnterPin] = React.useState(false);
 
   React.useEffect(() => {
     const str = string();
     setDetails(() => str);
   }, []);
-  
 
   const {
     usernameMaker,
@@ -47,15 +49,15 @@ const DisburseBuy = props => {
     lastName,
     name,
     phone,
-    proposalId
+    proposalId,
   } = props.route.params.body.paymentData;
 
-  const variables ={
+  const variables = {
     proposalId: proposalId,
     takerId: takerId,
     operationType: operationType,
-  }
-  
+  };
+
   const obj = {
     'Acount number': accountNumber,
     Address: address,
@@ -78,10 +80,16 @@ const DisburseBuy = props => {
     return str;
   };
 
-  const title = `${usernameMaker} has sent you`
+  const title = `${usernameMaker} has sent you`;
   const exchange = `$ ${offerAmount} ${offerAsset}`;
-  
-  return (
+
+  return enterPin ? (
+    <EnterPin
+      action={jwt => {
+        showEnterPin(false);
+      }}
+    />
+  ) : (
     <FormLayout.Content>
       <FormLayout.Body hpBody="60%">
         <ScrollView>
@@ -102,16 +110,28 @@ const DisburseBuy = props => {
           <ConfirmReceivedButton
             variables={variables}
             label="Confirm Sent"
-            actionConfirmSent={() => props.navigation.navigate('TransactionCompleted',{...props.route.params})}
+            actionConfirmSent={() =>
+              props.navigation.navigate('TransactionCompleted', {
+                ...props.route.params,
+              })
+            }
+            showEnterPinScreen={showEnterPin}
           />
-          <View style={styles.link} >
-            <Link label="Report a problem" color="#cc5741" action={()=> props.navigation.navigate('ReportAProblem',{...props.route.params})} />
+          <View style={styles.link}>
+            <Link
+              label="Report a problem"
+              color="#cc5741"
+              action={() =>
+                props.navigation.navigate('ReportAProblem', {
+                  ...props.route.params,
+                })
+              }
+            />
           </View>
         </View>
       </FormLayout.Footer>
     </FormLayout.Content>
   );
-
 };
 
 const styles = StyleSheet.create({
@@ -121,18 +141,18 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     marginHorizontal: 20,
-    marginTop: 10
+    marginTop: 10,
   },
   text: {
     fontSize: 14,
     fontFamily: 'Poppins-SemiBold',
     textAlign: 'center',
-    marginBottom: 10
+    marginBottom: 10,
   },
-  link:{
+  link: {
     paddingHorizontal: '25%',
     paddingTop: 20,
-  }
+  },
 });
 
 export default DisburseBuy;

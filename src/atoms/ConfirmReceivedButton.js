@@ -3,6 +3,7 @@ import { Alert, ActivityIndicator, Text, View, StyleSheet } from 'react-native';
 import { useMutation } from '@apollo/react-hooks';
 import { MUTATIONS, QUERIES, getSession } from '../apollo';
 import Button from './Button';
+import { getPin } from '../utils/JWT';
 
 const ConfirmReceivedButton = props => {
   const [sendDisbursementBuyer] = useMutation(
@@ -55,7 +56,7 @@ const ConfirmReceivedButton = props => {
                 query: QUERIES.QUERY_USER_PROPOSALS,
                 variables: { id: id, offset: 0, limit: 100 },
               },
-            ], 
+            ],
           });
           return props.actionConfirmSent();
         } else {
@@ -66,35 +67,36 @@ const ConfirmReceivedButton = props => {
           );
         }
       } else {
+        // Buy
+        const pin = await getPin();
+
+        if (pin === null || pin === '') {
+          props.showEnterPinScreen(true);
+          return;
+        }
+
         const response = await sendDisbursementBuyer({
           variables: {
             proposalId: proposalId,
             takerId: takerId,
+            pin,
             node: 'takerBuyer',
             pin: pin
           },
+          refetchQueries: [
+            {
+              query: QUERIES.QUERY_PROPOSALS,
+              variables: { userId: id, offset: 0, limit: 100 },
+            },
+            {
+              query: QUERIES.QUERY_USER_PROPOSALS,
+              variables: { id: id, offset: 0, limit: 100 },
+            },
+          ],
         });
         const { success } = response.data.sendDisbursementBuyer;
         if (success) {
           setLoad(true);
-          await sendDisbursementSeller({
-            variables: {
-              proposalId: proposalId,
-              takerId: takerId,
-              node: 'makerSeller',
-              pin: pin
-            },
-            refetchQueries: [
-              {
-                query: QUERIES.QUERY_PROPOSALS,
-                variables: { userId: id, offset: 0, limit: 100 },
-              },
-              {
-                query: QUERIES.QUERY_USER_PROPOSALS,
-                variables: { id: id, offset: 0, limit: 100 },
-              },
-            ],
-          });
           return props.actionConfirmSent();
         } else {
           setLoad(false);
