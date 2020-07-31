@@ -90,6 +90,25 @@ export const SEND_RESOLUTION = gql`
   }
 `;
 
+export const SEND_SELL_RESOLUTION = gql`
+  mutation sendResolution(
+    $proposalId: Int!
+    $takerId: Int!
+    $recipientAddress: String
+    $node: NodeTypes!
+  ) {
+    sendResolution(
+      proposalId: $proposalId
+      takerId: $takerId
+      recipientAddress: $recipientAddress
+      node: $node
+    ) {
+      id
+      hash
+    }
+  }
+`;
+
 export const SEND_SETTLEMENT = gql`
   mutation sendSettlement(
     $proposalId: Int!
@@ -249,7 +268,6 @@ export const SELL = gql`
     $timestamp: String
     $juryPool: String
     $paymentMethod: PaymentMethods!
-    $recipientAddress: String
     $localCurrency: CurrencyEnum
   ) {
     sell(
@@ -262,7 +280,6 @@ export const SELL = gql`
       juryPool: $juryPool
       paymentMethod: $paymentMethod
       localCurrency: $localCurrency
-      recipientAddress: $recipientAddress
       node: makerBuyer
     ) {
       id

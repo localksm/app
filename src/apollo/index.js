@@ -23,6 +23,7 @@ import {
   CONFIRM_PROPOSAL,
   SEND_ACCEPTANCE,
   SEND_RESOLUTION,
+  SEND_SELL_RESOLUTION,
   SEND_SETTLEMENT,
   SEND_FULFILLMENT,
   INSERT_PROPOSAL_PAYMENT_METHOD,
@@ -84,7 +85,9 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     graphQLErrors.map(({ message, locations, path }) =>
       // eslint-disable-next-line no-console
       console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${JSON.stringify(locations)}, Path: ${path}`,
+        `[GraphQL error]: Message: ${message}, Location: ${JSON.stringify(
+          locations,
+        )}, Path: ${path}`,
       ),
     );
   }
@@ -123,7 +126,7 @@ export const QUERIES = {
   PUBLIC_KEY,
   QUERY_PROPOSALS,
   QUERY_USER_PROPOSALS,
-  VERIFY_PIN
+  VERIFY_PIN,
 };
 
 export const MUTATIONS = {
@@ -131,6 +134,7 @@ export const MUTATIONS = {
   LOGIN,
   SEND_ACCEPTANCE,
   SEND_RESOLUTION,
+  SEND_SELL_RESOLUTION,
   SEND_SETTLEMENT,
   SEND_FULFILLMENT,
   INSERT_PROPOSAL_PAYMENT_METHOD,
@@ -154,17 +158,17 @@ const initialState = {
   navigation: null,
   evidenceImages: null,
   token: null,
-  polkadot: null
+  polkadot: null,
 };
 cache.writeData({ data: initialState });
 
 export const state = ApolloState;
 
-export const cleanBalance = async ()=>{
+export const cleanBalance = async () => {
   await ApolloState.mutation({
     polkadot: {
-      balanceKSM:  null,
+      balanceKSM: null,
       __typename: null,
     },
   });
-}
+};

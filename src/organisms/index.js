@@ -1,5 +1,3 @@
-import { from } from 'apollo-link';
-
 export { default as HomeLayout } from './HomeLayout';
 export { default as CustomDrawerContent } from './CustomDrawer';
 export { default as OfferList } from './OfferList';
@@ -15,13 +13,16 @@ export { default as DisburseBuy } from './DisburseBuy';
 export { default as Completed } from './Completed';
 export { default as WalletView } from './WalletView';
 export { default as Report } from './Report';
-export { default as MediationView} from './MediationView';
+export { default as MediationView } from './MediationView';
 export { default as MediationResult } from './MediationResult';
-export { default as MyOffer} from './MyOffer';
-export { default as Slider } from './Slider'; 
+export { default as MyOffer } from './MyOffer';
+export { default as Slider } from './Slider';
 export { default as OnboardingImage } from './OnboardingImage';
 export { default as HelpView } from './HelpView';
-export { default as FormLayout} from './FormLayout';
-export {default as Withdraw } from './Withdraw';
+export { default as FormLayout } from './FormLayout';
+export { default as Withdraw } from './Withdraw';
 export { default as FormCreatePin } from './FormCreatePin';
 export { default as EnterPin } from './EnterPin';
+export {
+  default as SendSettlementMakerContent,
+} from './SendSettlementMakerContent';

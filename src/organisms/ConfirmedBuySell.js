@@ -101,7 +101,7 @@ const ConfirmedBuySell = props => {
         </View>
       </FormLayout.Body>
       <FormLayout.Footer>
-        <View style={styles.containerFooder}>
+        <View style={styles.footerContainer}>
           <View style={styles.textContainer}>
             {operationType === 'add_funds' || operationType === 'buy' ? (
               <Text style={styles.text}>
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: '20%',
     paddingBottom: '0%',
   },
-  containerFooder: {
+  footerContainer: {
     flex: 1,
     marginTop: '3%',
     marginHorizontal: '8%',

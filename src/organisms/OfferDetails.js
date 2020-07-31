@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useMutation } from '@apollo/react-hooks';
 import { Link, Button } from '../atoms';
 import { PaymentForm } from '../molecules';
-import { withContext, getSession, MUTATIONS, QUERIES } from '../apollo';
+import { withContext, getSession, MUTATIONS, QUERIES, client } from '../apollo';
 import { FormLayout } from '.';
 import { validateFormDetails } from '../utils/validateDetails';
 import { getPin } from '../utils/JWT';
@@ -80,6 +80,7 @@ const OfferDetails = props => {
   // MUTATIONS
   const [sendAcceptance] = useMutation(MUTATIONS.SEND_ACCEPTANCE);
   const [sendResolution] = useMutation(MUTATIONS.SEND_RESOLUTION);
+  const [sendSellResolution] = useMutation(MUTATIONS.SEND_SELL_RESOLUTION);
   const [sendSettlement] = useMutation(MUTATIONS.SEND_SETTLEMENT);
   const [sendFulfillment] = useMutation(MUTATIONS.SEND_FULFILLMENT);
   const [addPaymentMethod] = useMutation(
@@ -147,6 +148,16 @@ const OfferDetails = props => {
       }
     }
 
+    // Get recipientAddress
+    const recipientData = await client.query({
+      query: QUERIES.PUBLIC_KEY,
+      variables: {
+        id: takerId,
+        pin,
+      },
+    });
+    const recipientAddress = recipientData.data.publicKeys.ksm;
+
     try {
       // Send acceptance
       currentStep = 'Acceptance';
@@ -156,13 +167,21 @@ const OfferDetails = props => {
         node: operationType === 'buy' ? 'takerBuyer' : 'takerSeller',
       });
 
-      // Send resolution
+      // [**Send resolution**]
       currentStep = 'Resolution';
-      await processMutation('sendResolution', {
+      const sendResolutionMutation =
+        operationType === 'buy' ? 'sendResolution' : 'sendSellResolution';
+      const sendResolutionVars = {
         proposalId: proposalId,
         takerId,
+        recipientAddress,
         node: operationType === 'buy' ? 'makerSeller' : 'makerBuyer',
-      });
+      };
+
+      if (operationType === 'buy') delete sendResolutionVars.recipientAddress;
+
+      await processMutation(sendResolutionMutation, sendResolutionVars);
+      // [**Send resolution END**]
 
       // If this is a sell then finish the process (settlement and fulfillment relays on maker)
       if (operationType === 'sell') {
@@ -241,6 +260,7 @@ const OfferDetails = props => {
       addPaymentMethod,
       sendAcceptance,
       sendResolution,
+      sendSellResolution,
       sendSettlement,
       sendFulfillment,
     };

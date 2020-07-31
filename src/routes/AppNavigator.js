@@ -28,7 +28,8 @@ import {
    Onboarding,
    Help,
    CreatePin,
-   QuickTour
+   QuickTour,
+   SendSettlementMaker
   } from '../pages'
 
 
@@ -61,6 +62,7 @@ const MyOffersStack = () => {
       <Stack.Screen name='CreateOfferBuy' component={CreateOfferBuy} options={{headerShown: false}} />
       <Stack.Screen name='ConfirmedBuy' component={ConfirmedBuy} options={{headerShown: false}} />
       <Stack.Screen name='ConfirmedSell' component={ConfirmedSell} options={{headerShown: false}} />
+      <Stack.Screen name='SendSettlementMaker' component={SendSettlementMaker} options={{headerShown: false}} />
       <Stack.Screen name='Disburse' component={Disburse} options={{headerShown: false}} />
       <Stack.Screen name='TransactionCompleted' component={TransactionCompleted} options={{headerShown: false}} />
       <Stack.Screen name='CreateOfferSell' component={CreateOfferSell} options={{headerShown: false}} />
