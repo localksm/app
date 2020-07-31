@@ -9,26 +9,12 @@ import {
   Alert,
 } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
+import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { Offer, BalanceHeader } from '../molecules';
 import { QUERIES, getSession } from '../apollo';
-import { useNavigation } from '@react-navigation/native';
+import { mapPaymentMethod } from '../utils/misc';
 
-function mapPaymentMethod(method) {
-  const methods = {
-    VE: 'Venmo',
-    ZE: 'Zelle',
-    MP: 'Mercado Pago',
-    WU: 'Western Union',
-    MG: 'Money Gram',
-    NE: 'Neteller',
-    UP: 'Uphold',
-    PP: 'Paypal',
-    BN: 'Bank',
-    OT: 'Other',
-  };
-  return methods[method];
-}
 
 function Loading() {
   return (

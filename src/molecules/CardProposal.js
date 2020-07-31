@@ -13,6 +13,7 @@ import { useQuery } from '@apollo/react-hooks';
 import moment from 'moment';
 import { QUERIES, getSession } from '../apollo';
 import Offer from './Offer';
+import { mapPaymentMethod } from '../utils/misc';
 
 function Loading() {
   return (
@@ -28,22 +29,6 @@ function Error({ error }) {
       <Text>{`Error! ${error.message}`}</Text>
     </View>
   );
-}
-
-function mapPaymentMethod(method) {
-  const methods = {
-    VE: 'Venmo',
-    ZE: 'Zelle',
-    MP: 'Mercado Pago',
-    WU: 'Western Union',
-    MG: 'Money Gram',
-    NE: 'Neteller',
-    UP: 'Uphold',
-    PP: 'Paypal',
-    BN: 'Bank',
-    OT: 'Other',
-  };
-  return methods[method];
 }
 
 const CardProposal = props => {

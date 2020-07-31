@@ -8,51 +8,76 @@ import { withContext, getSession, MUTATIONS, QUERIES } from '../apollo';
 import { FormLayout } from '.';
 import { validateFormDetails } from '../utils/validateDetails';
 import { getPin } from '../utils/JWT';
+import { mapPaymentMethod } from '../utils/misc';
 import EnterPin from './EnterPin';
+import { offerDetialsStyles } from '../utils/styles';
 
-function mapPaymentMethod(method) {
-  const methods = {
-    VE: 'Venmo',
-    ZE: 'Zelle',
-    MP: 'Mercado Pago',
-    WU: 'Western Union',
-    MG: 'Money Gram',
-    NE: 'Neteller',
-    UP: 'Uphold',
-    PP: 'Paypal',
-    BN: 'Bank',
-    OT: 'Other',
-  };
-  return methods[method];
-}
+const initialState = {
+  // UI Controllers
+  loadingScreen: true, // Initialize loading as true
+  loading: false, // Initialize loading as true
+  errors: {},
+  enterPinScreen: false,
+  paymentDataform: false,
+
+  // Proposal Data
+  proposalId: null,
+  paymentMethod: '',
+  makerId: null,
+  takerId: null,
+  name: null,
+  lastName: null,
+  email: null,
+  address: null,
+  phone: null,
+  bankData: null,
+  accountNumber: null,
+  country: null,
+  offerAmount: 0,
+  offerAsset: null,
+  operationType: null,
+  usernameMaker: null,
+};
 
 const OfferDetails = props => {
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('');
-  const [paymentDataform, setPaymentDataform] = useState(false);
-  const [proposalId, setProposalId] = useState(null);
-  const [makerId, setMakerId] = useState(0);
-  const [takerId, setTakerId] = useState(0);
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
-  const [phone, setPhone] = useState('');
-  const [bankData, setBankData] = useState('');
-  const [accountNumber, setAccountNumber] = useState('');
+  // Set initialState to React hook
+  const [state, setState] = useState(initialState);
 
-  const [pin, setPin] = useState(null);
-  const [enterPinScreen, showEnterPinScreen] = useState(false);
+  useEffect(() => {
+    // Map route params to local state
+    async function setParamsToLocalState() {
+      // GET the current session from async storage
+      const { session } = await getSession();
+      const takerId = session.id;
+      const { body, id } = props.route.params;
+      const {
+        makerId,
+        paymentMethod,
+        operationType,
+        usernameMaker,
+        offerAsset,
+        offerAmount,
+      } = body;
 
-  /**
-   * Propiedades que nose de donde sacar
-   */
-  const [country, setCountry] = useState('');
+      setState(prev => ({
+        ...prev,
+        takerId,
+        makerId,
+        paymentMethod,
+        operationType,
+        proposalId: id,
+        usernameMaker,
+        offerAsset,
+        offerAmount,
+        loadingScreen: false, // Show content
+        paymentDataform: operationType === 'buy' ? true : false,
+      }));
+    }
 
-  /**
-   * MUTATIONS
-   */
+    setParamsToLocalState();
+  }, []);
+
+  // MUTATIONS
   const [sendAcceptance] = useMutation(MUTATIONS.SEND_ACCEPTANCE);
   const [sendResolution] = useMutation(MUTATIONS.SEND_RESOLUTION);
   const [sendSettlement] = useMutation(MUTATIONS.SEND_SETTLEMENT);
@@ -61,136 +86,48 @@ const OfferDetails = props => {
     MUTATIONS.INSERT_PROPOSAL_PAYMENT_METHOD,
   );
 
-  useEffect(() => {
-    // Get the user pin on screen load
-    async function getPinFromStorage() {
-      const storedPin = await getPin();
-      setPin(storedPin);
-    }
-    _prepareData();
-    getPinFromStorage();
-  }, []);
+  // Deconstruct state
+  const {
+    loading,
+    loadingScreen,
+    errors,
+    enterPinScreen,
+    paymentDataform,
+    proposalId,
+    paymentMethod,
+    makerId,
+    takerId,
+    name,
+    lastName,
+    email,
+    address,
+    phone,
+    bankData,
+    accountNumber,
+    country,
+    usernameMaker,
+    offerAmount,
+    offerAsset,
+    operationType,
+  } = state;
 
-  const _prepareData = async () => {
-    const { session } = await getSession();
-    setTakerId(session.id);
-    const params = props.route.params;
-    setPaymentMethod(params.body.paymentMethod);
-    setPaymentDataform(true);
-    setProposalId(params.id);
-    setMakerId(params.body.makerId);
+  const handleTextChange = (name, value) => {
+    setState(prev => ({ ...prev, [name]: value }));
   };
 
   const actionSendAcceptance = async () => {
+    setState(prev => ({ ...prev, loading: true }));
+    let currentStep;
     // Let's check if pin is already stored, if not show the EnterPin screen and stop execution...
-    if (pin === null) {      
-      showEnterPinScreen(true);
+    const pin = await getPin();
+    if (pin === null || pin === '') {
+      setState(prev => ({ ...prev, enterPinScreen: true }));
       return;
     }
 
-    if (
-      props.route.params.body.operationType === 'sell' ||
-      props.route.params.body.operationType === 'withdraw_funds'
-    ) {
-      setLoading(true);
-      try {
-        await sendAcceptance({
-          variables: {
-            proposalId: props.route.params.id,
-            takerId,
-            node: 'takerSeller',
-          },
-        });
-      } catch (error) {
-        setLoading(false);
-        return Alert.alert(
-          'Error',
-          'Something went wrong during the acceptance. Please try again later.',
-          [{ text: 'OK' }],
-          { cancelable: false },
-        );
-      }
-
-      try {
-        await sendResolution({
-          variables: {
-            proposalId: proposalId,
-            takerId,
-            node: 'makerBuyer',
-          },
-        });
-      } catch (error) {
-        setLoading(false);
-        return Alert.alert(
-          'Error',
-          'Something went wrong during the resolution. Please try again later.',
-          [{ text: 'OK' }],
-          { cancelable: false },
-        );
-      }
-
-      try {
-        await sendSettlement({
-          variables: {
-            proposalId: proposalId,
-            makerId: makerId,
-            takerId,
-            pin,
-            node: 'makerBuyer',
-          },
-        });
-      } catch (error) {
-        setLoading(false);
-        return Alert.alert(
-          'Error',
-          'Something went wrong during the settlement. Please try again later.',
-          [{ text: 'OK' }],
-          { cancelable: false },
-        );
-      }
-
-      try {
-        await sendFulfillment({
-          variables: { proposalId: proposalId, takerId, node: 'makerBuyer' },
-          refetchQueries: [
-            {
-              query: QUERIES.QUERY_PROPOSALS,
-              variables: { userId: takerId, offset: 0, limit: 100 },
-            },
-            {
-              query: QUERIES.QUERY_USER_PROPOSALS,
-              variables: {
-                id: takerId,
-                offset: 0,
-                limit: 100,
-              },
-            },
-          ],
-        });
-      } catch (error) {
-        setLoading(false);
-        return Alert.alert(
-          'Error',
-          'Something went wrong during the fulfillment. Please try again later.',
-          [{ text: 'OK' }],
-          { cancelable: false },
-        );
-      }
-
-      try {
-        setLoading(false);
-        props.navigation.navigate('AcceptedSell', { ...props.route.params });
-      } catch (error) {
-        setLoading(false);
-        return Alert.alert(
-          'Error',
-          'Something went wrong during the fulfillment. Please try again later.',
-          [{ text: 'OK' }],
-          { cancelable: false },
-        );
-      }
-    } else {
-      const resultValidator = validateFormDetails(
+    // Check if validation is required based on operation type
+    if (operationType === 'buy') {
+      const validation = validateFormDetails(
         name,
         lastName,
         email,
@@ -201,100 +138,80 @@ const OfferDetails = props => {
         paymentMethod,
       );
 
-      setErrors(resultValidator);
-      if (!resultValidator.isValid) {
+      if (!validation.isValid) {
+        setState(prev => ({ ...prev, errors: validation, loading: false }));
         return Alert.alert(
           'Cannot contain empty fields',
           'Please enter the information requested in the form before continuing',
         );
       }
+    }
 
-      setLoading(true);
-      try {
-        await sendAcceptance({
-          variables: {
-            proposalId: props.route.params.id,
-            takerId,
-            node: 'takerBuyer',
-          },
-        });
-      } catch (error) {
-        setLoading(false);
-        return Alert.alert(
-          'Error',
-          'Something went wrong during the acceptance. Please try again later.',
-          [{ text: 'OK' }],
-          { cancelable: false },
-        );
+    try {
+      // Send acceptance
+      currentStep = 'Acceptance';
+      await processMutation('sendAcceptance', {
+        proposalId,
+        takerId,
+        node: operationType === 'buy' ? 'takerBuyer' : 'takerSeller',
+      });
+
+      // Send resolution
+      currentStep = 'Resolution';
+      await processMutation('sendResolution', {
+        proposalId: proposalId,
+        takerId,
+        node: operationType === 'buy' ? 'makerSeller' : 'makerBuyer',
+      });
+
+      // If this is a sell then finish the process (settlement and fulfillment relays on maker)
+      if (operationType === 'sell') {
+        setState(prev => ({ ...prev, loading: false }));
+        props.navigation.navigate('AcceptedSell', { ...props.route.params });
+        return;
       }
 
-      try {
-        await sendResolution({
-          variables: { proposalId: proposalId, takerId, node: 'makerSeller' },
-        });
-      } catch (error) {
-        setLoading(false);
-        return Alert.alert(
-          'Error',
-          'Something went wrong during the resolution. Please try again later.',
-          [{ text: 'OK' }],
-          { cancelable: false },
-        );
-      }
+      // If this is a buy then we continue ...
+      currentStep = 'Settlement';
+      await processMutation('sendSettlement', {
+        proposalId,
+        makerId,
+        takerId,
+        pin,
+        node: 'takerBuyer',
+      });
 
-      try {
-        await sendSettlement({
-          variables: {
-            proposalId: proposalId,
-            makerId: makerId,
-            takerId,
-            pin,
-            node: 'takerBuyer',
-          },
-        });
-      } catch (error) {
-        setLoading(false);
-        return Alert.alert(
-          'Error',
-          'Something went wrong during the settlement. Please try again later.',
-          [{ text: 'OK' }],
-          { cancelable: false },
-        );
-      }
+      currentStep = 'Fulfillment';
+      await processMutation('sendFulfillment', {
+        proposalId: proposalId,
+        takerId,
+        node: 'takerBuyer',
+      });
 
-      try {
-        await sendFulfillment({
-          variables: { proposalId: proposalId, takerId, node: 'takerBuyer' },
-          refetchQueries: [
-            {
-              query: QUERIES.QUERY_PROPOSALS,
-              variables: { userId: takerId, offset: 0, limit: 100 },
-            },
-            {
-              query: QUERIES.QUERY_USER_PROPOSALS,
-              variables: {
-                id: takerId,
-                offset: 0,
-                limit: 100,
-              },
-            },
-          ],
-        });
-      } catch (error) {
-        setLoading(false);
-        return Alert.alert(
-          'Error',
-          'Something went wrong during the fulfillment. Please try again later.',
-          [{ text: 'OK' }],
-          { cancelable: false },
-        );
-      }
+      currentStep = 'Add Payment Method';
+      await processMutation('addPaymentMethod', {
+        userId: takerId,
+        proposalId,
+        name,
+        email,
+        lastName,
+        address,
+        phone,
+        bankData,
+        accountNumber,
+        paymentMethod,
+      });
 
-      try {
-        await addPaymentMethod({
-          variables: {
+      props.navigation.navigate('AcceptedBuy', {
+        body: {
+          usernameMaker,
+          offerAsset,
+          offerAmount,
+          paymentMethod,
+          operationType,
+          paymentData: {
             userId: takerId,
-            proposalId: proposalId,
+            proposalId,
             name,
             email,
             lastName,
@@ -304,127 +221,114 @@ const OfferDetails = props => {
             accountNumber,
             paymentMethod,
           },
-        });
-        setLoading(false);
-        props.navigation.navigate('AcceptedBuy', {
-          body: {
-            usernameMaker: props.route.params.body.usernameMaker,
-            offerAsset: props.route.params.body.offerAsset,
-            offerAmount: props.route.params.body.offerAmount,
-            paymentMethod: props.route.params.body.paymentMethod,
-            operationType: props.route.params.body.operationType,
-            paymentData: {
-              userId: takerId,
-              proposalId: proposalId,
-              name,
-              email,
-              lastName,
-              address,
-              phone,
-              bankData,
-              accountNumber,
-              paymentMethod,
-            },
-          },
-        });
-      } catch (error) {
-        setLoading(false);
-        return Alert.alert(
-          'Error',
-          'Something went wrong during the fulfillment. Please try again later.',
-          [{ text: 'OK' }],
-          { cancelable: false },
-        );
-      }
+        },
+      });
+      setState(prev => ({ ...prev, loading: false }));
+    } catch (e) {
+      setState(prev => ({ ...prev, loading: false }));
+      return Alert.alert(
+        'Error',
+        `Something went wrong during the ${currentStep}. Please try again later.`,
+        [{ text: 'OK' }],
+        { cancelable: false },
+      );
     }
   };
 
-  const handleTextChange = (name, value) => {
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'lastName':
-        setLastName(value);
-        break;
-      case 'email':
-        setEmail(value);
-        break;
-      case 'address':
-        setAddress(value);
-        break;
-      case 'bankData':
-        setBankData(value);
-        break;
-      case 'phone':
-        setPhone(value);
-        break;
-      case 'accountNumber':
-        setAccountNumber(value);
-        break;
-      default:
-        break;
-    }
-  };
+  // Process mutation dynamically
+  async function processMutation(mutation, variables) {
+    const mutations = {
+      addPaymentMethod,
+      sendAcceptance,
+      sendResolution,
+      sendSettlement,
+      sendFulfillment,
+    };
+
+    const m = mutations[mutation];
+
+    return await m({
+      variables,
+      refetchQueries: [
+        {
+          query: QUERIES.QUERY_PROPOSALS,
+          variables: { userId: takerId, offset: 0, limit: 100 },
+        },
+        {
+          query: QUERIES.QUERY_USER_PROPOSALS,
+          variables: {
+            id: takerId,
+            offset: 0,
+            limit: 100,
+          },
+        },
+      ],
+    });
+  }
 
   return !enterPinScreen ? (
     <FormLayout.Content>
       <FormLayout.Body>
-        <ScrollView>
-          <View style={styles.container}>
-            <View style={styles.form}>
-              <View style={styles.row}>
-                <View style={styles.left}>
-                  <Text style={styles.text}>
-                    {mapPaymentMethod(paymentMethod)}
-                  </Text>
-                  <Text style={styles.textSecond}>
-                    {props.route.params.body.usernameMaker}
-                  </Text>
-                </View>
-                <View style={styles.right}>
-                  <Text style={styles.textAmount}>
-                    $ {props.route.params.body.offerAmount}{' '}
-                    {props.route.params.body.offerAsset} -> KSM
-                  </Text>
+        {!loadingScreen ? (
+          <ScrollView>
+            <View style={offerDetialsStyles.container}>
+              <View style={offerDetialsStyles.form}>
+                <View style={offerDetialsStyles.row}>
+                  <View style={offerDetialsStyles.left}>
+                    <Text style={offerDetialsStyles.text}>
+                      {mapPaymentMethod(paymentMethod)}
+                    </Text>
+                    <Text style={offerDetialsStyles.textSecond}>
+                      {usernameMaker}
+                    </Text>
+                  </View>
+                  <View style={offerDetialsStyles.right}>
+                    <Text style={offerDetialsStyles.textAmount}>
+                      $ {offerAmount} {offerAsset} {'->'} KSM
+                    </Text>
+                  </View>
                 </View>
               </View>
+              {operationType !== 'sell' &&
+              operationType !== 'withdraw_funds' ? (
+                <View style={offerDetialsStyles.form}>
+                  <PaymentForm
+                    show={paymentDataform}
+                    method={paymentMethod}
+                    onChangeText={handleTextChange}
+                    errors={errors}
+                  />
+                </View>
+              ) : (
+                <View />
+              )}
             </View>
-            {props.route.params.body.operationType !== 'sell' &&
-            props.route.params.body.operationType !== 'withdraw_funds' ? (
-              <View style={styles.form}>
-                <PaymentForm
-                  show={paymentDataform}
-                  method={paymentMethod}
-                  onChangeText={handleTextChange}
-                  errors={errors}
-                />
-              </View>
-            ) : (
-              <View />
-            )}
+          </ScrollView>
+        ) : (
+          <View style={offerDetialsStyles.textLoad}>
+            <ActivityIndicator size="small" color="black" />
           </View>
-        </ScrollView>
+        )}
       </FormLayout.Body>
       <FormLayout.Footer>
         <View style={{ flex: 1, marginTop: '3%' }}>
           {loading ? (
-            <View style={styles.textLoad}>
+            <View style={offerDetialsStyles.textLoad}>
               <ActivityIndicator size="small" color="black" />
-              <Text style={styles.textLoad}>Please wait...</Text>
+              <Text style={offerDetialsStyles.textLoad}>Please wait...</Text>
             </View>
           ) : (
             <Button
               label="Confirm"
               action={actionSendAcceptance}
-              stylect={styles.buttonConfirm}
+              stylect={offerDetialsStyles.buttonConfirm}
             />
           )}
-          {loading === false && (
+          {!loading && (
             <Link
               label="Cancel"
               color="#cc5741"
-              stylect={styles.linkText}
+              stylect={offerDetialsStyles.linkText}
               action={() => {}}
             />
           )}
@@ -432,137 +336,15 @@ const OfferDetails = props => {
       </FormLayout.Footer>
     </FormLayout.Content>
   ) : (
-    <View style={styles.enterPinWrapper}>
+    <View style={offerDetialsStyles.enterPinWrapper}>
       <EnterPin
         action={token => {
-          // Set token to local state
-          setPin(token);
-
           // Hide enter pin screen
-          showEnterPinScreen(false);
+          setState(prev => ({ ...prev, enterPinScreen: false }));
         }}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    marginHorizontal: 30,
-    zIndex: 1,
-    elevation: 1,
-    paddingBottom: 20,
-  },
-  containerButtons: {
-    paddingBottom: '40%',
-    paddingTop: '15%',
-    zIndex: 2,
-    elevation: 2,
-  },
-  containerButtonsSmall: {
-    paddingBottom: '20%',
-    paddingTop: '12%',
-    zIndex: 2,
-    elevation: 2,
-  },
-  buttonConfirm: {
-    marginHorizontal: 20,
-    paddingTop: 0,
-  },
-  containerFee: {
-    borderTopRightRadius: 50,
-    borderTopLeftRadius: 50,
-    justifyContent: 'center',
-    marginVertical: 5,
-    paddingTop: '20%',
-    paddingBottom: '10%',
-    backgroundColor: 'white',
-  },
-  form: {
-    backgroundColor: '#2D2D2D',
-    borderColor: 'white',
-    borderWidth: 0.2,
-    padding: 20,
-    borderRadius: 10,
-    borderTopColor: '#ffffff',
-    borderStyle: 'solid',
-    borderBottomColor: '#ffffff',
-    marginTop: 20,
-    elevation: 3,
-  },
-  textLoad: {
-    alignItems: 'center',
-    color: 'black',
-  },
-  text: {
-    marginVertical: 5,
-    fontSize: 18,
-    fontFamily: 'Poppins-Medium',
-    color: '#ffffff',
-  },
-  textSecond: {
-    fontSize: 15,
-    padding: 5,
-    color: '#ffffff',
-    fontFamily: 'Poppins-Medium',
-  },
-  textAmount: {
-    fontSize: 16,
-    paddingLeft: 5,
-    fontFamily: 'Poppins-Medium',
-    color: '#ffffff',
-    textAlign: 'right',
-    alignSelf: 'stretch',
-    marginVertical: 5,
-  },
-  textareaContainer: {
-    height: 180,
-    padding: 5,
-    backgroundColor: '#F5FCFF',
-    marginVertical: 50,
-  },
-  textarea: {
-    textAlignVertical: 'top', // hack android
-    height: 170,
-    fontSize: 14,
-    color: '#333',
-  },
-  loading: {
-    flex: 1,
-    marginTop: 240,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  textBlod: {
-    fontFamily: 'Poppins-Bold',
-    color: '#ffffff',
-  },
-  left: {
-    width: '50%',
-  },
-  right: {
-    width: '50%',
-    flexDirection: 'row-reverse',
-    paddingStart: 10,
-  },
-  row: {
-    flexDirection: 'row',
-    marginHorizontal: 10,
-  },
-  feeContainer: {
-    backgroundColor: '#FAFAFA',
-    marginTop: 0,
-    borderRadius: 10,
-  },
-  linkText: {
-    alignItems: 'center',
-    fontFamily: 'Poppins-Regular',
-    paddingTop: 10,
-  },
-  enterPinWrapper: {
-    backgroundColor: '#2D2D2D',
-  },
-});
 
 export default withContext(OfferDetails);

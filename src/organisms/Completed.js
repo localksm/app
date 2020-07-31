@@ -3,22 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
 import { CompletedMultiView } from '../molecules';
 import { Button } from '../atoms';
-
-function mapPaymentMethod(method) {
-  const methods = {
-    VE: 'Venmo',
-    ZE: 'Zelle',
-    MP: 'Mercado Pago',
-    WU: 'Western Union',
-    MG: 'Money Gram',
-    NE: 'Neteller',
-    UP: 'Uphold',
-    PP: 'Paypal',
-    BN: 'Bank',
-    OT: 'Other',
-  };
-  return methods[method];
-}
+import { mapPaymentMethod } from '../utils/misc';
 
 const Completed = props => {
   const [details, setDetails] = React.useState('');
@@ -59,7 +44,7 @@ const Completed = props => {
 
   const string = () => {
     let str = `Payment method \n ${mapPaymentMethod(
-      paymentMethod,
+      paymentMethod
     )} \nPayment details \n`;
     Object.keys(obj).forEach(k => {
       if (obj[k] !== null && obj[k] !== '' && obj[k] !== undefined) {

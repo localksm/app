@@ -2,22 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { Link, ConfirmSentBuyButton } from '../atoms';
 import { FormLayout } from '.';
-
-function mapPaymentMethod(method) {
-  const methods = {
-    VE: 'Venmo',
-    ZE: 'Zelle',
-    MP: 'Mercado Pago',
-    WU: 'Western Union',
-    MG: 'Money Gram',
-    NE: 'Neteller',
-    UP: 'Uphold',
-    PP: 'Paypal',
-    BN: 'Bank',
-    OT: 'Other',
-  };
-  return methods[method];
-}
+import { mapPaymentMethod } from '../utils/misc';
 
 const AcceptedBuySell = props => {
   const [details, setDetails] = React.useState('');
@@ -59,7 +44,7 @@ const AcceptedBuySell = props => {
 
   const string = () => {
     let str = `Payment method \n ${mapPaymentMethod(
-      paymentMethod,
+      paymentMethod
     )} \nPayment details \n`;
     Object.keys(obj).forEach(k => {
       if (obj[k] !== null && obj[k] !== '' && obj[k] !== undefined) {

@@ -2,26 +2,10 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MultiView } from '../molecules';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Link, Button, ConfirmReceivedButton } from '../atoms';
+import { Link, ConfirmReceivedButton } from '../atoms';
 import { FormLayout } from '.';
 import EnterPin from './EnterPin';
-import { storePin } from '../utils/JWT';
-
-function mapPaymentMethod(method) {
-  const methods = {
-    VE: 'Venmo',
-    ZE: 'Zelle',
-    MP: 'Mercado Pago',
-    WU: 'Western Union',
-    MG: 'Money Gram',
-    NE: 'Neteller',
-    UP: 'Uphold',
-    PP: 'Paypal',
-    BN: 'Bank',
-    OT: 'Other',
-  };
-  return methods[method];
-}
+import { mapPaymentMethod } from '../utils/misc';
 
 const DisburseBuy = props => {
   const [details, setDetails] = React.useState('');

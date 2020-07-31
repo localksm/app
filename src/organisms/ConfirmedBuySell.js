@@ -4,22 +4,7 @@ import { Link, ConfirmSentBuyButton, ConfirmReceivedButton } from '../atoms';
 import { EnterPin, FormLayout } from '.';
 import { client, QUERIES, getSession } from '../apollo';
 import { getPin } from '../utils/JWT';
-
-function mapPaymentMethod(method) {
-  const methods = {
-    VE: 'Venmo',
-    ZE: 'Zelle',
-    MP: 'Mercado Pago',
-    WU: 'Western Union',
-    MG: 'Money Gram',
-    NE: 'Neteller',
-    UP: 'Uphold',
-    PP: 'Paypal',
-    BN: 'Bank',
-    OT: 'Other',
-  };
-  return methods[method];
-}
+import { mapPaymentMethod } from '../utils/misc';
 
 const ConfirmedBuySell = props => {
   const [send, setSend] = useState(false);
@@ -54,12 +39,12 @@ const ConfirmedBuySell = props => {
     proposalId,
   } = props.route.params.body.paymentData;
   const { status } = props.route.params;
-  const variables ={
+  const variables = {
     proposalId: proposalId,
     takerId: takerId,
     operationType: operationType,
-    pin: pin 
-  }
+    pin: pin,
+  };
 
   const obj = {
     'Acount number': accountNumber,
@@ -84,8 +69,7 @@ const ConfirmedBuySell = props => {
   };
 
   const handleVerifyPin = async () => {
-
-    const {session } = await getSession();
+    const { session } = await getSession();
     const pin = await getPin();
     const response = await client.query({
       query: QUERIES.VERIFY_PIN,
@@ -95,10 +79,9 @@ const ConfirmedBuySell = props => {
     if (isValid) {
       setPin(pin);
     }
-    setVeriFyPin(!isValid);    
+    setVeriFyPin(!isValid);
   };
 
- 
   const title = `${usernameTaker} has accepted your offer `;
   const exchange = `Please send \n $ ${offerAmount} ${offerAsset}`;
 
@@ -118,48 +101,61 @@ const ConfirmedBuySell = props => {
         </View>
       </FormLayout.Body>
       <FormLayout.Footer>
-        <View style={ styles.containerFooder}>
+        <View style={styles.containerFooder}>
           <View style={styles.textContainer}>
             {operationType === 'add_funds' || operationType === 'buy' ? (
-              <Text style={styles.text}>You'll receive: {requestAmount} KSM</Text>
+              <Text style={styles.text}>
+                You'll receive: {requestAmount} KSM
+              </Text>
             ) : (
               <Text style={styles.text}>
                 Please confirm that you receive the correct amount
               </Text>
             )}
           </View>
-          {send ? (
-            Alert.alert('Confirmed')
-          ) : operationType === 'add_funds' || operationType === 'buy' ? (
-            status === 'accepted' && (
-              <ConfirmSentBuyButton
-                variables={proposalId}
-                label="Confirm received"                
-                actionConfirmSent={() => setSend(true)}
-              />
-            )
-          ) : (
-            status === 'confirmed' &&
-            <ConfirmReceivedButton
-            variables={variables}
-            label="Confirm Received"
-            actionConfirmSent={() => props.navigation.navigate('TransactionCompleted',{...props.route.params})}
-          />
-          )}
+          {send
+            ? Alert.alert('Confirmed')
+            : operationType === 'add_funds' || operationType === 'buy'
+            ? status === 'accepted' && (
+                <ConfirmSentBuyButton
+                  variables={proposalId}
+                  label="Confirm received"
+                  actionConfirmSent={() => setSend(true)}
+                />
+              )
+            : status === 'confirmed' && (
+                <ConfirmReceivedButton
+                  variables={variables}
+                  label="Confirm Received"
+                  actionConfirmSent={() =>
+                    props.navigation.navigate('TransactionCompleted', {
+                      ...props.route.params,
+                    })
+                  }
+                />
+              )}
           <View style={styles.buttons}>
-            <Link label="Report a problem" color="#cc5741" action={() => props.navigation.navigate('ReportAProblem',{...props.route.params})} />
+            <Link
+              label="Report a problem"
+              color="#cc5741"
+              action={() =>
+                props.navigation.navigate('ReportAProblem', {
+                  ...props.route.params,
+                })
+              }
+            />
           </View>
         </View>
       </FormLayout.Footer>
     </FormLayout.Content>
-  ):(
+  ) : (
     <ScrollView>
       <EnterPin
-        action={token => {          
+        action={token => {
           setPin(token);
           setVeriFyPin(false);
         }}
-        stylect ={{
+        stylect={{
           marginTop: '10%',
         }}
       />
@@ -172,7 +168,7 @@ const styles = StyleSheet.create({
     paddingTop: '0%',
   },
   textContainer: {
-    alignItems: 'center'    
+    alignItems: 'center',
   },
   text: {
     fontSize: 14,
@@ -183,7 +179,7 @@ const styles = StyleSheet.create({
     paddingTop: '3%',
     alignItems: 'center',
   },
-  
+
   title: {
     alignItems: 'center',
     paddingTop: '5%',
@@ -212,11 +208,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: '20%',
     paddingBottom: '0%',
   },
-  containerFooder:{  
-    flex: 1, 
-    marginTop: '3%', 
-    marginHorizontal: '8%' 
-  }  
+  containerFooder: {
+    flex: 1,
+    marginTop: '3%',
+    marginHorizontal: '8%',
+  },
 });
 
 export default ConfirmedBuySell;
