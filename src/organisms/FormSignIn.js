@@ -19,6 +19,7 @@ import {
 } from '../atoms';
 import { getPin } from '../utils/JWT';
 import EnterPin from './EnterPin';
+import { fetchBalacnce } from '../utils/ksm';
 
 const FormSignIn = props => {
   const [email, setEmail] = useState('');
@@ -49,13 +50,15 @@ const FormSignIn = props => {
     newPin();
   }, []);
 
-  const goToLogin = () =>
+  const goToLogin = () =>{
+    fetchBalacnce();
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
         routes: [{ name: 'Drawer' }],
       }),
     );
+  }    
 
   return !verifyPin ? (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -93,7 +96,7 @@ const FormSignIn = props => {
             <ButtonSignIn
               label="Login"
               stylect={{ backgroundColor: '#DB5A3A' }}
-              actionSignIn={() => (pin !== null ? goToLogin() : () => {})}
+              actionLogin={() => (pin !== null ? goToLogin() : () => {})}
               actionPin={() => setVeriFyPin(true)}
               variables={dataSession}
               actionErrorEmail={() => setErrorEmail(true)}
@@ -139,10 +142,12 @@ const FormSignIn = props => {
     </TouchableWithoutFeedback>
   ) : (
     <EnterPin
+      isLogin
       action={token => {
         setPin(token);
         setVeriFyPin(false);
       }}
+      actionLogin={goToLogin}
     />
   );
 };

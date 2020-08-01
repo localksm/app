@@ -6,7 +6,6 @@ import validator from 'validator';
 import Button from './Button';
 import { sessionModel } from '../utils/config';
 import { client, MUTATIONS, QUERIES, setSession } from '../apollo';
-import { fetchBalacnce } from '../utils/ksm';
 
 const ButtonSignIn = props => {
   const [load, setLoad] = useState(false);
@@ -96,13 +95,11 @@ const ButtonSignIn = props => {
           return;
         }
 
-        fetchBalacnce();
-
         const { isValid } = await verifyPin(id, pin);
         if (!isValid) {
           return props.actionPin();
         } else {
-          return props.actionSignIn();
+          return props.actionLogin();
         }
       } else {
         setLoad(false);

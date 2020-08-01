@@ -14,7 +14,6 @@ import { useNavigation } from '@react-navigation/native';
 import { sessionModel, googleConfig } from '../utils/config';
 import { client, MUTATIONS, QUERIES, setSession } from '../apollo';
 import Button from './Button';
-import { fetchBalacnce } from '../utils/ksm';
 import { getPin } from '../utils/JWT';
 
 const GoogleButton = props => {
@@ -104,7 +103,6 @@ const GoogleButton = props => {
           return props.actionPin();
         }
 
-        fetchBalacnce();
         return props.actionLogin();
       } else {
         // If not then navigate to the CreatePin screen passing the payload to signup

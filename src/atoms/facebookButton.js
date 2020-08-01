@@ -8,7 +8,6 @@ import { LOGIN, SIGNUP } from '../apollo/mutations';
 import { sessionModel as session } from '../utils/config';
 import { setSession, client } from '../apollo';
 import { VERIFY_USER } from '../apollo/queries';
-import { fetchBalacnce } from '../utils/ksm';
 import { getPin } from '../utils/JWT';
 
 validateEmail = async (email, name) => {
@@ -35,10 +34,6 @@ const FBLoginButton = props => {
       _signIn();
     }
   }, []);
-
-  const applyFetchBalacnce = () => {
-    fetchBalacnce();
-  };
 
   const mapUser = data => {
     session['id'] = data.id;
@@ -98,7 +93,6 @@ const FBLoginButton = props => {
         return props.actionPin(true);
       }
 
-      applyFetchBalacnce();
       props.actionLogin();
     } else {
       setloading(false);
@@ -133,8 +127,7 @@ const FBLoginButton = props => {
       const {
         data: { signup },
       } = sessionResult;
-      if (signup.success) {
-        applyFetchBalacnce();
+      if (signup.success) {        
         props.actionLogin();
       }
     }

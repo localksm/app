@@ -39,6 +39,9 @@ const EnterPin = props => {
         if (!pinIsValid) {
           return alert('Invalid Pin');
         }
+        if (props.isLogin) {          
+          props.actionLogin();
+        }
         
         props.action(jwt);
       });
