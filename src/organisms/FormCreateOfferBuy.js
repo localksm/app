@@ -95,7 +95,7 @@ const FormCreateOfferBuy = props => {
           <Fees container={'jury'} amount={offered ? offered : 0} />
           <View style={styles.textFooter}>
             <Text style={styles.footer}>
-              1 KSM = $ {splitAmount(Number.isNaN(valueKSM) ? 0 : valueKSM)}{' '}
+              1 KSM = $ {splitAmount((Number.isNaN(valueKSM) ? 0 : valueKSM)) }{' '}
               {currency}
             </Text>
           </View>
