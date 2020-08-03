@@ -1,15 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { Text, View, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
+import PinView from 'react-native-pin-view';
+
 import { CodeInput } from '../molecules';
 import { Button, InputLayout } from '../atoms';
 import FormValidator from '../utils/validator';
 import { PinFormValidations } from '../utils/validations';
 import { storePin } from '../utils/JWT';
 import { getSession, client, QUERIES } from '../apollo';
+import { Icon } from 'native-base';
 const EnterPin = props => {
+  const pinView = useRef(null);
   const [errors, setErrors] = useState({});
   const [disabled, setDisabled] = useState(true);
   const [pinCode, setPinCode] = useState('');
+  const [showRemoveButton, setShowRemoveButton] = useState(false)
+
 
   const validateForm = variables => {
     const formValidator = new FormValidator(PinFormValidations);
@@ -35,8 +41,8 @@ const EnterPin = props => {
         });
 
         const pinIsValid = data.validatePin.isValid;
-
         if (!pinIsValid) {
+          pinView.current.clearAll();
           return alert('Invalid Pin');
         }
         if (props.isLogin) {          
@@ -49,7 +55,7 @@ const EnterPin = props => {
   };
 
   return (
-    <View style={ props.stylect }>
+    <View style={props.stylect}>
       <View style={styles.secction_logo}>
         <Image
           style={styles.logo}
@@ -59,17 +65,42 @@ const EnterPin = props => {
       <View style={styles.secction_body}>
         <View style={styles.containerBody}>
           <Text style={styles.title}>Enter your PIN code</Text>
-          <View style={styles.container_codeInput}>
-            <InputLayout element="pin" resultValidator={errors}>
-              <CodeInput
-                codeLength={6}
-                onCodeChange={value => {
-                  setPinCode(value);
-                  setDisabled(!(value.length === 6));
-                }}
-              />
-            </InputLayout>
-          </View>
+          <InputLayout element="pin" resultValidator={errors}>
+            <PinView
+              inputSize={30}
+              pinLength={6}
+              ref={pinView}
+              onValueChange={value => {
+                setPinCode(value);
+                setDisabled(!(value.length === 6));
+                setShowRemoveButton(value.length > 0);
+              }}              
+              inputAreaStyle={{
+                marginBottom: 24,
+              }}
+              inputViewEmptyStyle={{
+                backgroundColor: 'transparent',
+                borderWidth: 1,
+                borderColor: '#FFF',
+              }}
+              inputViewFilledStyle={{
+                backgroundColor: '#FFF',
+              }}
+              buttonViewStyle={{
+                borderWidth: 1,
+                borderColor: '#FFF',
+              }}
+              buttonTextStyle={{
+                color: '#FFF',
+              }}
+              customLeftButton={
+                showRemoveButton ? 
+                <TouchableWithoutFeedback onPress={() => pinView.current.clear() } > 
+                  <Image style={styles.inputIco}source={ require('../../assets/remove.png') } /> 
+                </TouchableWithoutFeedback> 
+              : undefined}
+            />
+          </InputLayout>
           <Button
             label="Accept"
             stylect={!disabled ? styles.button : styles.buttonDisable}
@@ -105,22 +136,19 @@ const styles = StyleSheet.create({
     marginTop: '5%',
   },
   containerBody: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 20,
-  },
-  container_codeInput: {
-    marginVertical: 30,
+    marginTop: '10%',
   },
   button: {
     backgroundColor: '#DB5A3A',
-    marginTop: '40%',
+    marginTop: '6%',
     width: '100%',
   },
   buttonDisable: {
     backgroundColor: '#e09a8d',
-    marginTop: '40%',
+    marginTop: '6%',
     width: '100%',
   },
 });

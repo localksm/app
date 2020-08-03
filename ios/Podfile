@@ -93,6 +93,8 @@ target 'localksm' do
 
   pod 'react-native-pure-jwt', :path => '../node_modules/react-native-pure-jwt'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'localksmTests' do
     inherit! :complete
     # Pods for testing
