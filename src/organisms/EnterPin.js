@@ -1,14 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { Text, View, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
 import PinView from 'react-native-pin-view';
-
-import { CodeInput } from '../molecules';
 import { Button, InputLayout } from '../atoms';
 import FormValidator from '../utils/validator';
 import { PinFormValidations } from '../utils/validations';
-import { storePin } from '../utils/JWT';
+import { storePin, removePin } from '../utils/JWT';
 import { getSession, client, QUERIES } from '../apollo';
-import { Icon } from 'native-base';
 const EnterPin = props => {
   const pinView = useRef(null);
   const [errors, setErrors] = useState({});
@@ -42,6 +39,7 @@ const EnterPin = props => {
 
         const pinIsValid = data.validatePin.isValid;
         if (!pinIsValid) {
+          await removePin();
           pinView.current.clearAll();
           return alert('Invalid Pin');
         }

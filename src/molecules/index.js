@@ -8,4 +8,3 @@ export { default as WalletContent } from './WalletContent';
 export { default as CardProposal } from './CardProposal';
 export { default as BalanceHeader } from './BalanceHeader';
 export { default as PaymentForm} from './PaymentForm';
-export { default as CodeInput } from './CodeInput';
