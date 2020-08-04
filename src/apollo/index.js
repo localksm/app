@@ -1,19 +1,8 @@
-import {
-  ApolloClient,
-  ApolloLink,
-  HttpLink,
-  InMemoryCache,
-} from 'apollo-boost';
-import { WebSocketLink } from 'apollo-link-ws';
-import { getMainDefinition } from 'apollo-utilities';
+import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import { onError } from 'apollo-link-error';
 import { setContext } from 'apollo-link-context';
-import { split } from 'apollo-link';
 import ls from 'react-native-local-storage';
-import {
-  GRAPHQL_ENDPOINT,
-  GRAPHQL_SUBSCRIPTIONS_ENDPOINT,
-} from '../utils/config';
+import { GRAPHQL_ENDPOINT } from '../utils/config';
 import { ContextProvider, ContextConsumer, withContext } from './context';
 import ApolloState from './stateManager';
 import {
@@ -47,14 +36,10 @@ import {
 
 const httpLink = new HttpLink({
   uri: `${GRAPHQL_ENDPOINT}`,
+  onError: errorLink,
 });
 
-const wsLink = new WebSocketLink({
-  uri: `${GRAPHQL_SUBSCRIPTIONS_ENDPOINT}`,
-  options: { reconnect: true },
-});
-
-export const setSession = async payload => {
+export const setSession = async (payload) => {
   return await ls.save('session', payload);
 };
 
@@ -66,7 +51,7 @@ export const removeSession = async () => {
   return await ls.clear();
 };
 
-const authLink = setContext(async _ => {
+const authLink = setContext(async (_) => {
   const data = await getSession();
   const { session } = data !== null && data;
   const jwt = session && session.token;
@@ -95,23 +80,12 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
-const link = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query);
-    return (
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
-    );
-  },
-  wsLink,
-  httpAuthLink,
-);
 export const cache = new InMemoryCache();
 export const client = new ApolloClient({
-  link: ApolloLink.from([errorLink, link]),
+  link: httpAuthLink,
   cache,
   resolvers: {
-    logout: async id => {
+    logout: async (id) => {
       await removeSession();
     },
   },

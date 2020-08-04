@@ -1,16 +1,16 @@
 import React from 'react';
-import { Text, View, ActivityIndicator, Clipboard } from 'react-native';
-import Toast from 'react-native-root-toast';
+import { Text, View, } from 'react-native';
 import { QUERIES, client, getSession } from '../apollo';
 import { QrWallet, Link } from '../atoms';
 import { getPin } from '../utils/JWT';
+import { copy } from '../utils/misc';
 
-const WalletContent = ({ id, imageStyle, textKeyStyle, textCopyStyle }) => {
+const WalletContent = ({ imageStyle, textKeyStyle, textCopyStyle }) => {
   const [address, setAddress] = React.useState('Address');
 
   React.useEffect(() => {
     set();
-  }, []);
+  }, [set]);
 
   async function set() {
     const pin = await getPin();
@@ -29,15 +29,6 @@ const WalletContent = ({ id, imageStyle, textKeyStyle, textCopyStyle }) => {
     }
   }
 
-
-  const copy = () => {
-    Toast.show('Copied Address!', {
-      backgroundColor: 'white',
-      textColor: 'black',
-    });
-    Clipboard.setString(data.publicKeys.ksm);
-  };
-
   return (
     <>
       <View style={imageStyle}>
@@ -45,7 +36,7 @@ const WalletContent = ({ id, imageStyle, textKeyStyle, textCopyStyle }) => {
       </View>
       <Text style={textKeyStyle}>{address}</Text>
       <View style={imageStyle}>
-        <Link label="Copy Address" style={textCopyStyle} action={copy} />
+        <Link label="Copy Address" style={textCopyStyle} action={() => copy(address)} />
       </View>
     </>
   );
