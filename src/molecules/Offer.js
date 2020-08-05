@@ -1,18 +1,18 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
-import {ProposalTypeImages} from '../atoms';
+import { View, StyleSheet, Text } from 'react-native';
+import { ProposalTypeImages } from '../atoms';
 
-const Offer = props => {
-  const {operationType} = props;
+const Offer = (props) => {
+  const { operationType } = props;
   return (
     <View style={styles.container}>
       <View style={styles.right}>
-        <ProposalTypeImages operationType={operationType}/>
+        <ProposalTypeImages operationType={operationType} />
       </View>
       <View style={styles.center}>
         <Text style={{ ...styles.text }}>{props.payment}</Text>
         <Text style={{ ...styles.textSecond, fontSize: 14 }}>
-          {props.usernameMaker? props.usernameMaker :'unknown'}
+          {props.usernameMaker ? props.usernameMaker : 'unknown'}
         </Text>
         <Text style={styles.textSecond}>{props.date} UTC</Text>
       </View>
@@ -33,19 +33,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: 5,
     backgroundColor: 'transparent',
-    resizeMode: 'contain',    
+    resizeMode: 'contain',
     padding: 20,
     borderBottomWidth: 0.35,
-    borderBottomColor: '#b8b8b8'
+    borderBottomColor: '#b8b8b8',
   },
   right: {
     flex: 0.7,
     justifyContent: 'center',
-    alignItems: 'center',    
-    width:'100%',
-    height:'100%',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
     minWidth: 5,
-    minHeight: 95
+    minHeight: 95,
   },
   center: {
     flex: 3.7,

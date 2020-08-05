@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import Balance from '../atoms/Balance';
-import { getSession } from '../apollo';
+import { setSessionToState } from '../utils/hooks';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,23 +23,16 @@ const styles = StyleSheet.create({
   },
 });
 
-function BalanceHeader( ) {
+function BalanceHeader() {
   const [session, setSession] = React.useState(null);
 
   React.useEffect(() => {
-    set();
+    setSessionToState(setSession);
   }, []);
 
-  async function set() {
-    const { session } = await getSession();
-    setSession(session);
-  }
-    
   return session !== null ? (
     <View style={styles.container}>
-      <Text style={{ ...styles.textBalance}}>
-        Balance
-      </Text>
+      <Text style={{ ...styles.textBalance }}>Balance</Text>
       <Balance
         styleTotal={{ ...styles.textBalance, fontSize: 20 }}
         styleFree={{ ...styles.textBalance, fontSize: 10 }}

@@ -31,7 +31,7 @@ function Error({ error }) {
   );
 }
 
-const CardProposal = props => {
+const CardProposal = () => {
   const [id, setId] = useState(null);
   const navigation = useNavigation();
   

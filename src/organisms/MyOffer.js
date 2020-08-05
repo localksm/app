@@ -113,7 +113,6 @@ const MyOffer = () => {
                               ...item,
                             });
                           }
-
                           return navigation.navigate('ConfirmedBuy', {
                             ...item,
                           });

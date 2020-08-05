@@ -3,52 +3,22 @@ import React from 'react';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import { MockedProvider } from '@apollo/client/testing';
 import renderer, { act } from 'react-test-renderer';
 import { WalletContent } from '../src/molecules';
-import { QUERIES } from '../src/apollo';
 
 Enzyme.configure({ adapter: new Adapter() });
 
+jest.useFakeTimers();
 
-const mocks = [
-  {
-    request: {
-      query: QUERIES.PUBLIC_KEY,
-      variables: {
-        id: 1,
-        pin: '1234567890',
-      },
-    },
-    result: {
-      data: {
-        publicKeys: { ksm: '0987654321' },
-      },
-    },
-  },
-];
-
-it('should render without error', async () => {
-  let useEffect;
+it('renders correctly', async () => {
   await act(async () => {
-    // Testing useEffect
-    const mockUseEffect = () => {
-      useEffect.mockImplementationOnce((f) => f());
-    };
-    useEffect = jest.spyOn(React, 'useEffect');
-    mockUseEffect();
-
-    const { container } = renderer.create(
-      <MockedProvider mocks={mocks}>
-        <WalletContent
-          id={0}
-          imageStyle={{}}
-          textKeyStyle={{}}
-          textCopyStyle={{}}
-        />
-      </MockedProvider>,
+    renderer.create(
+      <WalletContent
+        id={0}
+        imageStyle={{}}
+        textKeyStyle={{}}
+        textCopyStyle={{}}
+      />,
     );
-
-    expect(container).toMatchSnapshot();
   });
 });
