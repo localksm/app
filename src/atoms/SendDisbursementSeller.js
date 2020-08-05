@@ -3,12 +3,21 @@ import { Alert, ActivityIndicator, Text, View, StyleSheet } from 'react-native';
 import { useMutation } from '@apollo/react-hooks';
 import { MUTATIONS, QUERIES, getSession } from '../apollo';
 import Button from './Button';
+import { getPin } from '../utils/JWT';
 
-const ConfirmSentBuyButton = (props) => {
-  const [id, setId] = useState(null);
-  const [sendDisbursementBuyer] = useMutation(
-    MUTATIONS.SEND_DISBURSEMENT_BUYER,
+const SendDisbursementSeller = (props) => {
+  const [sendDisbursementSeller] = useMutation(
+    MUTATIONS.SEND_DISBURSEMENT_SELLER,
   );
+  const [load, setLoad] = useState(false);
+  const [id, setId] = useState(null);
+  const {
+    proposalId,
+    takerId,
+    operationType,
+    pin,
+    disbursed,
+  } = props.variables;
 
   useEffect(() => {
     set();
@@ -19,15 +28,29 @@ const ConfirmSentBuyButton = (props) => {
     setId(session.id);
   }
 
-  const [confirmProposal] = useMutation(MUTATIONS.CONFIRM_PROPOSAL);
-  const [load, setLoad] = useState(false);
-  const { proposalId, takerId, pin, operationType } = props.variables;
-
   const confirmSent = async () => {
+    const pin = await getPin()
+    let node;
+    if (operationType === 'buy') {
+      node = 'makerSeller';
+    } else {
+      node = 'takerSeller';
+    }
+
+    if (pin === null || pin === '') {
+      props.showEnterPinScreen(true);
+      return;
+    }
+
     try {
       setLoad(true);
-      await confirmProposal({
-        variables: { proposalId: proposalId },
+      await sendDisbursementSeller({
+        variables: {
+          proposalId: proposalId,
+          takerId: takerId,
+          node,
+          pin,
+        },
         refetchQueries: [
           {
             query: QUERIES.QUERY_PROPOSALS,
@@ -39,12 +62,14 @@ const ConfirmSentBuyButton = (props) => {
           },
         ],
       });
-    } catch (error) {
+      return props.actionConfirmSent();
+    } catch (e) {
       setLoad(false);
-      Alert.alert('Warning!', 'Unexpected error');
+      Alert.alert('Warning', 'Something went wrong, please contact support');
       throw new Error(error);
     }
   };
+
   return !load ? (
     <Button label={props.label} action={confirmSent} />
   ) : (
@@ -61,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ConfirmSentBuyButton;
+export default SendDisbursementSeller;

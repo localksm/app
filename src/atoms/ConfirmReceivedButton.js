@@ -6,15 +6,15 @@ import Button from './Button';
 import { getPin } from '../utils/JWT';
 
 const ConfirmReceivedButton = props => {
-  const [sendDisbursementBuyer] = useMutation(
-    MUTATIONS.SEND_DISBURSEMENT_BUYER,
-  );
   const [sendDisbursementSeller] = useMutation(
     MUTATIONS.SEND_DISBURSEMENT_SELLER,
   );
+  const [sendDisbursementBuyer] = useMutation(
+    MUTATIONS.SEND_DISBURSEMENT_BUYER,
+  );
   const [load, setLoad] = useState(false);
   const [id, setId] = useState(null);
-  const { proposalId, takerId, operationType, pin } = props.variables;
+  const { proposalId, takerId, operationType, pin, disbursed} = props.variables;
 
   useEffect(() => {
     set();
@@ -26,19 +26,16 @@ const ConfirmReceivedButton = props => {
   }
 
   const confirmSent = async () => {
-    try {
+
+    
+   /* try {
       setLoad(true);
       if (operationType === 'sell' || operationType === 'withdraw_funds') {
-        const response = await sendDisbursementBuyer({
-          variables: {
-            proposalId: proposalId,
-            takerId: takerId,
-            node: 'makerBuyer',
-            pin: pin
-          },
-        });
-        const { success } = response.data.sendDisbursementBuyer;
-        if (success) {
+        if (pin === null || pin === '') {
+          props.showEnterPinScreen(true);
+          return;
+        } 
+        if(disbursed){
           setLoad(true);
           await sendDisbursementSeller({
             variables: {
@@ -59,13 +56,14 @@ const ConfirmReceivedButton = props => {
             ],
           });
           return props.actionConfirmSent();
-        } else {
+        }else{
           setLoad(false);
-          return Alert.alert(
-            'Warning',
-            'Something went wrong, contact support',
-          );
+          Alert.alert('Warning!','espere un momento en lo que su transaccion esta lista' )
+
         }
+
+  
+        
       } else {
         // Buy
         const pin = await getPin();
@@ -110,7 +108,7 @@ const ConfirmReceivedButton = props => {
       setLoad(false);
       Alert.alert('Warning', 'Something went wrong, please contact support');
       throw new Error(error);
-    }
+    }*/
   };
 
   return !load ? (

@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MultiView } from '../molecules';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Link, ConfirmReceivedButton } from '../atoms';
+import { Link, SendDisbursementBuyer } from '../atoms';
 import { FormLayout } from '.';
 import EnterPin from './EnterPin';
 import { mapPaymentMethod } from '../utils/misc';
 
-const DisburseBuy = props => {
+const DisbursementBuyer = (props) => {
   const [details, setDetails] = React.useState('');
   const [enterPin, showEnterPin] = React.useState(false);
 
@@ -35,12 +35,12 @@ const DisburseBuy = props => {
     phone,
     proposalId,
   } = props.route.params.body.paymentData;
-  const {disbursed} = props.route.params;
+  const { disbursed } = props.route.params;
   const variables = {
-    proposalId: proposalId,
-    takerId: takerId,
-    operationType: operationType,
-    disbursed: disbursed,
+    proposalId,
+    takerId,
+    operationType,
+    disbursed,
   };
 
   const obj = {
@@ -57,8 +57,13 @@ const DisburseBuy = props => {
     let str = `Payment method \n ${mapPaymentMethod(
       paymentMethod,
     )} \nPayment details \n`;
-    Object.keys(obj).forEach(k => {
-      if (obj[k] !== 'null' && obj[k] !== null && obj[k] !== '' && obj[k] !== undefined) {
+    Object.keys(obj).forEach((k) => {
+      if (
+        obj[k] !== 'null' &&
+        obj[k] !== null &&
+        obj[k] !== '' &&
+        obj[k] !== undefined
+      ) {
         str = str + `${k}: ${obj[k]}\n`;
       }
     });
@@ -70,7 +75,7 @@ const DisburseBuy = props => {
 
   return enterPin ? (
     <EnterPin
-      action={jwt => {
+      action={(jwt) => {
         showEnterPin(false);
       }}
     />
@@ -92,7 +97,7 @@ const DisburseBuy = props => {
             Please confirm that you receive the correct amount
           </Text>
 
-          <ConfirmReceivedButton
+          <SendDisbursementBuyer
             variables={variables}
             label="Confirm Sent"
             actionConfirmSent={() =>
@@ -140,4 +145,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DisburseBuy;
+export default DisbursementBuyer;

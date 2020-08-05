@@ -222,12 +222,10 @@ export const SEND_DISBURSEMENT_BUYER = gql`
     $takerId: Int!
     $pin: String!
     $node: NodeTypes!
-    $pin: String!
   ) {
     sendDisbursementBuyer(
       proposalId: $proposalId
       takerId: $takerId
-      pin: $pin
       node: $node
       pin: $pin
     ) {
@@ -241,14 +239,12 @@ export const SEND_DISBURSEMENT_SELLER = gql`
   mutation sendDisbursementSeller(
     $proposalId: Int!
     $takerId: Int!
-    $pin: String!
     $node: NodeTypes!
     $pin: String!
   ) {
     sendDisbursementSeller(
       proposalId: $proposalId
       takerId: $takerId
-      pin: $pin
       node: $node
       pin: $pin
     ) {

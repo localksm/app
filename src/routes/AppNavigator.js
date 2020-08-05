@@ -17,7 +17,8 @@ import {
    ConfirmedSell, 
    AcceptedBuy, 
    AcceptedSell,
-   Disburse,
+   DisburseBuyer,
+   DisburseSeller,
    TransactionCompleted,
    Wallet,
    ReportAProblem,
@@ -40,15 +41,10 @@ const OfferStack = () => {
   return(
     <Stack.Navigator initialRouteName='Offers' >
       <Stack.Screen name='Offers' component={Offers} options={{headerShown: false}} />
-      <Stack.Screen name='DetailsOffer' component={DetailsOffer} options={{headerShown: false}} />
       <Stack.Screen name='AcceptedBuy' component={AcceptedBuy} options={{headerShown: false}} />
       <Stack.Screen name='AcceptedSell' component={AcceptedSell} options={{headerShown: false}} />
-      <Stack.Screen name='Disburse' component={Disburse} options={{headerShown: false}} />
-      <Stack.Screen name='TransactionCompleted' component={TransactionCompleted} options={{headerShown: false}} />
+      <Stack.Screen name='DetailsOffer' component={DetailsOffer} options={{headerShown: false}} />
       <Stack.Screen name='Filter' component={Filter} options={{headerShown: false}} />
-      <Stack.Screen name='ReportAProblem' component={ReportAProblem} options={{headerShown: false}} />
-      <Stack.Screen name='Mediation' component={Mediation} options={{headerShown: false}} />
-      <Stack.Screen name='WonMediation' component={WonMediation} options={{headerShown: false}} />
     </Stack.Navigator>
   )
 }
@@ -63,7 +59,8 @@ const MyOffersStack = () => {
       <Stack.Screen name='ConfirmedBuy' component={ConfirmedBuy} options={{headerShown: false}} />
       <Stack.Screen name='ConfirmedSell' component={ConfirmedSell} options={{headerShown: false}} />
       <Stack.Screen name='SendSettlementMaker' component={SendSettlementMaker} options={{headerShown: false}} />
-      <Stack.Screen name='Disburse' component={Disburse} options={{headerShown: false}} />
+      <Stack.Screen name='DisburseBuyer' component={DisburseBuyer} options={{headerShown: false}} />
+      <Stack.Screen name='DisburseSeller' component={DisburseSeller} options={{headerShown: false}} />
       <Stack.Screen name='TransactionCompleted' component={TransactionCompleted} options={{headerShown: false}} />
       <Stack.Screen name='CreateOfferSell' component={CreateOfferSell} options={{headerShown: false}} />
       <Stack.Screen name='ReportAProblem' component={ReportAProblem} options={{headerShown: false}} />

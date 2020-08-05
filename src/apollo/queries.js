@@ -59,6 +59,7 @@ export const QUERY_PROPOSALS = gql`
     proposals(userId: $userId, offset: $offset, limit: $limit) {
       id
       status
+      disbursed
       body {
         usernameMaker
         usernameTaker
@@ -97,6 +98,8 @@ export const QUERY_USER_PROPOSALS = gql`
       status
       count
       localCurrency
+      disbursed
+      settle
       body {
         usernameMaker
         usernameTaker

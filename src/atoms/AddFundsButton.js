@@ -185,7 +185,6 @@ const AddFundsButton = props => {
         await addfunds({ variables: send });
         props.actionAddFunds();
       } catch (error) {
-        console.log(error);
         setLoad(false);
         Alert.alert('Warning', `Error: ${error}`);
         throw new Error(error);

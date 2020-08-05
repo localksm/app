@@ -31,6 +31,9 @@ const AcceptedBuySell = props => {
     phone,
     proposalId,
   } = props.route.params.body.paymentData;
+  const variables ={
+    proposalId
+  }
 
   const obj = {
     'Acount number': accountNumber,
@@ -47,7 +50,7 @@ const AcceptedBuySell = props => {
       paymentMethod
     )} \nPayment details \n`;
     Object.keys(obj).forEach(k => {
-      if (obj[k] !== null && obj[k] !== '' && obj[k] !== undefined) {
+      if (obj[k] !== null && obj[k] !== '' && obj[k] !== undefined && obj[k] !== 'null') {
         str = str + `${k}: ${obj[k]}\n`;
       }
     });
@@ -80,7 +83,7 @@ const AcceptedBuySell = props => {
               Alert.alert('Confirimed proposal',`Please wait for ${usernameMaker} to respond`)
               : 
               <ConfirmSentBuyButton
-                variables={proposalId}
+                variables={variables}
                 label="Confirm sent"
                 actionConfirmSent={() => setSend(true)}
               />

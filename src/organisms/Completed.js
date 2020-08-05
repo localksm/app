@@ -47,7 +47,7 @@ const Completed = props => {
       paymentMethod
     )} \nPayment details \n`;
     Object.keys(obj).forEach(k => {
-      if (obj[k] !== null && obj[k] !== '' && obj[k] !== undefined) {
+      if (obj[k] !== 'null' && obj[k] !== null && obj[k] !== '' && obj[k] !== undefined) {
         str = str + `${k}: ${obj[k]}\n`;
       }
     });

@@ -61,7 +61,7 @@ const ConfirmedBuySell = props => {
       paymentMethod,
     )} \nPayment details \n`;
     Object.keys(obj).forEach(k => {
-      if (obj[k] !== null && obj[k] !== '' && obj[k] !== undefined) {
+      if (obj[k] !== null && obj[k] !== '' && obj[k] !== undefined && obj[k] !== 'null') {
         str = str + `${k}: ${obj[k]}\n`;
       }
     });
@@ -118,7 +118,7 @@ const ConfirmedBuySell = props => {
             : operationType === 'add_funds' || operationType === 'buy'
             ? status === 'accepted' && (
                 <ConfirmSentBuyButton
-                  variables={proposalId}
+                  variables={variables}
                   label="Confirm received"
                   actionConfirmSent={() => setSend(true)}
                 />

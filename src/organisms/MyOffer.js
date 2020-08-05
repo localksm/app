@@ -70,31 +70,31 @@ const MyOffer = () => {
               <TouchableOpacity
                 onPress={async () => {
                   const isMaker = name === item.body.usernameMaker;
+                  const isBuy =
+                    item.body.operationType === 'add_funds' ||
+                    item.body.operationType === 'buy';
+                  const isSettle = item.settle;
                   switch (item.status) {
                     case 'created':
                       return navigation.navigate('Confirmation', { ...item });
                     case 'accepted':
                       if (isMaker) {
-                        if (
-                          item.body.operationType === 'add_funds' ||
-                          item.body.operationType === 'buy'
-                        ) {
+                        if (isBuy) {
                           return navigation.navigate('ConfirmedBuy', {
                             ...item,
                           });
                         } else {
-                          return navigation.navigate('SendSettlementMaker', {
+                          if(!isSettle){
+                            return navigation.navigate('SendSettlementMaker', {
+                              ...item,
+                            });
+                          }
+                          return navigation.navigate('ConfirmedSell', {
                             ...item,
                           });
-                          // return navigation.navigate('ConfirmedSell', {
-                          //   ...item,
-                          // });
                         }
                       } else {
-                        if (
-                          item.body.operationType === 'add_funds' ||
-                          item.body.operationType === 'buy'
-                        ) {
+                        if (isBuy) {
                           return navigation.navigate('AcceptedBuy', {
                             ...item,
                           });
@@ -104,32 +104,44 @@ const MyOffer = () => {
                           });
                         }
                       }
+
                     case 'confirmed':
                       if (isMaker) {
-                        if (
-                          item.body.operationType === 'add_funds' ||
-                          item.body.operationType === 'buy'
-                        ) {
+                        if (isBuy) {
+                          if (item.disbursed) {
+                            return navigation.navigate('DisburseSeller', {
+                              ...item,
+                            });
+                          }
+
                           return navigation.navigate('ConfirmedBuy', {
                             ...item,
                           });
                         } else {
-                          return navigation.navigate('ConfirmedSell', {
+                          // If is a sell and I am the maker then send me to the buyer disburse
+                          return navigation.navigate('DisburseBuyer', {
                             ...item,
                           });
                         }
                       } else {
-                        if (
-                          item.body.operationType === 'add_funds' ||
-                          item.body.operationType === 'buy'
-                        ) {
-                          return navigation.navigate('Disburse', { ...item });
+                        if (isBuy) {
+                          // If is a buy and I am the taker then send me to the buyer disburse
+                          return navigation.navigate('DisburseBuyer', {
+                            ...item,
+                          });
                         } else {
+                          if (item.disbursed) {
+                            return navigation.navigate('DisburseSeller', {
+                              ...item,
+                            });
+                          }
+
                           return navigation.navigate('ConfirmedSell', {
                             ...item,
                           });
                         }
                       }
+
                     case 'completed':
                       return navigation.navigate('TransactionCompleted', {
                         ...item,
