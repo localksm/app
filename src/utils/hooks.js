@@ -7,6 +7,13 @@ export async function setSessionToState(set) {
   set(session);
 }
 
+
+export async function setSessionId(set) {
+  const sessionData = await getSession();
+  const session = sessionData?.session;
+  set(session?.id);
+}
+
 export async function setUserAddress(set) {
   const pin = await getPin();
   const sessionData = await getSession();

@@ -11,6 +11,8 @@ function InputText(props) {
       onChangeText={props.onChangeText}
       placeholderTextColor="#ffffff"
       returnKeyType="done"
+      autoCapitalize={props.autoCapitalize}
+      keyboardType={props.keyboardType}
       value={props.value}
     />
   ) : (
@@ -19,6 +21,8 @@ function InputText(props) {
       style={[styles.inputMaterial, props.stylect]}
       onChangeText={props.onChangeText}
       placeholderTextColor="#ffffff"
+      autoCapitalize={props.autoCapitalize}
+      keyboardType={props.keyboardType}
       value={props.value}
     />
   );

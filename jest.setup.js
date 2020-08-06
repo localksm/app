@@ -125,6 +125,32 @@ jest.mock('@react-navigation/drawer', () => {
   };
 });
 
+const mockedNavigate = jest.fn();
+
+jest.mock('@react-navigation/native', () => {
+  return {
+    ...jest.requireActual('@react-navigation/native'),
+    useNavigation: () => ({
+      navigate: mockedNavigate,
+    }),
+  };
+});
+
+jest.mock('@apollo/react-hooks', () => {
+  return {
+    useQuery: () => ({
+      loading: {},
+      error: {},
+      data: {},
+    }),
+    useMutation: () => ({
+      loading: {},
+      error: {},
+      data: {},
+    }),
+  };
+});
+
 var jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 

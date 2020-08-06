@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `ShallowWrapper {}`;
+
+exports[`renders payment input type text input 1`] = `ShallowWrapper {}`;
+
+exports[`renders payment input type text textarea 1`] = `ShallowWrapper {}`;
+
+exports[`renders payment text input 1`] = `ShallowWrapper {}`;
+
+exports[`renders payment text textarea 1`] = `ShallowWrapper {}`;
+
+exports[`renders paymentInputs correctly 1`] = `ShallowWrapper {}`;

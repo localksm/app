@@ -22,3 +22,20 @@ it('renders correctly', async () => {
     );
   });
 });
+
+it('test copy address', async () => {
+  jest.useFakeTimers();
+  await act(() => {
+    const onPressMock = jest.fn();
+    const wrapper = Enzyme.shallow(
+      <WalletContent
+        id={0}
+        imageStyle={{}}
+        textKeyStyle={{}}
+        textCopyStyle={{}}
+      />,
+    );
+    wrapper.children().find('Link').simulate('action', 'address');
+    expect(onPressMock).not.toHaveBeenCalledWith('address');
+  });
+});

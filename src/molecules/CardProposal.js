@@ -11,84 +11,57 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
 import moment from 'moment';
-import { QUERIES, getSession } from '../apollo';
+import { QUERIES } from '../apollo';
 import Offer from './Offer';
-import { mapPaymentMethod } from '../utils/misc';
-
-function Loading() {
-  return (
-    <View style={[styles.container, { marginVertical: 30 }]}>
-      <ActivityIndicator size="large" color="black" />
-    </View>
-  );
-}
-
-function Error({ error }) {
-  return (
-    <View style={styles.container}>
-      <Text>{`Error! ${error.message}`}</Text>
-    </View>
-  );
-}
+import { mapPaymentMethod, cardProposalNavigation } from '../utils/misc';
+import { setSessionId } from '../utils/hooks';
+import { GenericGQLLoading, GenericGQLError } from '.';
 
 const CardProposal = () => {
   const [id, setId] = useState(null);
   const navigation = useNavigation();
-  
+
   useEffect(() => {
-    set();
+    setSessionId(setId);
   }, []);
 
-  async function set() {
-    const { session } = await getSession();
-    setId(session.id);
-  }
-
   const { loading, error, data } = useQuery(QUERIES.QUERY_PROPOSALS, {
-    variables: {userId: id},
-    pollInterval: 6000
+    variables: { userId: id },
+    pollInterval: 6000,
   });
-  if (loading) return <Loading />;
-  if (error) return <Error error={error} />;
 
-  return (
+  return loading ? (
+    <GenericGQLLoading styles={styles} />
+  ) : error ? (
+    <GenericGQLError styles={styles} error={error} />
+  ) : (
     <>
       <FlatList
         data={data.proposals}
         ListFooterComponent={<View />}
         ListFooterComponentStyle={styles.listFooterComponent}
-        contentContainerStyle={styles.contentContainer }
+        contentContainerStyle={styles.contentContainer}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
               onPress={() => {
-                switch (item.body.operationType) {
-                  case 'add_funds':
-                    return navigation.navigate('DetailsOffer', { ...item });
-                  case 'withdraw_funds':
-                    return navigation.navigate('DetailsOffer', { ...item });
-                  case 'buy':
-                    return navigation.navigate('DetailsOffer', { ...item });
-                  case 'sell':
-                    return navigation.navigate('DetailsOffer', { ...item });
-                  default:
-                    Alert.alert(
-                      'Warning!',
-                      'Unexpected error, contact the support area',
-                    );
-                    break;
-                }
+                cardProposalNavigation(item, navigation);
               }}>
               <Offer
                 payment={mapPaymentMethod(item.body.paymentMethod)}
                 usernameMaker={item.body.usernameMaker}
-                date={moment(new Date(item.body.updatedAt).toUTCString()).format(
-                  'MMMM Do YYYY - h:mm:ss A',
-                )}
+                date={moment(
+                  new Date(item.body.updatedAt).toUTCString(),
+                ).format('MMMM Do YYYY - h:mm:ss A')}
                 offered={item.body.requestAmount}
                 requiered={item.body.offerAmount}
                 status={item.status}
-                currency={item.body.operationType === 'add_funds' || item.body.operationType === 'buy' ? item.body.offerAsset : item.body.requestAsset}
+                currency={
+                  item.body.operationType === 'add_funds' ||
+                  item.body.operationType === 'buy'
+                    ? item.body.offerAsset
+                    : item.body.requestAsset
+                }
                 isOffer={true}
                 operationType={item.body.operationType}
               />
@@ -105,14 +78,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
-  listFooterComponent:{
-    height: 30
+  listFooterComponent: {
+    height: 30,
   },
-  contentContainer:{
-    paddingBottom: 300 
-  }
+  contentContainer: {
+    paddingBottom: 300,
+  },
 });
 
 export default CardProposal;

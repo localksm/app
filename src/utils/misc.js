@@ -30,3 +30,113 @@ export function copy(address) {
   });
   Clipboard.setString(address);
 }
+
+const nameInput = {
+  element: 'name',
+  placeholder: 'Name',
+  type: 'input',
+  keyboardType: 'default',
+  autoCapitalize: 'sentences',
+};
+
+const lastNameInput = {
+  element: 'lastName',
+  placeholder: 'Last Name',
+  type: 'input',
+  keyboardType: 'default',
+  autoCapitalize: 'sentences',
+};
+
+const emailInput = {
+  element: 'email',
+  placeholder: 'Email',
+  type: 'input',
+  keyboardType: 'default',
+  autoCapitalize: 'none',
+};
+
+const accountNumberInput = {
+  element: 'accountNumber',
+  placeholder: 'Account Number',
+  type: 'input',
+  keyboardType: 'default',
+  autoCapitalize: 'sentences',
+};
+
+const bankDataInput = {
+  element: 'bankData',
+  placeholder: 'Payment Data',
+  type: 'textarea',
+  keyboardType: 'default',
+};
+
+const addressInput = {
+  element: 'address',
+  placeholder: 'Address',
+  type: 'textarea',
+  keyboardType: 'default',
+};
+
+const phoneInput = {
+  element: 'phone',
+  placeholder: 'Phone',
+  type: 'input',
+  keyboardType: 'numeric',
+  autoCapitalize: 'none',
+};
+
+export const paymentMethods = {
+  ['VE']: {
+    fields: [nameInput, lastNameInput, emailInput],
+  },
+  ['ZE']: {
+    fields: [nameInput, lastNameInput, accountNumberInput, emailInput],
+  },
+  ['MP']: {
+    fields: [nameInput, lastNameInput, emailInput, bankDataInput, addressInput],
+  },
+  ['WU']: {
+    fields: [nameInput, lastNameInput, bankDataInput, addressInput],
+  },
+  ['MG']: {
+    fields: [
+      nameInput,
+      lastNameInput,
+      phoneInput,
+      bankDataInput,
+      addressInput,
+      bankDataInput,
+    ],
+  },
+  ['NE']: {
+    fields: [nameInput, lastNameInput, emailInput],
+  },
+  ['UP']: {
+    fields: [nameInput, lastNameInput, emailInput],
+  },
+  ['PP']: {
+    fields: [nameInput, lastNameInput, emailInput],
+  },
+  ['BN']: {
+    fields: [nameInput, lastNameInput, bankDataInput],
+  },
+  ['OT']: {
+    fields: [],
+  },
+};
+
+export function cardProposalNavigation(item, navigation) {
+  switch (item.body.operationType) {
+    case 'add_funds':
+      return navigation.navigate('DetailsOffer', { ...item });
+    case 'withdraw_funds':
+      return navigation.navigate('DetailsOffer', { ...item });
+    case 'buy':
+      return navigation.navigate('DetailsOffer', { ...item });
+    case 'sell':
+      return navigation.navigate('DetailsOffer', { ...item });
+    default:
+      Alert.alert('Warning!', 'Unexpected error, contact the support area');
+      break;
+  }
+}
