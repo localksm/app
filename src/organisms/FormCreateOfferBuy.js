@@ -19,9 +19,10 @@ import {
 } from '../atoms';
 import { splitAmount } from '../utils/splitAmount';
 import { FormLayout } from '.';
+import { useSetErrors } from '../utils/hooks';
 
-const FormCreateOfferBuy = props => {
-  const [errors, setErrors] = useState({});
+const FormCreateOfferBuy = () => {
+  const { errors, setErrors } = useSetErrors();
   const [offered, setOffered] = useState('0');
   const [required, setRequired] = useState('0');
   const [paymentMethod, setPaymentmethod] = useState('');
@@ -29,6 +30,7 @@ const FormCreateOfferBuy = props => {
   const [currency, setCurrency] = useState('');
   const [other, setOther] = useState('');
   const navigation = useNavigation();
+
   const variables = {
     offerAmount: offered,
     requestAmount: required,
@@ -39,7 +41,7 @@ const FormCreateOfferBuy = props => {
     operationType: 'add_funds',
   };
 
-  const valueKSM = offered && required ? (1 * offered) / required : NaN;
+  const valueKSM = offered && required ? (1 * offered) / required : 0;
 
   return (
     <FormLayout.Content>
@@ -53,20 +55,22 @@ const FormCreateOfferBuy = props => {
               </InputLayout>
               <InputLayout element="currency" resultValidator={errors}>
                 <InputText
+                  testID="test-onchange-amount"
                   name="Amount"
                   keyboardType="numeric"
                   placeholder={`Amount ${currency}`}
-                  onChangeText={value => setOffered(value)}
+                  onChangeText={(value) => setOffered(value)}
                   stylect={{ fontStyle: 'normal', fontSize: 15 }}
                 />
               </InputLayout>
               <Text style={styles.textRequired}>Required Currency</Text>
               <InputLayout element="requiredCurrency" resultValidator={errors}>
                 <InputText
+                  testID="test-onchange-ksm-amount"
                   name="Amount"
                   keyboardType="numeric"
                   placeholder="Amount KSM"
-                  onChangeText={value => setRequired(value)}
+                  onChangeText={(value) => setRequired(value)}
                   stylect={{ fontStyle: 'normal', fontSize: 15 }}
                 />
               </InputLayout>
@@ -82,7 +86,7 @@ const FormCreateOfferBuy = props => {
                 <InputLayout element="other" resultValidator={errors}>
                   <InputText
                     placeholder="Other"
-                    onChangeText={value => setOther(value)}
+                    onChangeText={(value) => setOther(value)}
                   />
                 </InputLayout>
               )}
@@ -95,11 +99,12 @@ const FormCreateOfferBuy = props => {
           <Fees container={'jury'} amount={offered ? offered : 0} />
           <View style={styles.textFooter}>
             <Text style={styles.footer}>
-              1 KSM = $ {splitAmount((Number.isNaN(valueKSM) ? 0 : valueKSM)) }{' '}
+              1 KSM = $ {splitAmount(Number.isNaN(valueKSM) ? 0 : valueKSM)}{' '}
               {currency}
             </Text>
           </View>
           <AddFundsButton
+            testID="test-addfunds-btn"
             variables={variables}
             label="Send"
             handlerError={setErrors}

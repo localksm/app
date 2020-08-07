@@ -4,23 +4,19 @@ import { useMutation } from '@apollo/react-hooks';
 import { MUTATIONS, QUERIES, getSession } from '../apollo';
 import Button from './Button';
 import { getPin } from '../utils/JWT';
+import { setSessionId, useLoader } from '../utils/hooks';
 
-const SendDisbursementBuyer = (props) => {
-  const [sendDisbursementBuyer] = useMutation(
+function SendDisbursementBuyer(props) {
+  const sendDisbursementBuyerMutation = useMutation(
     MUTATIONS.SEND_DISBURSEMENT_BUYER,
   );
-  const [load, setLoad] = useState(false);
+  const { load, setLoad } = useLoader(false);
   const [id, setId] = useState(null);
   const { proposalId, takerId, operationType, disbursed } = props.variables;
 
   useEffect(() => {
-    set();
+    setSessionId(setId);
   }, []);
-
-  async function set() {
-    const { session } = await getSession();
-    setId(session.id);
-  }
 
   const confirmSent = async () => {
     setLoad(true);
@@ -38,7 +34,7 @@ const SendDisbursementBuyer = (props) => {
     }
 
     try {
-      const response = await sendDisbursementBuyer({
+      const response = await sendDisbursementBuyerMutation[0]({
         variables: {
           proposalId: proposalId,
           takerId: takerId,
@@ -58,7 +54,7 @@ const SendDisbursementBuyer = (props) => {
       });
       const { success } = response.data.sendDisbursementBuyer;
       if (success) {
-        return props.actionConfirmSent();
+        return props.navigation.navigate('TransactionCompleted', props.params)
       } else {
         setLoad(false);
         return Alert.alert('Warning', 'Something went wrong, contact support');
@@ -72,7 +68,7 @@ const SendDisbursementBuyer = (props) => {
 
   return !load ? (
     !disbursed ? (
-      <Button label={props.label} action={confirmSent} />
+      <Button label={props.label} testID="test-btn" action={confirmSent} />
     ) : null
   ) : (
     <View style={styles.text}>
@@ -80,7 +76,7 @@ const SendDisbursementBuyer = (props) => {
       <Text style={styles.text}>Please wait...</Text>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   text: {

@@ -2,20 +2,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { WalletContent } from '../molecules';
-import { getSession } from '../apollo';
+import { setSessionId } from '../utils/hooks';
 
 const WalletView = () => {
   const [id, setId] = React.useState(null);
 
   React.useEffect(() => {
-    set();
-  }, []);
-
-  async function set() {
-    const ses = await getSession();
-
-    setId(() => ses.session.id);
-  }
+    setSessionId(setId);
+  }, [setSessionId]);
 
   return (
     <View style={styles.container}>

@@ -9,8 +9,8 @@ import { getPin } from '../utils/JWT';
 
 function SendSettlementMakerContent(props) {
   const navigation = useNavigation();
-  const [sendSettlement] = useMutation(MUTATIONS.SEND_SETTLEMENT);
-  const [sendFulfillment] = useMutation(MUTATIONS.SEND_FULFILLMENT);
+  const sendSettlement = useMutation(MUTATIONS.SEND_SETTLEMENT);
+  const sendFulfillment = useMutation(MUTATIONS.SEND_FULFILLMENT);
 
   // Handle action
 
@@ -29,7 +29,7 @@ function SendSettlementMakerContent(props) {
 
     try {
       currentStep = 'Settlement';
-      await sendSettlement({
+      await sendSettlement[0]({
         variables: {
           proposalId,
           makerId: id,
@@ -40,7 +40,7 @@ function SendSettlementMakerContent(props) {
       });
 
       currentStep = 'Fulfillment';
-      sendFulfillment({
+      sendFulfillment[0]({
         variables: {
           proposalId,
           takerId,

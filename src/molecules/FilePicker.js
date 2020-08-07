@@ -17,6 +17,7 @@ import { Buffer } from 'buffer';
 import { Auth, Storage } from 'aws-amplify';
 import awsconfig from '../S3/aws-exports';
 import { getSession, withContext } from '../apollo';
+import { FilePickerComponent } from '.';
 
 const FilePicker = (props) => {
   const [chosenItems, setChosenItems] = useState([]);
@@ -158,27 +159,35 @@ const FilePicker = (props) => {
     }
   };
 
-  return !loading ? (
-    <View style={styles.containerPrincipal}>
-      <TouchableOpacity
-        activeOpacity={0.5}
-        style={styles.button}
-        onPress={handlerSingleFilePicker}>
-        <View style={styles.container}>
-          <Image
-            style={styles.icon}
-            source={require('../../assets/uploadPhoto.png')}
-          />
-          <Text numberOfLines={1} style={styles.buttonText}>
-            Select images
-          </Text>
-        </View>
-      </TouchableOpacity>
-      {props.children}
-    </View>
-  ) : (
-    <ActivityIndicator size="large" color="white" />
+  return (
+    <FilePickerComponent
+      loading={loading}
+      handlerSingleFilePicker={handlerSingleFilePicker}
+      children={props.children}
+    />
   );
+  // return !loading ? (
+  //   <View style={styles.containerPrincipal}>
+  //     <TouchableOpacity
+  //       className="picker-btn"
+  //       activeOpacity={0.5}
+  //       style={styles.button}
+  //       onPress={handlerSingleFilePicker}>
+  //       <View style={styles.container}>
+  //         <Image
+  //           style={styles.icon}
+  //           source={require('../../assets/uploadPhoto.png')}
+  //         />
+  //         <Text numberOfLines={1} style={styles.buttonText}>
+  //           Select images
+  //         </Text>
+  //       </View>
+  //     </TouchableOpacity>
+  //     {props.children}
+  //   </View>
+  // ) : (
+  //   <ActivityIndicator size="large" color="white" />
+  // );
 };
 
 const styles = StyleSheet.create({

@@ -1,20 +1,27 @@
 import React, { useState, useRef } from 'react';
-import { Text, View, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import PinView from 'react-native-pin-view';
 import { Button, InputLayout } from '../atoms';
 import FormValidator from '../utils/validator';
 import { PinFormValidations } from '../utils/validations';
 import { storePin, removePin } from '../utils/JWT';
 import { getSession, client, QUERIES } from '../apollo';
-const EnterPin = props => {
+import { useDisabled, useShowRemoveButton, useSetErrors } from '../utils/hooks';
+
+const EnterPin = (props) => {
   const pinView = useRef(null);
-  const [errors, setErrors] = useState({});
-  const [disabled, setDisabled] = useState(true);
+  const { errors, setErrors } = useSetErrors();
+  const { disabled, setDisabled } = useDisabled();
   const [pinCode, setPinCode] = useState('');
-  const [showRemoveButton, setShowRemoveButton] = useState(false)
+  const { showRemoveButton, setShowRemoveButton } = useShowRemoveButton();
 
-
-  const validateForm = variables => {
+  const validateForm = (variables) => {
     const formValidator = new FormValidator(PinFormValidations);
     let validation = formValidator.validate(variables);
     return validation;
@@ -28,7 +35,7 @@ const EnterPin = props => {
     });
     setErrors(validator);
     if (validator.isValid) {
-      storePin(pinCode, async jwt => {
+      storePin(pinCode, async (jwt) => {
         const { data } = await client.query({
           query: QUERIES.VERIFY_PIN,
           variables: {
@@ -43,10 +50,10 @@ const EnterPin = props => {
           pinView.current.clearAll();
           return alert('Invalid Pin');
         }
-        if (props.isLogin) {          
+        if (props.isLogin) {
           props.actionLogin();
         }
-        
+
         props.action(jwt);
       });
     }
@@ -68,11 +75,11 @@ const EnterPin = props => {
               inputSize={30}
               pinLength={6}
               ref={pinView}
-              onValueChange={value => {
+              onValueChange={(value) => {
                 setPinCode(value);
                 setDisabled(!(value.length === 6));
                 setShowRemoveButton(value.length > 0);
-              }}              
+              }}
               inputAreaStyle={{
                 marginBottom: 24,
               }}
@@ -92,11 +99,17 @@ const EnterPin = props => {
                 color: '#FFF',
               }}
               customLeftButton={
-                showRemoveButton ? 
-                <TouchableWithoutFeedback onPress={() => pinView.current.clear() } > 
-                  <Image style={styles.inputIco}source={ require('../../assets/remove.png') } /> 
-                </TouchableWithoutFeedback> 
-              : undefined}
+                showRemoveButton ? (
+                  <TouchableWithoutFeedback
+                    testID="remove-pin-btn"
+                    onPress={() => pinView.current.clear()}>
+                    <Image
+                      style={styles.inputIco}
+                      source={require('../../assets/remove.png')}
+                    />
+                  </TouchableWithoutFeedback>
+                ) : undefined
+              }
             />
           </InputLayout>
           <Button

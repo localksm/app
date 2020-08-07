@@ -1,5 +1,4 @@
 export { default as HomeLayout } from './HomeLayout';
-export { default as CustomDrawerContent } from './CustomDrawer';
 export { default as OfferList } from './OfferList';
 export { default as OfferDetails } from './OfferDetails';
 export { default as FormSignIn } from './FormSignIn';
@@ -24,6 +23,6 @@ export { default as FormLayout } from './FormLayout';
 export { default as Withdraw } from './Withdraw';
 export { default as FormCreatePin } from './FormCreatePin';
 export { default as EnterPin } from './EnterPin';
-export {
-  default as SendSettlementMakerContent,
-} from './SendSettlementMakerContent';
+export { default as SendSettlementMakerContent } from './SendSettlementMakerContent';
+
+export { default as CustomDrawerContent } from './CustomDrawer';

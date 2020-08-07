@@ -8,13 +8,13 @@ import { validateAddress } from '../utils/ksm';
 
 const SendWithdrawButton = props => {
   const { address, amount, id, total } = props.variables;
-  const [withdraw] = useMutation(MUTATIONS.WITHDRAW);
+  const withdraw = useMutation(MUTATIONS.WITHDRAW);
   const [load, setLoad] = useState(false);
   
   const send = async () => {
     setLoad(true);
     try {
-      const {data} = await withdraw({
+      const {data} = await withdraw[0]({
         variables: { senderId: id, to: address, amount: amount },
       });
       const {success} = data.withdraw;

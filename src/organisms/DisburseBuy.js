@@ -7,7 +7,7 @@ import { FormLayout } from '.';
 import EnterPin from './EnterPin';
 import { mapPaymentMethod } from '../utils/misc';
 
-const DisburseBuy = props => {
+function DisburseBuy(props) {
   const [details, setDetails] = React.useState('');
   const [enterPin, showEnterPin] = React.useState(false);
 
@@ -16,6 +16,8 @@ const DisburseBuy = props => {
     setDetails(() => str);
   }, []);
 
+  const { disbursed, body } = props.route.params;
+
   const {
     usernameMaker,
     offerAsset,
@@ -23,7 +25,7 @@ const DisburseBuy = props => {
     paymentMethod,
     takerId,
     operationType,
-  } = props.route.params.body;
+  } = body;
 
   const {
     accountNumber,
@@ -34,8 +36,8 @@ const DisburseBuy = props => {
     name,
     phone,
     proposalId,
-  } = props.route.params.body.paymentData;
-  const {disbursed} = props.route.params;
+  } = body.paymentData;
+
   const variables = {
     proposalId: proposalId,
     takerId: takerId,
@@ -57,8 +59,13 @@ const DisburseBuy = props => {
     let str = `Payment method \n ${mapPaymentMethod(
       paymentMethod,
     )} \nPayment details \n`;
-    Object.keys(obj).forEach(k => {
-      if (obj[k] !== 'null' && obj[k] !== null && obj[k] !== '' && obj[k] !== undefined) {
+    Object.keys(obj).forEach((k) => {
+      if (
+        obj[k] !== 'null' &&
+        obj[k] !== null &&
+        obj[k] !== '' &&
+        obj[k] !== undefined
+      ) {
         str = str + `${k}: ${obj[k]}\n`;
       }
     });
@@ -70,7 +77,7 @@ const DisburseBuy = props => {
 
   return enterPin ? (
     <EnterPin
-      action={jwt => {
+      action={(jwt) => {
         showEnterPin(false);
       }}
     />

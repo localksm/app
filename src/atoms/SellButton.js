@@ -8,8 +8,8 @@ import { getPin } from '../utils/JWT';
 
 const SellButton = props => {
   const [session, setSession] = useState(null);
-  const [sell] = useMutation(MUTATIONS.SELL);
-  const [addPaymentMethods] = useMutation(
+  const sell = useMutation(MUTATIONS.SELL);
+  const addPaymentMethods = useMutation(
     MUTATIONS.INSERT_PROPOSAL_PAYMENT_METHOD,
   );
   const [load, setLoad] = useState(false);
@@ -208,11 +208,11 @@ const SellButton = props => {
   
         send['recipientAddress'] = recipientAddress
 
-          const { data } = await sell({ variables: send });
+          const { data } = await sell[0]({ variables: send });
           const {id} = data.sell
 
           if (data.sell !== null) {
-            const { data } = await addPaymentMethods({
+            const { data } = await addPaymentMethods[0]({
               variables: {
                 userId: session.id,
                 proposalId: id,

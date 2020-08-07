@@ -3,8 +3,13 @@ import { Header, Left, Body, Button, Icon, Right } from 'native-base';
 import { StatusBar, View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+const navigate = (navigation) => {
+  navigation.openDrawer();
+};
+
 const HeaderLayout = (props) => {
   const navigation = useNavigation();
+
   return (
     <View>
       <Header transparent style={styles.container}>
@@ -16,8 +21,8 @@ const HeaderLayout = (props) => {
         <Left>
           <Button
             transparent
-            className="drawer-button"
-            onPress={() => navigation.openDrawer()}>
+            testID="drawer-button"
+            onPress={() => navigate(navigation)}>
             <Icon name="menu" style={styles.leftElement} />
           </Button>
         </Left>

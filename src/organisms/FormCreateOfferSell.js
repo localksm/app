@@ -57,6 +57,7 @@ const FormCreateOfferSell = () => {
               <InputLayout element="currency" resultValidator={errors}>
                 <InputText
                   name="Amount"
+                  testID="test-onchange-ksm-amount"
                   keyboardType="numeric"
                   placeholder="Amount KSM"
                   onChangeText={value => setOffered(value)}
@@ -70,6 +71,7 @@ const FormCreateOfferSell = () => {
               <InputLayout element="requiredCurrency" resultValidator={errors}>
                 <InputText
                   name="Amount"
+                  testID="test-onchange-amount"
                   keyboardType="numeric"
                   placeholder={`Amount ${currency}`}
                   onChangeText={value => setRequired(value)}

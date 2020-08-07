@@ -1,6 +1,7 @@
 import 'react-native';
 import React from 'react';
 import Enzyme from 'enzyme';
+import { fireEvent, render } from 'react-native-testing-library';
 import Adapter from 'enzyme-adapter-react-16';
 
 import renderer, { act } from 'react-test-renderer';
@@ -23,19 +24,11 @@ it('renders correctly', async () => {
   });
 });
 
-it('test copy address', async () => {
+it('copy address', async () => {
   jest.useFakeTimers();
-  await act(() => {
-    const onPressMock = jest.fn();
-    const wrapper = Enzyme.shallow(
-      <WalletContent
-        id={0}
-        imageStyle={{}}
-        textKeyStyle={{}}
-        textCopyStyle={{}}
-      />,
-    );
-    wrapper.children().find('Link').simulate('action', 'address');
-    expect(onPressMock).not.toHaveBeenCalledWith('address');
-  });
+  const handler = jest.fn();
+  
+  const { getByTestId } = render(<WalletContent />);
+  fireEvent.press(getByTestId('link'));
+  expect(handler).not.toHaveBeenCalled();
 });

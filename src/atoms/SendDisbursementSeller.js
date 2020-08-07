@@ -6,7 +6,7 @@ import Button from './Button';
 import { getPin } from '../utils/JWT';
 
 const SendDisbursementSeller = (props) => {
-  const [sendDisbursementSeller] = useMutation(
+  const sendDisbursementSeller = useMutation(
     MUTATIONS.SEND_DISBURSEMENT_SELLER,
   );
   const [load, setLoad] = useState(false);
@@ -29,7 +29,7 @@ const SendDisbursementSeller = (props) => {
   }
 
   const confirmSent = async () => {
-    const pin = await getPin()
+    const pin = await getPin();
     let node;
     if (operationType === 'buy') {
       node = 'makerSeller';
@@ -44,7 +44,7 @@ const SendDisbursementSeller = (props) => {
 
     try {
       setLoad(true);
-      await sendDisbursementSeller({
+      await sendDisbursementSeller[0]({
         variables: {
           proposalId: proposalId,
           takerId: takerId,
@@ -62,7 +62,8 @@ const SendDisbursementSeller = (props) => {
           },
         ],
       });
-      return props.actionConfirmSent();
+
+      return props.navigation.navigate('TransactionCompleted', props.params);
     } catch (e) {
       setLoad(false);
       Alert.alert('Warning', 'Something went wrong, please contact support');

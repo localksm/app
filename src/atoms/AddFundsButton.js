@@ -7,7 +7,7 @@ import { getPin } from '../utils/JWT';
 
 const AddFundsButton = props => {
   const [session, setSession] = useState(null);
-  const [addfunds] = useMutation(MUTATIONS.ADD_FUNDS);
+  const addfunds = useMutation(MUTATIONS.ADD_FUNDS);
   const [load, setLoad] = useState(false);
   const { variables } = props;
   function validateForm(
@@ -182,7 +182,7 @@ const AddFundsButton = props => {
 
         send['recipientAddress'] = recipientAddress;
 
-        await addfunds({ variables: send });
+        await addfunds[0]({ variables: send });
         props.actionAddFunds();
       } catch (error) {
         setLoad(false);

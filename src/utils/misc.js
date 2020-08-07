@@ -140,3 +140,11 @@ export function cardProposalNavigation(item, navigation) {
       break;
   }
 }
+
+export const email = 'support@localksm.com';
+export function copyEmail() {
+  const email = 'support@localksm.com';
+
+  Toast.show('Copied Email!', { backgroundColor: 'white', textColor: 'black' });
+  Clipboard.setString(email);
+}

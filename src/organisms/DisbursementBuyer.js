@@ -6,10 +6,11 @@ import { Link, SendDisbursementBuyer } from '../atoms';
 import { FormLayout } from '.';
 import EnterPin from './EnterPin';
 import { mapPaymentMethod } from '../utils/misc';
+import { useDetails, useEnterPintScreen } from '../utils/hooks';
 
-const DisbursementBuyer = (props) => {
-  const [details, setDetails] = React.useState('');
-  const [enterPin, showEnterPin] = React.useState(false);
+function DisbursementBuyer(props) {
+  const { details, setDetails } = useDetails();
+  const { enterPin, showEnterPin } = useEnterPintScreen();
 
   React.useEffect(() => {
     const str = string();
@@ -75,6 +76,7 @@ const DisbursementBuyer = (props) => {
 
   return enterPin ? (
     <EnterPin
+      testID="btn-pin"
       action={(jwt) => {
         showEnterPin(false);
       }}
@@ -100,11 +102,9 @@ const DisbursementBuyer = (props) => {
           <SendDisbursementBuyer
             variables={variables}
             label="Confirm Sent"
-            actionConfirmSent={() =>
-              props.navigation.navigate('TransactionCompleted', {
-                ...props.route.params,
-              })
-            }
+            testID="test-btn"
+            params={{...props.route.params}}
+
             showEnterPinScreen={showEnterPin}
           />
           <View style={styles.link}>
@@ -122,7 +122,7 @@ const DisbursementBuyer = (props) => {
       </FormLayout.Footer>
     </FormLayout.Content>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

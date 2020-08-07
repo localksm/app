@@ -22,11 +22,11 @@ import { fetchBalacnce } from '../utils/ksm';
 import eye from '../../assets/eye.png';
 import eyeOff from '../../assets/eye-off.png';
 
-const FormCreatePin = props => {
+const FormCreatePin = (props) => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const [signup] = useMutation(MUTATIONS.SIGNUP);
-  const [login] = useMutation(MUTATIONS.LOGIN);
+  const signup = useMutation(MUTATIONS.SIGNUP);
+  const login = useMutation(MUTATIONS.LOGIN);
   const [isSelected, setSelected] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [valuePin, setValuePin] = useState('');
@@ -38,7 +38,7 @@ const FormCreatePin = props => {
     setDisabled(!(valuePin !== '' && confirmPinValue !== '' && isSelected));
   });
 
-  const validateForm = variables => {
+  const validateForm = (variables) => {
     const formValidator = new FormValidator(createPinValidations);
     let validation = formValidator.validate(variables);
 
@@ -55,7 +55,7 @@ const FormCreatePin = props => {
     return validation;
   };
 
-  const mapUser = data => {
+  const mapUser = (data) => {
     sessionModel['token'] = data.token;
     sessionModel['id'] = data.id;
     sessionModel['name'] = data.name;
@@ -76,7 +76,7 @@ const FormCreatePin = props => {
     if (validator.isValid) {
       setLoading(true);
       try {
-        storePin(valuePin, async token => {
+        storePin(valuePin, async (token) => {
           const { data } = await signup({
             variables: {
               ...props.route.params.payload,
@@ -142,7 +142,9 @@ const FormCreatePin = props => {
                     maxLength={6}
                     stylect={styles.inputStyle}
                   />
-                  <TouchableWithoutFeedback onPress={() => setSecure(!secure)}>
+                  <TouchableWithoutFeedback
+                    testID="set-secure-btn1"
+                    onPress={() => setSecure(!secure)}>
                     <Image
                       style={styles.inputIco}
                       source={secure ? eye : eyeOff}
@@ -163,6 +165,7 @@ const FormCreatePin = props => {
                     maxLength={6}
                   />
                   <TouchableWithoutFeedback
+                    testID="set-secure-btn2"
                     onPress={() => setSecureConfirm(!secureConfirm)}>
                     <Image
                       style={styles.inputIco}

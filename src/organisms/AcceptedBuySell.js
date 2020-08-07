@@ -4,9 +4,8 @@ import { Link, ConfirmSentBuyButton } from '../atoms';
 import { FormLayout } from '.';
 import { mapPaymentMethod } from '../utils/misc';
 
-const AcceptedBuySell = props => {
+const AcceptedBuySell = (props) => {
   const [details, setDetails] = React.useState('');
-  const [send, setSend] = React.useState(false)
 
   React.useEffect(() => {
     const str = string();
@@ -31,9 +30,11 @@ const AcceptedBuySell = props => {
     phone,
     proposalId,
   } = props.route.params.body.paymentData;
-  const variables ={
-    proposalId
-  }
+
+  const variables = {
+    proposalId,
+    usernameMaker,
+  };
 
   const obj = {
     'Acount number': accountNumber,
@@ -47,10 +48,15 @@ const AcceptedBuySell = props => {
 
   const string = () => {
     let str = `Payment method \n ${mapPaymentMethod(
-      paymentMethod
+      paymentMethod,
     )} \nPayment details \n`;
-    Object.keys(obj).forEach(k => {
-      if (obj[k] !== null && obj[k] !== '' && obj[k] !== undefined && obj[k] !== 'null') {
+    Object.keys(obj).forEach((k) => {
+      if (
+        obj[k] !== null &&
+        obj[k] !== '' &&
+        obj[k] !== undefined &&
+        obj[k] !== 'null'
+      ) {
         str = str + `${k}: ${obj[k]}\n`;
       }
     });
@@ -79,20 +85,21 @@ const AcceptedBuySell = props => {
         <View style={{ flex: 1, marginTop: 10, marginHorizontal: 20 }}>
           {operationType === 'withdraw_funds' ||
             (operationType === 'sell' && (
-              send ?
-              Alert.alert('Confirimed proposal',`Please wait for ${usernameMaker} to respond`)
-              : 
               <ConfirmSentBuyButton
                 variables={variables}
                 label="Confirm sent"
-                actionConfirmSent={() => setSend(true)}
+                testID="set-send-btn"
               />
             ))}
           <View style={styles.buttons}>
             <Link
               label="Report a problem"
               color="#cc5741"
-              action={() => props.navigation.navigate('ReportAProblem',{...props.route.params})}
+              action={() =>
+                props.navigation.navigate('ReportAProblem', {
+                  ...props.route.params,
+                })
+              }
             />
           </View>
         </View>

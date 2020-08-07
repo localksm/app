@@ -100,11 +100,7 @@ const DisbursementSeller = (props) => {
           <SendDisbursementSeller
             variables={variables}
             label="Confirm Sent"
-            actionConfirmSent={() =>
-              props.navigation.navigate('TransactionCompleted', {
-                ...props.route.params,
-              })
-            }
+            params={{...props.route.params}}
             showEnterPinScreen={showEnterPin}
           />
           <View style={styles.link}>

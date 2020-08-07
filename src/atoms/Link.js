@@ -4,6 +4,7 @@ import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 function Link(props) {
   return (
     <TouchableOpacity
+      testID="link"
       style={(styles.btn_session, props.stylect)}
       onPress={props.action}>
       <Text style={{ ...styles.text_btn, color: props.color }}>

@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mocks apollo error 1`] = `ShallowWrapper {}`;
+
+exports[`mocks apollo loading 1`] = `ShallowWrapper {}`;

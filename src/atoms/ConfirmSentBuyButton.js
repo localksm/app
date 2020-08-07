@@ -1,27 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, ActivityIndicator, Text, View, StyleSheet } from 'react-native';
 import { useMutation } from '@apollo/react-hooks';
-import { MUTATIONS, QUERIES, getSession } from '../apollo';
+import { MUTATIONS, QUERIES } from '../apollo';
 import Button from './Button';
+import { setSessionId } from '../utils/hooks';
 
 const ConfirmSentBuyButton = (props) => {
   const [id, setId] = useState(null);
-  const [sendDisbursementBuyer] = useMutation(
-    MUTATIONS.SEND_DISBURSEMENT_BUYER,
-  );
-
   useEffect(() => {
-    set();
+    setSessionId(setId);
   }, []);
-
-  async function set() {
-    const { session } = await getSession();
-    setId(session.id);
-  }
 
   const [confirmProposal] = useMutation(MUTATIONS.CONFIRM_PROPOSAL);
   const [load, setLoad] = useState(false);
-  const { proposalId, takerId, pin, operationType } = props.variables;
+  const { proposalId, usernameMaker } = props.variables;
 
   const confirmSent = async () => {
     try {
@@ -39,6 +31,10 @@ const ConfirmSentBuyButton = (props) => {
           },
         ],
       });
+      Alert.alert(
+        'Confirimed proposal',
+        `Please wait for ${usernameMaker} to respond`,
+      )
     } catch (error) {
       setLoad(false);
       Alert.alert('Warning!', 'Unexpected error');

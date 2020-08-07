@@ -8,20 +8,16 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { getSession, setSession, cleanBalance } from '../apollo';
 import Balance from '../atoms/Balance';
 import { removePin } from '../utils/JWT';
+import { setSessionToState } from '../utils/hooks';
 
-export default function CustomDrawerContent(props) {
+function CustomDrawerContent(props) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    set();
+    setSessionToState(setUser);
   }, []);
 
-  async function set() {
-    const { session } = await getSession();
-    setUser(session);
-  }
-
-  const logout = async props => {
+  const logout = async (props) => {
     await removePin();
     setSession({ session: null });
     cleanBalance();
@@ -124,3 +120,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
+
+export default CustomDrawerContent;

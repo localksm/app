@@ -78,12 +78,12 @@ const OfferDetails = props => {
   }, []);
 
   // MUTATIONS
-  const [sendAcceptance] = useMutation(MUTATIONS.SEND_ACCEPTANCE);
-  const [sendResolution] = useMutation(MUTATIONS.SEND_RESOLUTION);
-  const [sendSellResolution] = useMutation(MUTATIONS.SEND_SELL_RESOLUTION);
-  const [sendSettlement] = useMutation(MUTATIONS.SEND_SETTLEMENT);
-  const [sendFulfillment] = useMutation(MUTATIONS.SEND_FULFILLMENT);
-  const [addPaymentMethod] = useMutation(
+  const sendAcceptance = useMutation(MUTATIONS.SEND_ACCEPTANCE);
+  const sendResolution = useMutation(MUTATIONS.SEND_RESOLUTION);
+  const sendSellResolution = useMutation(MUTATIONS.SEND_SELL_RESOLUTION);
+  const sendSettlement = useMutation(MUTATIONS.SEND_SETTLEMENT);
+  const sendFulfillment = useMutation(MUTATIONS.SEND_FULFILLMENT);
+  const addPaymentMethod = useMutation(
     MUTATIONS.INSERT_PROPOSAL_PAYMENT_METHOD,
   );
 
@@ -257,12 +257,12 @@ const OfferDetails = props => {
   // Process mutation dynamically
   async function processMutation(mutation, variables) {
     const mutations = {
-      addPaymentMethod,
-      sendAcceptance,
-      sendResolution,
-      sendSellResolution,
-      sendSettlement,
-      sendFulfillment,
+      addPaymentMethod:addPaymentMethod[0],
+      sendAcceptance:sendAcceptance[0],
+      sendResolution:sendResolution[0],
+      sendSellResolution:sendSellResolution[0],
+      sendSettlement:sendSettlement[0],
+      sendFulfillment:sendFulfillment[0],
     };
 
     const m = mutations[mutation];
