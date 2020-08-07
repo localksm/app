@@ -41,7 +41,7 @@ const FormCreateOfferBuy = () => {
     operationType: 'add_funds',
   };
 
-  const valueKSM = offered && required ? (1 * offered) / required : 0;
+  const localCurrencyValue = offered && required ? (1 * offered) / required : 0;
 
   return (
     <FormLayout.Content>
@@ -99,7 +99,7 @@ const FormCreateOfferBuy = () => {
           <Fees container={'jury'} amount={offered ? offered : 0} />
           <View style={styles.textFooter}>
             <Text style={styles.footer}>
-              1 KSM = $ {splitAmount(Number.isNaN(valueKSM) ? 0 : valueKSM)}{' '}
+              1 KSM = $ {splitAmount((Number.isNaN(localCurrencyValue) ? 0 : localCurrencyValue)) }{' '}
               {currency}
             </Text>
           </View>

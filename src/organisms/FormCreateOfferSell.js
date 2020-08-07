@@ -18,6 +18,7 @@ import {
 } from '../atoms';
 import { PaymentForm } from '../molecules';
 import { FormLayout } from '.';
+import { splitAmount } from '../utils/splitAmount';
 
 const FormCreateOfferSell = () => {
   const [errors, setErrors] = useState({});
@@ -38,7 +39,7 @@ const FormCreateOfferSell = () => {
     other: other,
     operationType: 'withdraw_funds',
   };
-  const valueKSM = required && offered ? (1 * required) / offered : '...';
+  const localCurrencyValue = required && offered ? (1 * required) / offered : 0;
 
   const handleText = (name, value) => {
     setPaymentVars(data => ({ ...data, [name]: value }));
@@ -110,7 +111,7 @@ const FormCreateOfferSell = () => {
         <View style={styles.footerContainer}>
           <View style={styles.textFooter}>
             <Text style={styles.footer}>
-              1 KSM = $ {valueKSM} {currency}
+              1 KSM = $ { splitAmount(localCurrencyValue, 2)} {currency}
             </Text>
           </View>
           <SellButton
