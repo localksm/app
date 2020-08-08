@@ -62,3 +62,5 @@ buck-out/
 
 notes.txt
 coverage
+
+android/app/google-services.json

@@ -1,4 +1,10 @@
-import { JWT_SECRET } from '@env';
+import {
+  JWT_SECRET,
+  GOOGLE_IOS_KEY,
+  GOOGLE_ANDROID_KEY,
+  TW_CONSUMER_KEY,
+  TW_CONSUMER_SECRET,
+} from '@env';
 import { Platform } from 'react-native';
 
 export const ENV_VARS = { JWT_SECRET };
@@ -23,13 +29,10 @@ export const GRAPHQL_SUBSCRIPTIONS_ENDPOINT =
     : 'ws://app.localksm.com/graphql';
 
 export const googleConfig = {
-  webClientId:
-    Platform.OS === 'ios'
-      ? '514153515531-srjm0vkiu1va0nmuvkk5kpl2fn1ge6q8.apps.googleusercontent.com'
-      : '514153515531-805ps37oc567a0do8fe0rb0lr1c12iap.apps.googleusercontent.com',
+  webClientId: Platform.OS === 'ios' ? GOOGLE_IOS_KEY : GOOGLE_ANDROID_KEY,
 };
 
 export const twitterConfig = {
-  consumer_key: 'wwOBrFV2MyEOG7D0DgibC4vNU',
-  consumer_secret: 'd4UrAVZgv7fZYspuMxoBGD9J1RhaieFHtOBSVsOSL2z9VFYDNG',
+  consumer_key: TW_CONSUMER_KEY,
+  consumer_secret: TW_CONSUMER_SECRET,
 };
