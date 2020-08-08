@@ -64,3 +64,5 @@ notes.txt
 coverage
 
 android/app/google-services.json
+
+*.hprof
