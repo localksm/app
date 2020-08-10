@@ -5,16 +5,20 @@ import { MUTATIONS, QUERIES, getSession } from '../apollo';
 import Button from './Button';
 import { getPin } from '../utils/JWT';
 
-const ConfirmReceivedButton = props => {
-  const [sendDisbursementSeller] = useMutation(
+const ConfirmReceivedButton = (props) => {
+  const sendDisbursementSeller = useMutation(
     MUTATIONS.SEND_DISBURSEMENT_SELLER,
   );
-  const [sendDisbursementBuyer] = useMutation(
-    MUTATIONS.SEND_DISBURSEMENT_BUYER,
-  );
+  const sendDisbursementBuyer = useMutation(MUTATIONS.SEND_DISBURSEMENT_BUYER);
   const [load, setLoad] = useState(false);
   const [id, setId] = useState(null);
-  const { proposalId, takerId, operationType, pin, disbursed} = props.variables;
+  const {
+    proposalId,
+    takerId,
+    operationType,
+    pin,
+    disbursed,
+  } = props.variables;
 
   useEffect(() => {
     set();
@@ -26,9 +30,10 @@ const ConfirmReceivedButton = props => {
   }
 
   const confirmSent = async () => {
-
-    
-   /* try {
+    props.navigation.navigate('TransactionCompleted', {
+      ...props.params,
+    });
+    /* try {
       setLoad(true);
       if (operationType === 'sell' || operationType === 'withdraw_funds') {
         if (pin === null || pin === '') {

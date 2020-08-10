@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert, ScrollView } from 'react-native';
 import { Link, ConfirmSentBuyButton, ConfirmReceivedButton } from '../atoms';
 import { EnterPin, FormLayout } from '.';
-import { client, QUERIES, getSession } from '../apollo';
-import { getPin } from '../utils/JWT';
-import { mapPaymentMethod } from '../utils/misc';
+import { mapPaymentMethod, handleVerifyPin } from '../utils/misc';
+import { ConfirmedBuySellButton } from '../molecules';
 
-const ConfirmedBuySell = props => {
+const ConfirmedBuySell = (props) => {
   const [send, setSend] = useState(false);
   const [details, setDetails] = React.useState('');
   const [verifyPin, setVeriFyPin] = useState(false);
@@ -15,7 +14,7 @@ const ConfirmedBuySell = props => {
   React.useEffect(() => {
     const str = string();
     setDetails(() => str);
-    handleVerifyPin();
+    handleVerifyPin(setPin, setVeriFyPin);
   }, []);
 
   const {
@@ -60,26 +59,17 @@ const ConfirmedBuySell = props => {
     let str = `Payment method \n ${mapPaymentMethod(
       paymentMethod,
     )} \nPayment details \n`;
-    Object.keys(obj).forEach(k => {
-      if (obj[k] !== null && obj[k] !== '' && obj[k] !== undefined && obj[k] !== 'null') {
+    Object.keys(obj).forEach((k) => {
+      if (
+        obj[k] !== null &&
+        obj[k] !== '' &&
+        obj[k] !== undefined &&
+        obj[k] !== 'null'
+      ) {
         str = str + `${k}: ${obj[k]}\n`;
       }
     });
     return str;
-  };
-
-  const handleVerifyPin = async () => {
-    const { session } = await getSession();
-    const pin = await getPin();
-    const response = await client.query({
-      query: QUERIES.VERIFY_PIN,
-      variables: { id: session.id, pin: pin },
-    });
-    const { isValid } = response.data.validatePin;
-    if (isValid) {
-      setPin(pin);
-    }
-    setVeriFyPin(!isValid);
   };
 
   const title = `${usernameTaker} has accepted your offer `;
@@ -113,27 +103,15 @@ const ConfirmedBuySell = props => {
               </Text>
             )}
           </View>
-          {send
-            ? Alert.alert('Confirmed')
-            : operationType === 'add_funds' || operationType === 'buy'
-            ? status === 'accepted' && (
-                <ConfirmSentBuyButton
-                  variables={variables}
-                  label="Confirm received"
-                  actionConfirmSent={() => setSend(true)}
-                />
-              )
-            : status === 'confirmed' && (
-                <ConfirmReceivedButton
-                  variables={variables}
-                  label="Confirm Received"
-                  actionConfirmSent={() =>
-                    props.navigation.navigate('TransactionCompleted', {
-                      ...props.route.params,
-                    })
-                  }
-                />
-              )}
+          <ConfirmedBuySellButton
+            send={send}
+            status={status}
+            operationType={operationType}
+            setSend={setSend}
+            variables={variables}
+            navigation={props.navigation}
+            params={props.route.params}
+          />
           <View style={styles.buttons}>
             <Link
               label="Report a problem"
@@ -151,7 +129,7 @@ const ConfirmedBuySell = props => {
   ) : (
     <ScrollView>
       <EnterPin
-        action={token => {
+        action={(token) => {
           setPin(token);
           setVeriFyPin(false);
         }}

@@ -37,6 +37,11 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontFamily: 'Poppins-Regular',
   },
+  error: {
+    borderColor: 'red',
+    borderBottomWidth: 1,
+    color: 'red',
+  },
 });
 
 export default InputText;

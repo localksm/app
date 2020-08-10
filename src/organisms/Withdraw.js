@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   Keyboard,
   TouchableWithoutFeedback,
   ScrollView,
-  ActivityIndicator,
 } from 'react-native';
 import { InputText, SendWithdrawButton } from '../atoms';
-import { getBalance } from '../utils/ksm';
-import { QUERIES, client, withContext, getSession } from '../apollo';
-import { getPin } from '../utils/JWT';
+import { withContext } from '../apollo';
+import { WithdrawText } from '../molecules';
+import { setAddressAndBalance } from '../utils/misc';
 
 const Withdraw = () => {
   const [amount, setAmount] = useState(0);
@@ -19,70 +17,41 @@ const Withdraw = () => {
   const [total, setTotalBalance] = useState(0);
   const [free, setFreeBalance] = React.useState(0);
   const [show, showBalance] = useState(false);
-  const [id, setId] = useState(null)
+  const [id, setId] = useState(null);
   const variables = {
     amount: parseFloat(amount),
     address: address,
     total: parseFloat(total),
     id: id,
-  }
+  };
   useEffect(() => {
-    set();
+    setAddressAndBalance(setId, setFreeBalance, setTotalBalance, showBalance);
   }, []);
-
-  async function set() {
-    const pin = await getPin()
-    const { session } = await getSession();
-    setId(session.id)
-
-    try {
-      const res = await client.query({
-        query: QUERIES.PUBLIC_KEY,
-        variables: { id: session.id, pin },
-      });
-      const address = res.data.publicKeys.ksm;
-      await getBalance(address, setResponse);
-    } catch (e) {
-      throw new Error(e);
-    }
-  }
-
-  function setResponse(freeBalance, totalBalance) {
-    setFreeBalance(() => freeBalance.toString());
-    setTotalBalance(() => totalBalance.toString());
-    showBalance(true);
-  }
 
   return (
     <ScrollView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
-          <View style={styles.balance}>
-            <Text style={styles.text}>Current Balance</Text>
-            {!show ? (
-              <ActivityIndicator size="large" color="white" />
-            ) : (
-              <Text style={styles.text}>{total} KSM</Text>
-            )}
-          </View>
+          <WithdrawText show={show} styles={styles} total={total} />
           <View style={styles.input}>
             <InputText
+              testID="test-change-amount"
               placeholder="Amount"
               keyboardType="numeric"
-              onChangeText={value => setAmount(value)}
+              onChangeText={(value) => setAmount(value)}
             />
             <InputText
+              testID="test-change-address"
               placeholder="Enter address"
-              onChangeText={value => setAddress(value)}
+              onChangeText={(value) => setAddress(value)}
               noReturn
             />
           </View>
-            <SendWithdrawButton
-              variables={variables}
-              label="Submit"
-              stylect={styles.button}
-            />
-          
+          <SendWithdrawButton
+            variables={variables}
+            label="Submit"
+            stylect={styles.button}
+          />
         </View>
       </TouchableWithoutFeedback>
     </ScrollView>

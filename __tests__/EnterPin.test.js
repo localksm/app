@@ -63,32 +63,3 @@ it('test disabled', async () => {
   expect(wrapper.prop('disabled')).toEqual(undefined); // FAIL
 });
 
-/*it('press save pin', async () => {
-  jest.useFakeTimers();
-
-  const handler = jest.fn();
-  const mockState = { disabled: true, showRemoveButton: true };
-
-  const { getByTestId } = render(
-    <EnterPin
-      showRemoveButton={mockState.showRemoveButton}
-      disabled={mockState.disabled}
-      route={mockParams}
-      navigation={{ navigate: () => {} }}
-    />,
-  );
-  fireEvent.press(getByTestId('test-btn'));
-  expect(handler).not.toHaveBeenCalled();
-});*/
-
-/*
-it('test disabled pin', async () => {
-  jest.useFakeTimers();
-
-  const handler = jest.fn();
-  const mockState = { disabled: false };
-
-  const wrapper = shallow(<EnterPin disabled={mockState.disabled} />);
-  expect(wrapper.find('TouchableWithoutFeedback').exists()).toBeTruthy();
-});
-*/

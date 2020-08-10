@@ -8,9 +8,9 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { InputText, ButtonSignUp } from '../atoms';
+import { InputText, ButtonSignUp, TextError } from '../atoms';
 
-const FormSignUp = props => {
+const FormSignUp = (props) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,6 +28,10 @@ const FormSignUp = props => {
     confirmPassword,
   };
 
+  function getStyles(error) {
+    return error && styles.error;
+  }
+
   return [
     <View key="logo" style={styles.secction_logo}>
       <Image
@@ -39,67 +43,80 @@ const FormSignUp = props => {
       <View style={styles.container}>
         <InputText
           name="username"
+          testID="test-signup-username-change"
           placeholder="Username"
           autoCapitalize="none"
-          onChangeText={value => {
+          onChangeText={(value) => {
             setUsername(value), setErrorName(false);
           }}
-          stylect={errorName && styles.error}
+          stylect={getStyles(errorName)}
         />
-        {errorName && <Text style={styles.text}>Username is required</Text>}
+        <TextError
+          error={errorName}
+          styles={styles.text}
+          text="Username is required"
+        />
         <InputText
           name="email"
+          testID="test-signup-email-change"
           keyboardType="email-address"
           placeholder="Email"
           autoCapitalize="none"
-          onChangeText={value => {
+          onChangeText={(value) => {
             setEmail(value), setErrorEmail(false), setErrorEmailValid(false);
           }}
-          stylect={
-            (errorEmail && styles.error) || (errorEmailValid && styles.error)
-          }
+          stylect={getStyles(errorEmail || errorEmailValid)}
         />
-        {errorEmail && <Text style={styles.text}>Email is required</Text>}
-        {errorEmailValid && (
-          <Text style={styles.text}>Enter a valid email</Text>
-        )}
+        <TextError
+          error={errorEmail}
+          styles={styles.text}
+          text="Email is required"
+        />
+        <TextError
+          error={errorEmailValid}
+          styles={styles.text}
+          text="Enter a valid email"
+        />
         <InputText
           name="password"
+          testID="test-signup-password-change"
           placeholder="Password"
           secureTextEntry={true}
-          onChangeText={value => {
+          onChangeText={(value) => {
             setPassword(value), setErrorPass(false);
           }}
-          stylect={errorPass && styles.error}
+          stylect={getStyles(errorPass)}
         />
-        {errorPass && (
-          <Text style={styles.text}>
-            The password must contain at least 10 alphanumeric characters
-          </Text>
-        )}
+        <TextError
+          error={errorPass}
+          styles={styles.text}
+          text="The password must contain at least 10 alphanumeric characters"
+        />
         <InputText
           name="confirmPassword"
+          testID="test-signup-password-confirm-change"
           placeholder="Confirm Password"
           secureTextEntry={true}
-          onChangeText={value => {
+          onChangeText={(value) => {
             setConfirmPassword(value), setErrorConfirm(false);
           }}
-          stylect={errorConfirm && styles.error}
+          stylect={getStyles(errorConfirm)}
         />
-        {errorConfirm && (
-          <Text style={styles.text}>Passwords do not match</Text>
-        )}
+        <TextError
+          error={errorConfirm}
+          styles={styles.text}
+          text="Passwords do not match"
+        />
         <View style={styles.button}>
           <ButtonSignUp
             variables={dataSession}
             label="Register"
             stylect={{ backgroundColor: '#DB5A3A' }}
-            actionSignUp={() => navigation.navigate('Drawer')}
-            errorName={() => setErrorName(true)}
-            errorEmail={() => setErrorEmail(true)}
-            errorEmailValid={() => setErrorEmailValid(true)}
-            errorPass={() => setErrorPass(true)}
-            errorConfirm={() => setErrorConfirm(true)}
+            errorName={setErrorName}
+            errorEmail={setErrorEmail}
+            errorEmailValid={setErrorEmailValid}
+            errorPass={setErrorPass}
+            errorConfirm={setErrorConfirm}
           />
         </View>
       </View>

@@ -49,25 +49,25 @@ const ButtonSignUp = props => {
     try {
       if (validator.isEmpty(email)) {
         setLoading(false);
-        return props.errorEmail();
+        return props.errorEmail(true);
       } else if (!validator.isEmail(email)) {
         setLoading(false);
-        return props.errorEmailValid();
+        return props.errorEmailValid(true);
       } else if (validator.isEmpty(username)) {
         setLoading(false);
-        return props.errorName();
+        return props.errorName(true);
       } else if (validator.isEmpty(password)) {
         setLoading(false);
-        return props.errorPass();
+        return props.errorPass(true);
       } else if (validator.isInt(password, { min: 10 })) {
         setLoading(false);
         return props.errorPass();
       } else if (validator.isEmpty(confirmPassword)) {
         setLoading(false);
-        return props.errorConfirm();
+        return props.errorConfirm(true);
       } else if (!validator.equals(password, confirmPassword)) {
         setLoading(false);
-        return props.errorConfirm();
+        return props.errorConfirm(true);
       }
       if (!emailExists) {
         // Navigate to CreatePin passing signup params

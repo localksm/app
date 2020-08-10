@@ -2,6 +2,7 @@ export { default as HomeLayout } from './HomeLayout';
 export { default as OfferList } from './OfferList';
 export { default as OfferDetails } from './OfferDetails';
 export { default as FormSignIn } from './FormSignIn';
+export { default as FormSignInContent } from './FormSignInContent';
 export { default as FormSignUp } from './FormSignUp';
 export { default as FormCreateOfferBuy } from './FormCreateOfferBuy';
 export { default as FormCreateOfferSell } from './FormCreateOfferSell';

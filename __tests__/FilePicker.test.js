@@ -30,7 +30,7 @@ it('renders loader component correctly', async () => {
     );
 
     expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find(ActivityIndicator).exists()).toBe(true)
+    expect(wrapper.find(ActivityIndicator).exists()).toBe(true);
   });
 });
 
@@ -48,4 +48,13 @@ it('renders view component correctly', async () => {
 
     expect(wrapper).toMatchSnapshot();
   });
+});
+
+it('open drawer', async () => {
+  jest.useFakeTimers();
+  const handler = jest.fn();
+
+  const { getByTestId } = render(<FilePicker />);
+  fireEvent.press(getByTestId('picker-btn'));
+  expect(handler).not.toHaveBeenCalled();
 });

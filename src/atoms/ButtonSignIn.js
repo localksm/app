@@ -7,12 +7,12 @@ import Button from './Button';
 import { sessionModel } from '../utils/config';
 import { client, MUTATIONS, QUERIES, setSession } from '../apollo';
 
-const ButtonSignIn = props => {
+const ButtonSignIn = (props) => {
   const [load, setLoad] = useState(false);
-  const [loginWithEmail] = useMutation(MUTATIONS.LOGIN);
+  const loginWithEmail = useMutation(MUTATIONS.LOGIN);
   const navigation = useNavigation();
 
-  const mapUser = data => {
+  const mapUser = (data) => {
     sessionModel['token'] = data.token;
     sessionModel['id'] = data.id;
     sessionModel['name'] = data.name;
@@ -23,7 +23,7 @@ const ButtonSignIn = props => {
     return sessionModel;
   };
 
-  const verifyUser = async email => {
+  const verifyUser = async (email) => {
     const res = await client.query({
       query: QUERIES.VERIFY_USER,
       variables: {
@@ -59,12 +59,12 @@ const ButtonSignIn = props => {
     try {
       if (email === '') {
         setLoad(false);
-        props.actionErrorEmail();
+        props.actionErrorEmail(true);
         return Alert.alert('Warning!', 'Email is required');
       }
       if (password === '') {
         setLoad(false);
-        props.actionErrorPass();
+        props.actionErrorPass(true);
         return Alert.alert('Warning!', 'Password is required');
       }
 
@@ -82,24 +82,24 @@ const ButtonSignIn = props => {
         );
       }
       if (emailExists) {
-        const { data } = await loginWithEmail({ variables: payloadLogin });
+        const { data } = await loginWithEmail[0]({ variables: payloadLogin });
         const { id } = data.login;
         const session = mapUser(data.login);
         setSession({ session });
         setLoad(false);
-           
+
         // Check for pin before verifying and after setting session
         if (pin === null || pin === '') {
           setLoad(false);
-          props.actionPin();
+          props.actionPin(true);
           return;
         }
 
         const { isValid } = await verifyPin(id, pin);
         if (!isValid) {
-          return props.actionPin();
+          return props.setVeriFyPin();
         } else {
-          return props.actionLogin();
+          return props.pin !== null ? props.goToLogin() : null;
         }
       } else {
         setLoad(false);

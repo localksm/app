@@ -95,12 +95,12 @@ const GoogleButton = props => {
         setLoading(false);
         if (pin === null || pin === '') {
           setLoading(false);
-          props.actionPin();
+          props.actionPin(true);
           return;
         }
         const { isValid } = await verifyPin(session.id, pin);
         if (!isValid) {
-          return props.actionPin();
+          return props.actionPin(true);
         }
 
         return props.actionLogin();

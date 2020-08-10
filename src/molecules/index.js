@@ -16,3 +16,5 @@ export { default as FormTextInp } from './FormTextInp';
 export { default as FormTextAreaInp } from './FormTextAreaInp';
 export { default as GenericGQLLoading } from './GenericGQLLoading';
 export { default as GenericGQLError } from './GenericGQLError';
+export { default as ConfirmedBuySellButton } from './ConfirmedBuySellButton';
+export { default as WithdrawText } from './WithdrawText';

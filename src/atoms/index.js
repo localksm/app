@@ -22,3 +22,4 @@ export { default as SendWithdrawButton } from './SendWithdrawButton';
 export { default as SendAdjudicationButton } from './SendAdjudicationButton';
 export { default as SendDisbursementBuyer } from './SendDisbursementBuyer';
 export { default as SendDisbursementSeller } from './SendDisbursementSeller';
+export { default as TextError } from './TextError';

@@ -54,7 +54,9 @@ const EnterPin = (props) => {
           props.actionLogin();
         }
 
-        props.action(jwt);
+        if (props.action) props.action(jwt);
+        props.setPin(jwt);
+        props.setScreen(false);
       });
     }
   };

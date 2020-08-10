@@ -11,14 +11,14 @@ const ConfirmSentBuyButton = (props) => {
     setSessionId(setId);
   }, []);
 
-  const [confirmProposal] = useMutation(MUTATIONS.CONFIRM_PROPOSAL);
+  const confirmProposal = useMutation(MUTATIONS.CONFIRM_PROPOSAL);
   const [load, setLoad] = useState(false);
   const { proposalId, usernameMaker } = props.variables;
 
   const confirmSent = async () => {
     try {
       setLoad(true);
-      await confirmProposal({
+      await confirmProposal[0]({
         variables: { proposalId: proposalId },
         refetchQueries: [
           {

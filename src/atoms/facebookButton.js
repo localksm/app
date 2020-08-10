@@ -26,14 +26,7 @@ validateEmail = async (email, name) => {
 const FBLoginButton = props => {
   const navigation = useNavigation();
   const [loading, setloading] = useState(false);
-  const [loginFacebook] = useMutation(LOGIN);
-
-  useEffect(() => {
-    if (props.init) {
-      props.actionPin(false);
-      _signIn();
-    }
-  }, []);
+  const loginFacebook = useMutation(LOGIN);
 
   const mapUser = data => {
     session['id'] = data.id;
@@ -79,7 +72,7 @@ const FBLoginButton = props => {
       }
     }
 
-    const result = await loginFacebook({ variables: payload });
+    const result = await loginFacebook[0]({ variables: payload });
     if (result.data) {
       const {
         data: { login },
