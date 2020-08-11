@@ -9,6 +9,10 @@ import { backHandlerControl } from '../utils/backHandlerControl';
 const Wallet = props => {
   const [select, setSelect] = useState(false);
   backHandlerControl(props);
+  const {select, setSelect} = useSetSelect();
+
+  const handleSelect = () => setSelect(prev => !prev)
+
   return (
     <HomeLayout>
       <View style={styleBackground.container}>
@@ -20,7 +24,7 @@ const Wallet = props => {
               backgroundColor: !select ? 'white' : null,
             }}
             stylectLabel={{ color: !select ? '#DB5A3A' : 'white' }}
-            action={() => setSelect(false)}
+            action={handleSelect}
           />
           <Button
             label="Withdraw"
@@ -29,7 +33,7 @@ const Wallet = props => {
               backgroundColor: select ? 'white' : null,
             }}
             stylectLabel={{ color: select ? '#DB5A3A' : 'white' }}
-            action={() => setSelect(true)}
+            action={handleSelect}
           />
         </View>
         <View style={ styles.elements}>
