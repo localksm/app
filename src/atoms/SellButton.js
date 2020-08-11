@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, ActivityIndicator, Text, View, StyleSheet } from 'react-native';
 import { useMutation } from '@apollo/react-hooks';
-import { MUTATIONS, getSession, client, QUERIES } from '../apollo';
+import { MUTATIONS, getSession, client, QUERIES, withContext } from '../apollo';
 import Button from './Button';
 import { validateFormDetails } from '../utils/validateDetails';
 import { getPin } from '../utils/JWT';
+import { fetchBalacnce } from '../utils/ksm';
 
-const SellButton = props => {
+const SellButton = (props) => {
   const [session, setSession] = useState(null);
   const sell = useMutation(MUTATIONS.SELL);
   const addPaymentMethods = useMutation(
@@ -32,33 +33,34 @@ const SellButton = props => {
     const countryValidate = country !== '';
     const otherValidate = other !== '';
     const validation = {
-      currency:{
+      currency: {
         isInvalid: false,
-        message:''
+        message: '',
       },
-      requiredCurrency:{
+      requiredCurrency: {
         isInvalid: false,
-        message:''
+        message: '',
       },
-      paymentMethod:{
+      paymentMethod: {
         isInvalid: false,
-        message:''
+        message: '',
       },
-      localCurrency:{
+      localCurrency: {
         isInvalid: false,
-        message:''
+        message: '',
       },
-      other:{
+      other: {
         isInvalid: false,
-        message:''
+        message: '',
       },
-      country:{
+      country: {
         isInvalid: false,
-        message:''
+        message: '',
       },
       isValid: false,
       message: '',
     };
+
     if (selectBank) {
       if (
         !offeredValidate ||
@@ -67,18 +69,20 @@ const SellButton = props => {
         !currencyValidate ||
         !countryValidate
       ) {
-        
         validation['isValid'] = false;
-        validation['currency']['isInvalid']= !offeredValidate;
-        validation['currency']['message']= "Offered currency cannot be empty";
-        validation['requiredCurrency']['isInvalid']= !requiredValidate;
-        validation['requiredCurrency']['message']= "Required currency cannot be empty";
-        validation['paymentMethod']['isInvalid']= !paymentValidate;
-        validation['paymentMethod']['message']= "Please select the payment method of your preference";
-        validation['localCurrency']['isInvalid']= !currencyValidate;
-        validation['localCurrency']['message']= "Please select your local currency";        
-        validation['country']['isInvalid']= !countryValidate;
-        validation['country']['message']= "Please select a country";
+        validation['currency']['isInvalid'] = !offeredValidate;
+        validation['currency']['message'] = 'Offered currency cannot be empty';
+        validation['requiredCurrency']['isInvalid'] = !requiredValidate;
+        validation['requiredCurrency']['message'] =
+          'Required currency cannot be empty';
+        validation['paymentMethod']['isInvalid'] = !paymentValidate;
+        validation['paymentMethod']['message'] =
+          'Please select the payment method of your preference';
+        validation['localCurrency']['isInvalid'] = !currencyValidate;
+        validation['localCurrency']['message'] =
+          'Please select your local currency';
+        validation['country']['isInvalid'] = !countryValidate;
+        validation['country']['message'] = 'Please select a country';
 
         return validation;
       }
@@ -90,18 +94,20 @@ const SellButton = props => {
         !currencyValidate ||
         !otherValidate
       ) {
-
         validation['isValid'] = false;
-        validation['currency']['isInvalid']= !offeredValidate;
-        validation['currency']['message']= "Offered currency cannot be empty";
-        validation['requiredCurrency']['isInvalid']= !requiredValidate;
-        validation['requiredCurrency']['message']= "Required currency cannot be empty";
-        validation['paymentMethod']['isInvalid']= !paymentValidate;
-        validation['paymentMethod']['message']= "Please select the payment method of your preference";
-        validation['localCurrency']['isInvalid']= !currencyValidate;
-        validation['localCurrency']['message']= "Please select your local currency";        
-        validation['other']['isInvalid']= !otherValidate;
-        validation['other']['message']= "The Other input cannot be empty";        
+        validation['currency']['isInvalid'] = !offeredValidate;
+        validation['currency']['message'] = 'Offered currency cannot be empty';
+        validation['requiredCurrency']['isInvalid'] = !requiredValidate;
+        validation['requiredCurrency']['message'] =
+          'Required currency cannot be empty';
+        validation['paymentMethod']['isInvalid'] = !paymentValidate;
+        validation['paymentMethod']['message'] =
+          'Please select the payment method of your preference';
+        validation['localCurrency']['isInvalid'] = !currencyValidate;
+        validation['localCurrency']['message'] =
+          'Please select your local currency';
+        validation['other']['isInvalid'] = !otherValidate;
+        validation['other']['message'] = 'The Other input cannot be empty';
 
         return validation;
       }
@@ -111,17 +117,19 @@ const SellButton = props => {
       !paymentValidate ||
       !currencyValidate
     ) {
-
       validation['isValid'] = false;
-      validation['currency']['isInvalid']= !offeredValidate;
-      validation['currency']['message']= "Offered currency cannot be empty";
-      validation['requiredCurrency']['isInvalid']= !requiredValidate;
-      validation['requiredCurrency']['message']= "Required currency cannot be empty";
-      validation['paymentMethod']['isInvalid']= !paymentValidate;
-      validation['paymentMethod']['message']= "Please select the payment method of your preference";
-      validation['localCurrency']['isInvalid']= !currencyValidate;
-      validation['localCurrency']['message']= "Please select your local currency";
-      
+      validation['currency']['isInvalid'] = !offeredValidate;
+      validation['currency']['message'] = 'Offered currency cannot be empty';
+      validation['requiredCurrency']['isInvalid'] = !requiredValidate;
+      validation['requiredCurrency']['message'] =
+        'Required currency cannot be empty';
+      validation['paymentMethod']['isInvalid'] = !paymentValidate;
+      validation['paymentMethod']['message'] =
+        'Please select the payment method of your preference';
+      validation['localCurrency']['isInvalid'] = !currencyValidate;
+      validation['localCurrency']['message'] =
+        'Please select your local currency';
+
       return validation;
     } else {
       validation['isValid'] = true;
@@ -152,7 +160,16 @@ const SellButton = props => {
 
   const sendSell = async () => {
     setLoad(true);
-    const validation = validateForm(
+    await fetchBalacnce();
+    const balance = await props.state.getData('GET_BALANCE_KSM');
+    const { total } = JSON.parse(balance.polkadot.balanceKSM);
+
+    if (variables.offerAmount > total) {
+      setLoad(false);
+      return Alert.alert('', 'Insufficient balance');
+    }
+
+    const validation = await validateForm(
       variables.offerAmount,
       variables.requestAmount,
       variables.paymentMethod,
@@ -172,7 +189,7 @@ const SellButton = props => {
     props.handlerError(validation);
 
     if (validation.isValid) {
-      const resultValidator =validateFormDetails(
+      const resultValidator = validateFormDetails(
         name,
         lastName,
         email,
@@ -182,7 +199,7 @@ const SellButton = props => {
         phone,
         paymentMethod,
       );
-      
+
       props.handlerError(resultValidator);
       if (!resultValidator.isValid) {
         setLoad(false);
@@ -195,21 +212,21 @@ const SellButton = props => {
           setLoad(true);
           const send = mapData(variables, session);
 
-        // Get reciepient address
-        const pin = await getPin()
-        const recipientData = await client.query({
-          query: QUERIES.PUBLIC_KEY,
-          variables: {
-            id: session.id,
-            pin
-          }
-        })
-        const recipientAddress = recipientData.data.publicKeys.ksm
-  
-        send['recipientAddress'] = recipientAddress
+          // Get reciepient address
+          const pin = await getPin();
+          const recipientData = await client.query({
+            query: QUERIES.PUBLIC_KEY,
+            variables: {
+              id: session.id,
+              pin,
+            },
+          });
+          const recipientAddress = recipientData.data.publicKeys.ksm;
+
+          send['recipientAddress'] = recipientAddress;
 
           const { data } = await sell[0]({ variables: send });
-          const {id} = data.sell
+          const { id } = data.sell;
 
           if (data.sell !== null) {
             const { data } = await addPaymentMethods[0]({
@@ -237,10 +254,7 @@ const SellButton = props => {
             }
           } else {
             setLoad(false);
-            Alert.alert(
-              'Something went wrong!',
-              'Failed to send data',
-            );
+            Alert.alert('Something went wrong!', 'Failed to send data');
           }
         } catch (error) {
           setLoad(false);
@@ -253,7 +267,7 @@ const SellButton = props => {
       return Alert.alert(
         'Cannot contain empty fields',
         'Please enter the information requested in the form before continuing',
-      );      
+      );
     }
   };
 
@@ -282,4 +296,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SellButton;
+export default withContext(SellButton);
