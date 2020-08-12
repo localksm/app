@@ -18,3 +18,5 @@ export { default as GenericGQLLoading } from './GenericGQLLoading';
 export { default as GenericGQLError } from './GenericGQLError';
 export { default as ConfirmedBuySellButton } from './ConfirmedBuySellButton';
 export { default as WithdrawText } from './WithdrawText';
+export { default as WalletSwitch} from './WalletSwitch';
+export { default as WalletViewButton } from './WalletViewButton';

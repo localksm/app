@@ -1,45 +1,28 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { WalletView, HomeLayout, Withdraw } from '../organisms';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { HomeLayout } from '../organisms';
 import { styleBackground } from '../utils/styles';
-import { Button } from '../atoms';
 import { backHandlerControl } from '../utils/backHandlerControl';
+import { useSetSelect } from '../utils/hooks';
+import { WalletSwitch, WalletViewButton } from '../molecules';
 
 const Wallet = props => {
   const [select, setSelect] = useState(false);
   backHandlerControl(props);
-  const {select, setSelect} = useSetSelect();
-
-  const handleSelect = () => setSelect(prev => !prev)
+  const { select, setSelect } = useSetSelect();
 
   return (
     <HomeLayout>
       <View style={styleBackground.container}>
         <View style={styles.buttons}>
-          <Button
-            label="Deposit"
-            stylect={{
-              ...styles.deposit,
-              backgroundColor: !select ? 'white' : null,
-            }}
-            stylectLabel={{ color: !select ? '#DB5A3A' : 'white' }}
-            action={handleSelect}
-          />
-          <Button
-            label="Withdraw"
-            stylect={{
-              ...styles.deposit,
-              backgroundColor: select ? 'white' : null,
-            }}
-            stylectLabel={{ color: select ? '#DB5A3A' : 'white' }}
-            action={handleSelect}
+          <WalletViewButton
+            select={select}
+            handleSelect={setSelect}
           />
         </View>
-        <View style={ styles.elements}>
-          <ScrollView>
-            {!select ? <WalletView />: <Withdraw />}
-          </ScrollView>
+        <View style={styles.elements}>
+          <WalletSwitch select={select} />
         </View>
       </View>
     </HomeLayout>
@@ -53,15 +36,8 @@ const styles = StyleSheet.create({
     minHeight: hp('10%'),
     alignItems:'center',
   },
-  deposit: {
-    borderWidth: 1,
-    borderColor: 'white',
-    width: 150,
-    marginRight: 10,
-    marginLeft: 10,
-  },
-  elements:{
-    marginTop:'5%',
+  elements: {
+    marginTop: '5%',
     height: hp('90%'),
     minHeight: hp('90%'),
   }
