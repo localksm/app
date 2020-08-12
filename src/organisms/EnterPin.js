@@ -13,6 +13,7 @@ import { PinFormValidations } from '../utils/validations';
 import { storePin, removePin } from '../utils/JWT';
 import { getSession, client, QUERIES } from '../apollo';
 import { useDisabled, useShowRemoveButton, useSetErrors } from '../utils/hooks';
+import { savePin } from '../utils/misc';
 
 const EnterPin = (props) => {
   const pinView = useRef(null);
@@ -20,46 +21,6 @@ const EnterPin = (props) => {
   const { disabled, setDisabled } = useDisabled();
   const [pinCode, setPinCode] = useState('');
   const { showRemoveButton, setShowRemoveButton } = useShowRemoveButton();
-
-  const validateForm = (variables) => {
-    const formValidator = new FormValidator(PinFormValidations);
-    let validation = formValidator.validate(variables);
-    return validation;
-  };
-
-  const savePin = async () => {
-    const { session } = await getSession();
-
-    const validator = validateForm({
-      pin: pinCode,
-    });
-    setErrors(validator);
-    if (validator.isValid) {
-      storePin(pinCode, async (jwt) => {
-        const { data } = await client.query({
-          query: QUERIES.VERIFY_PIN,
-          variables: {
-            id: session.id,
-            pin: jwt,
-          },
-        });
-
-        const pinIsValid = data.validatePin.isValid;
-        if (!pinIsValid) {
-          await removePin();
-          pinView.current.clearAll();
-          return alert('Invalid Pin');
-        }
-        if (props.isLogin) {
-          props.actionLogin();
-        }
-
-        if (props.action) props.action(jwt);
-        props.setPin(jwt);
-        props.setScreen(false);
-      });
-    }
-  };
 
   return (
     <View style={props.stylect}>
@@ -117,7 +78,7 @@ const EnterPin = (props) => {
           <Button
             label="Accept"
             stylect={!disabled ? styles.button : styles.buttonDisable}
-            action={savePin}
+            action={() => savePin(pinCode, setErrors, props)}
             disabled={disabled}
           />
         </View>

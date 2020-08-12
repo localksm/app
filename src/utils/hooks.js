@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useQuery } from '@apollo/react-hooks';
 import { getSession, client, QUERIES } from '../apollo';
 import { getPin } from './JWT';
 
@@ -66,4 +67,13 @@ export function useSetErrors() {
   const [errors, setErrors] = useState({});
 
   return { errors, setErrors };
+}
+
+export function useUserProposals(userID) {
+  const { loading, error, data } = useQuery(QUERIES.QUERY_USER_PROPOSALS, {
+    variables: { id: userID },
+    pollInterval: 6000,
+  });
+
+  return { loading, error, data };
 }

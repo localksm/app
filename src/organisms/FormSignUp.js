@@ -49,7 +49,7 @@ const FormSignUp = (props) => {
           onChangeText={(value) => {
             setUsername(value), setErrorName(false);
           }}
-          stylect={getStyles(errorName)}
+          error={errorName}
         />
         <TextError
           error={errorName}
@@ -65,7 +65,7 @@ const FormSignUp = (props) => {
           onChangeText={(value) => {
             setEmail(value), setErrorEmail(false), setErrorEmailValid(false);
           }}
-          stylect={getStyles(errorEmail || errorEmailValid)}
+          error={errorEmail}
         />
         <TextError
           error={errorEmail}
@@ -85,7 +85,7 @@ const FormSignUp = (props) => {
           onChangeText={(value) => {
             setPassword(value), setErrorPass(false);
           }}
-          stylect={getStyles(errorPass)}
+          error={errorPass}
         />
         <TextError
           error={errorPass}
@@ -100,7 +100,7 @@ const FormSignUp = (props) => {
           onChangeText={(value) => {
             setConfirmPassword(value), setErrorConfirm(false);
           }}
-          stylect={getStyles(errorConfirm)}
+          error={errorConfirm}
         />
         <TextError
           error={errorConfirm}

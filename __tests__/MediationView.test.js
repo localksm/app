@@ -45,7 +45,7 @@ it('renders correctly', async () => {
 
 it('test send to won mediation screen on press', async () => {
   jest.useFakeTimers();
-  const openHandler = jest.fn();
+  const handler = jest.fn();
 
   const { getByTestId } = render(
     <MediationView
@@ -55,5 +55,5 @@ it('test send to won mediation screen on press', async () => {
   );
 
   fireEvent.press(getByTestId('test-btn'));
-  expect(openHandler).not.toHaveBeenCalled();
+  expect(handler).not.toHaveBeenCalled();
 });

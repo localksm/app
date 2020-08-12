@@ -8,8 +8,12 @@ import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
 
 import awsconfig from '../S3/aws-exports';
-import { getSession, QUERIES, client } from '../apollo';
-import { getPin } from './JWT';
+import { getSession, QUERIES, client, setSession } from '../apollo';
+import { getPin, removePin, storePin } from './JWT';
+import { sessionModel } from './config';
+import { getBalance, fetchBalacnce } from './ksm';
+import FormValidator from './validator';
+import { PinFormValidations, createPinValidations } from './validations';
 
 export function mapPaymentMethod(method) {
   const methods = {
@@ -109,13 +113,7 @@ export const paymentMethods = {
     fields: [nameInput, lastNameInput, bankDataInput, addressInput],
   },
   ['MG']: {
-    fields: [
-      nameInput,
-      lastNameInput,
-      phoneInput,
-      bankDataInput,
-      addressInput,
-    ],
+    fields: [nameInput, lastNameInput, phoneInput, bankDataInput, addressInput],
   },
   ['NE']: {
     fields: [nameInput, lastNameInput, emailInput],
@@ -408,3 +406,252 @@ export async function setAddressAndBalance(
   }
 }
 // Withdraw region End
+
+// CREATE PIN REGION
+export function mapUser(data) {
+  sessionModel['token'] = data.token;
+  sessionModel['id'] = data.id;
+  sessionModel['name'] = data.name;
+  sessionModel['email'] = data.email;
+  sessionModel['sessionType'] = 'email';
+  sessionModel['__typename'] = 'session';
+
+  return sessionModel;
+}
+
+const validateForm = (variables) => {
+  const formValidator = new FormValidator(PinFormValidations);
+  let validation = formValidator.validate(variables);
+  return validation;
+};
+
+export const savePin = async (pinCode, setErrors, props) => {
+  const { session } = await getSession();
+
+  const validator = validateForm({
+    pin: pinCode,
+  });
+  setErrors(validator);
+  if (validator.isValid) {
+    storePin(pinCode, async (jwt) => {
+      const { data } = await client.query({
+        query: QUERIES.VERIFY_PIN,
+        variables: {
+          id: session.id,
+          pin: jwt,
+        },
+      });
+
+      const pinIsValid = data.validatePin.isValid;
+      if (!pinIsValid) {
+        await removePin();
+        pinView.current.clearAll();
+        return alert('Invalid Pin');
+      }
+      if (props.isLogin) {
+        props.actionLogin();
+      }
+
+      if (props.action) props.action(jwt);
+      props.setPin(jwt);
+      props.setScreen(false);
+    });
+  }
+};
+
+const validateFormCreatePin = (variables, valuePin, confirmPinValue) => {
+  const formValidator = new FormValidator(createPinValidations);
+  let validation = formValidator.validate(variables);
+
+  if (validation.isValid) {
+    validation = {
+      pinConfirm: {
+        isInvalid: valuePin !== confirmPinValue,
+        message: 'The PIN confirmation does not match',
+      },
+      isValid: valuePin === confirmPinValue,
+    };
+  }
+
+  return validation;
+};
+
+export const handleSave = (
+  props,
+  signup,
+  login,
+  setErrors,
+  setLoading,
+  valuePin,
+  confirmPinValue,
+) => {
+  const validator = validateFormCreatePin(
+    {
+      pin: valuePin,
+      pinConfirm: confirmPinValue,
+    },
+    valuePin,
+    confirmPinValue,
+  );
+
+  setErrors(validator);
+  if (validator.isValid) {
+    setLoading(true);
+    try {
+      storePin(valuePin, async (token) => {
+        const { data } = await signup[0]({
+          variables: {
+            ...props.route.params.payload,
+            pin: token,
+          },
+        });
+        const { success } = data.signup;
+        if (success) {
+          const { data } = await login[0]({
+            variables: {
+              ...props.route.params.payload,
+            },
+          });
+          const { success } = data.login;
+          if (success) {
+            const session = mapUser(data.login);
+            await setSession({ session });
+            fetchBalacnce();
+            return props.navigation.navigate('Drawer');
+          } else {
+            setLoading(false);
+            return Alert.alert(
+              'Warning!',
+              'An unexpected error occurred while starting session',
+            );
+          }
+        } else {
+          setLoading(false);
+          return Alert.alert(
+            'Warning!',
+            'An unexpected error occurred while registering the user',
+          );
+        }
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+};
+
+// CREATE PIN REGION END
+
+// REPORT PROBLEM REGION
+export const onChangeFile = async (
+  state,
+  galleryImages,
+  setGalleryImages,
+  setChosenItemsCount,
+) => {
+  const evidence = await state.getData('SELECTED_IMAGES');
+  const newGalleryImages = [...galleryImages];
+  evidence.evidenceImages.images.forEach((x) =>
+    newGalleryImages.push({
+      source: { uri: x },
+      dimensions: { width: 150, height: 150 },
+    }),
+  );
+
+  setGalleryImages(newGalleryImages);
+  setChosenItemsCount(newGalleryImages.length);
+};
+// REPORT PROBLEM REGION END
+
+// MY OFFER REGION
+export async function prepareData(setuserID, setName) {
+  const { session } = await getSession();
+  setuserID(session.id);
+  setName(session.name);
+}
+
+export async function myOfferNavigator(item, navigation, name) {
+  const isMaker = name === item.body.usernameMaker;
+  const isBuy =
+    item.body.operationType === 'add_funds' ||
+    item.body.operationType === 'buy';
+  const isSettle = item.settle;
+  switch (item.status) {
+    case 'created':
+      return navigation.navigate('Confirmation', { ...item });
+    case 'accepted':
+      if (isMaker) {
+        if (isBuy) {
+          return navigation.navigate('ConfirmedBuy', {
+            ...item,
+          });
+        } else {
+          if (!isSettle) {
+            return navigation.navigate('SendSettlementMaker', {
+              ...item,
+            });
+          }
+          return navigation.navigate('ConfirmedSell', {
+            ...item,
+          });
+        }
+      } else {
+        if (isBuy) {
+          return navigation.navigate('AcceptedBuy', {
+            ...item,
+          });
+        } else {
+          return navigation.navigate('AcceptedSell', {
+            ...item,
+          });
+        }
+      }
+
+    case 'confirmed':
+      if (isMaker) {
+        if (isBuy) {
+          if (item.disbursed) {
+            return navigation.navigate('DisburseSeller', {
+              ...item,
+            });
+          }
+          return navigation.navigate('ConfirmedBuy', {
+            ...item,
+          });
+        } else {
+          // If is a sell and I am the maker then send me to the buyer disburse
+          return navigation.navigate('DisburseBuyer', {
+            ...item,
+          });
+        }
+      } else {
+        if (isBuy) {
+          // If is a buy and I am the taker then send me to the buyer disburse
+          return navigation.navigate('DisburseBuyer', {
+            ...item,
+          });
+        } else {
+          if (item.disbursed) {
+            return navigation.navigate('DisburseSeller', {
+              ...item,
+            });
+          }
+
+          return navigation.navigate('ConfirmedSell', {
+            ...item,
+          });
+        }
+      }
+
+    case 'completed':
+      return navigation.navigate('TransactionCompleted', {
+        ...item,
+      });
+    default:
+      Alert.alert('Warning!', 'Proposal not found');
+      break;
+  }
+
+  navigation.navigate('DetailsOffer');
+}
+
+// MY OFFER REGION END

@@ -11,6 +11,7 @@ import { getPin } from '../utils/JWT';
 import { mapPaymentMethod } from '../utils/misc';
 import EnterPin from './EnterPin';
 import { offerDetialsStyles } from '../utils/styles';
+import OfferDetailContent from './OfferDetailContent';
 
 const initialState = {
   // UI Controllers
@@ -39,7 +40,7 @@ const initialState = {
   usernameMaker: null,
 };
 
-const OfferDetails = props => {
+const OfferDetails = (props) => {
   // Set initialState to React hook
   const [state, setState] = useState(initialState);
 
@@ -59,7 +60,7 @@ const OfferDetails = props => {
         offerAmount,
       } = body;
 
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         takerId,
         makerId,
@@ -113,16 +114,16 @@ const OfferDetails = props => {
   } = state;
 
   const handleTextChange = (name, value) => {
-    setState(prev => ({ ...prev, [name]: value }));
+    setState((prev) => ({ ...prev, [name]: value }));
   };
 
   const actionSendAcceptance = async () => {
-    setState(prev => ({ ...prev, loading: true }));
+    setState((prev) => ({ ...prev, loading: true }));
     let currentStep;
     // Let's check if pin is already stored, if not show the EnterPin screen and stop execution...
     const pin = await getPin();
     if (pin === null || pin === '') {
-      setState(prev => ({ ...prev, enterPinScreen: true }));
+      setState((prev) => ({ ...prev, enterPinScreen: true }));
       return;
     }
 
@@ -140,7 +141,7 @@ const OfferDetails = props => {
       );
 
       if (!validation.isValid) {
-        setState(prev => ({ ...prev, errors: validation, loading: false }));
+        setState((prev) => ({ ...prev, errors: validation, loading: false }));
         return Alert.alert(
           'Cannot contain empty fields',
           'Please enter the information requested in the form before continuing',
@@ -185,7 +186,7 @@ const OfferDetails = props => {
 
       // If this is a sell then finish the process (settlement and fulfillment relays on maker)
       if (operationType === 'sell') {
-        setState(prev => ({ ...prev, loading: false }));
+        setState((prev) => ({ ...prev, loading: false }));
         props.navigation.navigate('AcceptedSell', { ...props.route.params });
         return;
       }
@@ -242,9 +243,9 @@ const OfferDetails = props => {
           },
         },
       });
-      setState(prev => ({ ...prev, loading: false }));
+      setState((prev) => ({ ...prev, loading: false }));
     } catch (e) {
-      setState(prev => ({ ...prev, loading: false }));
+      setState((prev) => ({ ...prev, loading: false }));
       return Alert.alert(
         'Error',
         `Something went wrong during the ${currentStep}. Please try again later.`,
@@ -257,12 +258,12 @@ const OfferDetails = props => {
   // Process mutation dynamically
   async function processMutation(mutation, variables) {
     const mutations = {
-      addPaymentMethod:addPaymentMethod[0],
-      sendAcceptance:sendAcceptance[0],
-      sendResolution:sendResolution[0],
-      sendSellResolution:sendSellResolution[0],
-      sendSettlement:sendSettlement[0],
-      sendFulfillment:sendFulfillment[0],
+      addPaymentMethod: addPaymentMethod[0],
+      sendAcceptance: sendAcceptance[0],
+      sendResolution: sendResolution[0],
+      sendSellResolution: sendSellResolution[0],
+      sendSettlement: sendSettlement[0],
+      sendFulfillment: sendFulfillment[0],
     };
 
     const m = mutations[mutation];
@@ -286,84 +287,23 @@ const OfferDetails = props => {
     });
   }
 
-  return !enterPinScreen ? (
-    <FormLayout.Content>
-      <FormLayout.Body>
-        {!loadingScreen ? (
-          <ScrollView>
-            <View style={offerDetialsStyles.container}>
-              <View style={offerDetialsStyles.form}>
-                <View style={offerDetialsStyles.row}>
-                  <View style={offerDetialsStyles.left}>
-                    <Text style={offerDetialsStyles.text}>
-                      {mapPaymentMethod(paymentMethod)}
-                    </Text>
-                    <Text style={offerDetialsStyles.textSecond}>
-                      {usernameMaker}
-                    </Text>
-                  </View>
-                  <View style={offerDetialsStyles.right}>
-                    <Text style={offerDetialsStyles.textAmount}>
-                      $ {offerAmount} {offerAsset} {'->'} KSM
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              {operationType !== 'sell' &&
-              operationType !== 'withdraw_funds' ? (
-                <View style={offerDetialsStyles.form}>
-                  <PaymentForm
-                    show={paymentDataform}
-                    method={paymentMethod}
-                    onChangeText={handleTextChange}
-                    errors={errors}
-                  />
-                </View>
-              ) : (
-                <View />
-              )}
-            </View>
-          </ScrollView>
-        ) : (
-          <View style={offerDetialsStyles.textLoad}>
-            <ActivityIndicator size="small" color="black" />
-          </View>
-        )}
-      </FormLayout.Body>
-      <FormLayout.Footer>
-        <View style={{ flex: 1, marginTop: '3%' }}>
-          {loading ? (
-            <View style={offerDetialsStyles.textLoad}>
-              <ActivityIndicator size="small" color="black" />
-              <Text style={offerDetialsStyles.textLoad}>Please wait...</Text>
-            </View>
-          ) : (
-            <Button
-              label="Confirm"
-              action={actionSendAcceptance}
-              stylect={offerDetialsStyles.buttonConfirm}
-            />
-          )}
-          {!loading && (
-            <Link
-              label="Cancel"
-              color="#cc5741"
-              stylect={offerDetialsStyles.linkText}
-              action={() => {}}
-            />
-          )}
-        </View>
-      </FormLayout.Footer>
-    </FormLayout.Content>
-  ) : (
-    <View style={offerDetialsStyles.enterPinWrapper}>
-      <EnterPin
-        action={token => {
-          // Hide enter pin screen
-          setState(prev => ({ ...prev, enterPinScreen: false }));
-        }}
-      />
-    </View>
+  return (
+    <OfferDetailContent
+      enterPinScreen={enterPinScreen}
+      loadingScreen={loadingScreen}
+      offerDetialsStyles={offerDetialsStyles}
+      usernameMaker={usernameMaker}
+      paymentMethod={paymentMethod}
+      operationType={operationType}
+      paymentDataform={paymentDataform}
+      handleTextChange={handleTextChange}
+      errors={errors}
+      loading={loading}
+      actionSendAcceptance={actionSendAcceptance}
+      offerAmount={offerAmount}
+      offerAsset={offerAsset}
+      setState={(token) => setState((prev) => ({ ...prev, enterPinScreen: false }))}
+    />
   );
 };
 

@@ -8,7 +8,7 @@ import Adapter from 'enzyme-adapter-react-16';
 
 import { EnterPin } from '../src/organisms';
 import { testHook } from '../testUtils';
-import { useDisabled, useShowRemoveButton } from '../src/utils/hooks';
+import { useDisabled } from '../src/utils/hooks';
 
 configure({ adapter: new Adapter() });
 
@@ -63,3 +63,9 @@ it('test disabled', async () => {
   expect(wrapper.prop('disabled')).toEqual(undefined); // FAIL
 });
 
+
+it('test on press', async () => {
+  jest.useFakeTimers();
+  const wrapper = shallow(<EnterPin />);
+  wrapper.find('Button').props().action();
+});

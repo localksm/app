@@ -11,9 +11,10 @@ import {
 import { useQuery } from '@apollo/react-hooks';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
-import { Offer, BalanceHeader } from '../molecules';
+import { Offer, BalanceHeader, OfferItem } from '../molecules';
 import { QUERIES, getSession } from '../apollo';
-import { mapPaymentMethod } from '../utils/misc';
+import { mapPaymentMethod, prepareData } from '../utils/misc';
+import { useUserProposals } from '../utils/hooks';
 
 function Loading() {
   return (
@@ -23,13 +24,6 @@ function Loading() {
   );
 }
 
-function Error({ error }) {
-  return (
-    <View style={styles.container}>
-      <Text>{`Error! ${error.message}`}</Text>
-    </View>
-  );
-}
 
 const MyOffer = () => {
   const navigation = useNavigation();
@@ -37,25 +31,15 @@ const MyOffer = () => {
   const [name, setName] = useState(null);
 
   useEffect(() => {
-    prepareData();
+    prepareData(setuserID, setName);
   }, []);
 
-  const prepareData = async () => {
-    const { session } = await getSession();
-    setuserID(session.id);
-    setName(session.name);
-  };
-
-  const { loading, error, data } = useQuery(QUERIES.QUERY_USER_PROPOSALS, {
-    variables: { id: userID },
-    pollInterval: 6000,
-  });
+  const { loading, data } = useUserProposals(userID);
 
   if (loading) return <Loading />;
-  if (error) return <Error error={error} />;
 
   return (
-    <>
+    <View>
       <View style={styles.container}>
         <BalanceHeader />
       </View>
@@ -65,117 +49,12 @@ const MyOffer = () => {
           ListFooterComponent={<View />}
           ListFooterComponentStyle={styles.listFooterComponent}
           contentContainerStyle={styles.contentContainer}
-          renderItem={({ item }) => {
-            return (
-              <TouchableOpacity
-                onPress={async () => {
-                  const isMaker = name === item.body.usernameMaker;
-                  const isBuy =
-                    item.body.operationType === 'add_funds' ||
-                    item.body.operationType === 'buy';
-                  const isSettle = item.settle;
-                  switch (item.status) {
-                    case 'created':
-                      return navigation.navigate('Confirmation', { ...item });
-                    case 'accepted':
-                      if (isMaker) {
-                        if (isBuy) {
-                          return navigation.navigate('ConfirmedBuy', {
-                            ...item,
-                          });
-                        } else {
-                          if(!isSettle){
-                            return navigation.navigate('SendSettlementMaker', {
-                              ...item,
-                            });
-                          }
-                          return navigation.navigate('ConfirmedSell', {
-                            ...item,
-                          });
-                        }
-                      } else {
-                        if (isBuy) {
-                          return navigation.navigate('AcceptedBuy', {
-                            ...item,
-                          });
-                        } else {
-                          return navigation.navigate('AcceptedSell', {
-                            ...item,
-                          });
-                        }
-                      }
-
-                    case 'confirmed':
-                      if (isMaker) {
-                        if (isBuy) {
-                          if (item.disbursed) {
-                            return navigation.navigate('DisburseSeller', {
-                              ...item,
-                            });
-                          }
-                          return navigation.navigate('ConfirmedBuy', {
-                            ...item,
-                          });
-                        } else {
-                          // If is a sell and I am the maker then send me to the buyer disburse
-                          return navigation.navigate('DisburseBuyer', {
-                            ...item,
-                          });
-                        }
-                      } else {
-                        if (isBuy) {
-                          // If is a buy and I am the taker then send me to the buyer disburse
-                          return navigation.navigate('DisburseBuyer', {
-                            ...item,
-                          });
-                        } else {
-                          if (item.disbursed) {
-                            return navigation.navigate('DisburseSeller', {
-                              ...item,
-                            });
-                          }
-
-                          return navigation.navigate('ConfirmedSell', {
-                            ...item,
-                          });
-                        }
-                      }
-
-                    case 'completed':
-                      return navigation.navigate('TransactionCompleted', {
-                        ...item,
-                      });
-                    default:
-                      Alert.alert('Warning!', 'Proposal not found');
-                      break;
-                  }
-
-                  navigation.navigate('DetailsOffer');
-                }}>
-                <Offer
-                  payment={mapPaymentMethod(item.body.paymentMethod)}
-                  usernameMaker={item.body.usernameMaker}
-                  date={moment(
-                    new Date(item.body.updatedAt).toUTCString(),
-                  ).format('MMMM Do YYYY - h:mm:ss A')}
-                  offered={item.body.requestAmount}
-                  requiered={item.body.offerAmount}
-                  status={item.status}
-                  currency={
-                    item.body.operationType === 'add_funds' ||
-                    item.body.operationType === 'buy'
-                      ? item.body.offerAsset
-                      : item.body.requestAsset
-                  }
-                  isOffer={true}
-                  operationType={item.body.operationType}
-                />
-              </TouchableOpacity>
-            );
-          }}
+          renderItem={({ item }) => (
+            <OfferItem item={item} name={name} navigation={navigation} />
+          )}
         />
       </View>
-    </>
+    </View>
   );
 };
 const styles = StyleSheet.create({

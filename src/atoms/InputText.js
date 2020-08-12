@@ -7,7 +7,15 @@ function InputText(props) {
   return props.noReturn ? (
     <TextInput
       {...props}
-      style={[styles.inputMaterial, props.stylect]}
+      style={{
+        ...props.stylect,
+        borderBottomWidth: 2,
+        marginTop: '5%',
+        borderColor: !props.error ? '#ffffff' : 'red',
+        fontSize: 16,
+        color: '#ffffff',
+        fontFamily: 'Poppins-Regular',
+      }}
       onChangeText={props.onChangeText}
       placeholderTextColor="#ffffff"
       returnKeyType="done"
@@ -18,7 +26,15 @@ function InputText(props) {
   ) : (
     <TextInput
       {...props}
-      style={[styles.inputMaterial, props.stylect]}
+      style={{
+        ...props.stylect,
+        borderBottomWidth: 2,
+        marginTop: '5%',
+        borderColor: !props.error ? '#ffffff' : 'red',
+        fontSize: 16,
+        color: '#ffffff',
+        fontFamily: 'Poppins-Regular',
+      }}
       onChangeText={props.onChangeText}
       placeholderTextColor="#ffffff"
       autoCapitalize={props.autoCapitalize}

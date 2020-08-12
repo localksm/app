@@ -52,7 +52,7 @@ function FormSignInContent({
             onChangeText={(value) => {
               setErrorEmail(false), setEmail(value);
             }}
-            stylect={errorEmail && styles.error}
+            error={errorEmail}
           />
           <InputText
             testID="test-pwd-input"
@@ -62,7 +62,7 @@ function FormSignInContent({
             onChangeText={(value) => {
               setErrorPass(false), setPassword(value);
             }}
-            stylect={errorPass && styles.error}
+            error={errorPass}
           />
           <TouchableOpacity>
             <Text style={styles.textForgot}>Forgot password?</Text>

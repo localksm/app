@@ -5,12 +5,12 @@ import { MUTATIONS, getSession } from '../apollo';
 import Button from './Button';
 import { responsePathAsArray } from 'graphql';
 
-const SendAdjudicationButton = props => {
-  const [sendAdjudication] = useMutation(MUTATIONS.SEND_ADJUDICATION);
+const SendAdjudicationButton = (props) => {
+  const sendAdjudication = useMutation(MUTATIONS.SEND_ADJUDICATION);
   const [load, setLoad] = useState(false);
   const [id, setId] = useState(null);
   const { proposalId, galleryImages, description } = props.variables;
- 
+
   useEffect(() => {
     set();
   }, []);
@@ -23,23 +23,20 @@ const SendAdjudicationButton = props => {
   const send = async () => {
     try {
       setLoad(true);
-      if(description === ''){
-          return Alert.alert('Warning!','Please, describe your problem')
-      }
-      else if(galleryImages === []){
-          return Alert.alert('Warning!','Please upload an evidence image')
-      } 
-      else{
-          const response = await sendAdjudication({
-            variables: {
-              proposalId: proposalId,
-              images: galleryImages,
-              createdBy: id,
-              comment: description,
-            },
-          });
-          props.actionMediation()
-
+      if (description === '') {
+        return Alert.alert('Warning!', 'Please, describe your problem');
+      } else if (galleryImages === []) {
+        return Alert.alert('Warning!', 'Please upload an evidence image');
+      } else {
+        const response = await sendAdjudication[0]({
+          variables: {
+            proposalId: proposalId,
+            images: galleryImages,
+            createdBy: id,
+            comment: description,
+          },
+        });
+        props.navigation.navigate('Mediation');
       }
     } catch (error) {
       setLoad(false);

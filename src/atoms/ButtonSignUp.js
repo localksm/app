@@ -46,8 +46,13 @@ const ButtonSignUp = props => {
       platform: Platform.OS === 'ios' ? 'ios' : 'android',
     };
 
+    console.log(payload);
+
     try {
-      if (validator.isEmpty(email)) {
+      if(validator.isEmpty(username)){
+        setLoading(false);
+        return props.errorName(true);
+      } else if (validator.isEmpty(email)) {
         setLoading(false);
         return props.errorEmail(true);
       } else if (!validator.isEmail(email)) {

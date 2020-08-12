@@ -3,24 +3,22 @@ import {
   Text,
   View,
   StyleSheet,
-  CheckBox,
   Image,
   TouchableWithoutFeedback,
   Keyboard,
-  Switch,
   Platform,
-  ActivityIndicator,
 } from 'react-native';
 import { useMutation } from '@apollo/react-hooks';
-import { InputText, Button, InputLayout } from '../atoms';
+import { InputText, InputLayout } from '../atoms';
 import FormValidator from '../utils/validator';
 import { createPinValidations } from '../utils/validations';
 import { MUTATIONS, setSession } from '../apollo';
 import { storePin } from '../utils/JWT';
-import { sessionModel } from '../utils/config';
 import { fetchBalacnce } from '../utils/ksm';
 import eye from '../../assets/eye.png';
 import eyeOff from '../../assets/eye-off.png';
+import { CreatePinSwitch, CreatePinLoader } from '../molecules';
+import { mapUser, handleSave } from '../utils/misc';
 
 const FormCreatePin = (props) => {
   const [loading, setLoading] = useState(false);
@@ -37,85 +35,6 @@ const FormCreatePin = (props) => {
   useEffect(() => {
     setDisabled(!(valuePin !== '' && confirmPinValue !== '' && isSelected));
   });
-
-  const validateForm = (variables) => {
-    const formValidator = new FormValidator(createPinValidations);
-    let validation = formValidator.validate(variables);
-
-    if (validation.isValid) {
-      validation = {
-        pinConfirm: {
-          isInvalid: valuePin !== confirmPinValue,
-          message: 'The PIN confirmation does not match',
-        },
-        isValid: valuePin === confirmPinValue,
-      };
-    }
-
-    return validation;
-  };
-
-  const mapUser = (data) => {
-    sessionModel['token'] = data.token;
-    sessionModel['id'] = data.id;
-    sessionModel['name'] = data.name;
-    sessionModel['email'] = data.email;
-    sessionModel['sessionType'] = 'email';
-    sessionModel['__typename'] = 'session';
-
-    return sessionModel;
-  };
-
-  const handleSave = () => {
-    const validator = validateForm({
-      pin: valuePin,
-      pinConfirm: confirmPinValue,
-    });
-
-    setErrors(validator);
-    if (validator.isValid) {
-      setLoading(true);
-      try {
-        storePin(valuePin, async (token) => {
-          const { data } = await signup({
-            variables: {
-              ...props.route.params.payload,
-              pin: token,
-            },
-          });
-          const { success } = data.signup;
-          if (success) {
-            const { data } = await login({
-              variables: {
-                ...props.route.params.payload,
-              },
-            });
-            const { success } = data.login;
-            if (success) {
-              const session = await mapUser(data.login);
-              await setSession({ session });
-              fetchBalacnce();
-              return props.navigation.navigate('Drawer');
-            } else {
-              setLoading(false);
-              return Alert.alert(
-                'Warning!',
-                'An unexpected error occurred while starting session',
-              );
-            }
-          } else {
-            setLoading(false);
-            return Alert.alert(
-              'Warning!',
-              'An unexpected error occurred while registering the user',
-            );
-          }
-        });
-      } catch (error) {
-        throw new Error(error);
-      }
-    }
-  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -186,32 +105,32 @@ const FormCreatePin = (props) => {
               </View>
 
               <View style={{ flexDirection: 'row', marginBottom: 20 }}>
-                {Platform.OS === 'android' ? (
-                  <CheckBox
-                    value={isSelected}
-                    onValueChange={setSelected}
-                    style={styles.checkbox}
-                    tintColors={{ true: 'white', false: 'white' }}
-                  />
-                ) : (
-                  <Switch value={isSelected} onValueChange={setSelected} />
-                )}
+                <CreatePinSwitch
+                  platform={Platform.OS}
+                  isSelected={isSelected}
+                  setSelected={setSelected}
+                  styles={styles}
+                />
                 <Text style={styles.label}>
                   I confirm that I kept my pin in a safe place
                 </Text>
               </View>
-              {!loading ? (
-                <Button
-                  label="Create PIN"
-                  stylect={!disabled ? styles.button : styles.buttonDisable}
-                  action={handleSave}
-                  disabled={disabled}
-                />
-              ) : (
-                <View style={styles.text}>
-                  <ActivityIndicator size="large" color="white" />
-                </View>
-              )}
+              <CreatePinLoader
+                loading={loading}
+                disabled={disabled}
+                handleSave={() =>
+                  handleSave(
+                    props,
+                    signup,
+                    login,
+                    setErrors,
+                    setLoading,
+                    valuePin,
+                    confirmPinValue,
+                  )
+                }
+                styles={styles}
+              />
             </View>
           </View>
         </View>

@@ -1,6 +1,7 @@
 export { default as HomeLayout } from './HomeLayout';
 export { default as OfferList } from './OfferList';
 export { default as OfferDetails } from './OfferDetails';
+export { default as OfferDetailContent } from './OfferDetailContent';
 export { default as FormSignIn } from './FormSignIn';
 export { default as FormSignInContent } from './FormSignInContent';
 export { default as FormSignUp } from './FormSignUp';
@@ -14,6 +15,7 @@ export { default as DisbursementSeller } from './DisbursementSeller';
 export { default as Completed } from './Completed';
 export { default as WalletView } from './WalletView';
 export { default as Report } from './Report';
+export { default as ReportContent } from './ReportContent';
 export { default as MediationView } from './MediationView';
 export { default as MediationResult } from './MediationResult';
 export { default as MyOffer } from './MyOffer';
