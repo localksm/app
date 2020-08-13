@@ -6,21 +6,19 @@ import { getPin } from './JWT';
 export async function getBalance(address, callback) {
   const wsProvider = new WsProvider('wss://kusama-rpc.polkadot.io');
   const api = await ApiPromise.create({ provider: wsProvider });
-    
-    try {
-      const { nonce, data: balance } = await api.query.system.account(address);
-      const total =
-      (parseInt(balance.free, 10) + parseInt(balance.reserved, 10)) * 0.000000000001;
-      const free = parseInt(balance.free, 10) * 0.000000000001;
-      wsProvider.unsubscribe();
-      wsProvider.disconnect();
-      callback(free, total);
-      
-    } catch (error) {
-      alert('There was an error getting your balance');
-    }    
 
-  return 0;
+  try {
+    const { nonce, data: balance } = await api.query.system.account(address);
+    const total =
+      (parseInt(balance.free, 10) + parseInt(balance.reserved, 10)) *
+      0.000000000001;
+    const free = parseInt(balance.free, 10) * 0.000000000001;
+    wsProvider.unsubscribe();
+    wsProvider.disconnect();
+    return callback(free, total);
+  } catch (error) {
+    alert('There was an error getting your balance');
+  }
 }
 
 export async function getAverageCost(callback) {
@@ -29,14 +27,19 @@ export async function getAverageCost(callback) {
       'https://api.coingecko.com/api/v3/simple/price?ids=kusama&vs_currencies=USD',
     );
 
-    const json = await getUSDcost.json();
+    function reload() {
+      setTimeout(() => {
+        getAverageCost(callback);
+      }, 1000);
+    }
 
-    callback(json.kusama.usd);
+    const typeData = await typeof getUSDcost;
+    const response = typeData === 'object' ? await getUSDcost.json : reload();
+
+    callback(response.kusama.usd);
   } catch (error) {
     throw new Error(error);
   }
-
-  return 0;
 }
 
 export function validateAddress(addr) {
@@ -60,9 +63,8 @@ export function validateAddress(addr) {
   }
 }
 
-
-export const fetchBalacnce = async ()=>{
-  const pin = await getPin()
+export const fetchBalacnce = async () => {
+  const pin = await getPin();
   const { session } = await getSession();
   const res = await client.query({
     query: QUERIES.PUBLIC_KEY,
@@ -70,28 +72,28 @@ export const fetchBalacnce = async ()=>{
   });
   const address = res.data.publicKeys.ksm;
 
-  const  balance = {
+  const balance = {
     fee: 0.01,
     total: 0,
-    averageCost: 0
+    averageCost: 0,
   };
   try {
-    await getBalance(address, (fee, total)=>{
-      balance['fee']= fee;
+    await getBalance(address, (fee, total) => {
+      balance['fee'] = fee;
       balance['total'] = total;
     });
-  
-    await getAverageCost((averageCost)=>{
+
+    await getAverageCost((averageCost) => {
       balance['averageCost'] = averageCost;
-    });    
+    });
   } catch (error) {
-    console.error(error);    
+    console.error(error);
   }
-    
+
   await state.mutation({
-        polkadot: {
-          balanceKSM: JSON.stringify(balance),
-          __typename: null,
-        },
-      });
+    polkadot: {
+      balanceKSM: JSON.stringify(balance),
+      __typename: null,
+    },
+  });
 };
