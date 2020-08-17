@@ -2,7 +2,7 @@ import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import { onError } from 'apollo-link-error';
 import { setContext } from 'apollo-link-context';
 import ls from 'react-native-local-storage';
-import { GRAPHQL_ENDPOINT } from '../utils/config';
+import { GRAPHQL_ENDPOINT, ENV_VARS } from '../utils/config';
 import { ContextProvider, ContextConsumer, withContext } from './context';
 import ApolloState from './stateManager';
 import {
@@ -55,10 +55,13 @@ const authLink = setContext(async (_) => {
   const data = await getSession();
   const { session } = data !== null && data;
   const jwt = session && session.token;
+  const client_key = ENV_VARS.CLIENT_KEY;
+  const secret_key = ENV_VARS.SECRET_KEY;
 
   return {
     headers: {
       authorization: `Bearer ${jwt}`,
+      keys: JSON.stringify({ client_key, secret_key }),
     },
   };
 });

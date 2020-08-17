@@ -1,13 +1,15 @@
 import {
   JWT_SECRET,
-  GOOGLE_IOS_KEY,
-  GOOGLE_ANDROID_KEY,
+  GOOGLE_IOS,
+  GOOGLE_ANDROID,
   TW_CONSUMER_KEY,
   TW_CONSUMER_SECRET,
+  CLIENT_KEY,
+  SECRET_KEY,
 } from '@env';
 import { Platform } from 'react-native';
 
-export const ENV_VARS = { JWT_SECRET };
+export const ENV_VARS = { JWT_SECRET, CLIENT_KEY, SECRET_KEY };
 
 export const sessionModel = {
   token: null,
@@ -29,7 +31,7 @@ export const GRAPHQL_SUBSCRIPTIONS_ENDPOINT =
     : 'ws://app.localksm.com/graphql';
 
 export const googleConfig = {
-  webClientId: Platform.OS === 'ios' ? GOOGLE_IOS_KEY : GOOGLE_ANDROID_KEY,
+  webClientId: Platform.OS === 'ios' ? GOOGLE_IOS : GOOGLE_ANDROID,
 };
 
 export const twitterConfig = {
