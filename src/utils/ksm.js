@@ -34,14 +34,15 @@ export async function getAverageCost(callback) {
     }
 
     const typeData = await getUSDcost;
-    if (typeData !== undefined || typeData !== null || typeData !== '') {
-      const response = 0;
-      callback(response);
-    } else {
+    if (typeData !== undefined && typeData !== null && typeData !== '') {
       const data = await typeof getUSDcost;
       const res = data === 'object' ? await getUSDcost.json : reload();
       callback(res.kusama.usd);
+      return;
     }
+    callback(0);
+
+    return;
   } catch (error) {
     throw new Error(error);
   }
