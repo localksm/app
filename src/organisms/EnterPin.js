@@ -14,14 +14,12 @@ import { storePin, removePin } from '../utils/JWT';
 import { getSession, client, QUERIES } from '../apollo';
 import { useDisabled, useShowRemoveButton, useSetErrors } from '../utils/hooks';
 import { savePin } from '../utils/misc';
-
 const EnterPin = (props) => {
   const pinView = useRef(null);
   const { errors, setErrors } = useSetErrors();
   const { disabled, setDisabled } = useDisabled();
   const [pinCode, setPinCode] = useState('');
   const { showRemoveButton, setShowRemoveButton } = useShowRemoveButton();
-
   return (
     <View style={props.stylect}>
       <View style={styles.secction_logo}>
@@ -78,7 +76,7 @@ const EnterPin = (props) => {
           <Button
             label="Accept"
             stylect={!disabled ? styles.button : styles.buttonDisable}
-            action={() => savePin(pinCode, setErrors, props)}
+            action={() => savePin(pinCode, setErrors, props, pinView)}
             disabled={disabled}
           />
         </View>
@@ -86,7 +84,6 @@ const EnterPin = (props) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   logo: {
     width: 100,
@@ -126,5 +123,4 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
-
 export default EnterPin;

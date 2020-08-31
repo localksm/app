@@ -12,7 +12,6 @@ import { mapPaymentMethod } from '../utils/misc';
 import EnterPin from './EnterPin';
 import { offerDetialsStyles } from '../utils/styles';
 import OfferDetailContent from './OfferDetailContent';
-
 const initialState = {
   // UI Controllers
   loadingScreen: true, // Initialize loading as true
@@ -20,7 +19,6 @@ const initialState = {
   errors: {},
   enterPinScreen: false,
   paymentDataform: false,
-
   // Proposal Data
   proposalId: null,
   paymentMethod: '',
@@ -39,11 +37,9 @@ const initialState = {
   operationType: null,
   usernameMaker: null,
 };
-
 const OfferDetails = (props) => {
   // Set initialState to React hook
   const [state, setState] = useState(initialState);
-
   useEffect(() => {
     // Map route params to local state
     async function setParamsToLocalState() {
@@ -59,7 +55,6 @@ const OfferDetails = (props) => {
         offerAsset,
         offerAmount,
       } = body;
-
       setState((prev) => ({
         ...prev,
         takerId,
@@ -74,10 +69,8 @@ const OfferDetails = (props) => {
         paymentDataform: operationType === 'buy' ? true : false,
       }));
     }
-
     setParamsToLocalState();
   }, []);
-
   // MUTATIONS
   const sendAcceptance = useMutation(MUTATIONS.SEND_ACCEPTANCE);
   const sendResolution = useMutation(MUTATIONS.SEND_RESOLUTION);
@@ -87,7 +80,6 @@ const OfferDetails = (props) => {
   const addPaymentMethod = useMutation(
     MUTATIONS.INSERT_PROPOSAL_PAYMENT_METHOD,
   );
-
   // Deconstruct state
   const {
     loading,
@@ -112,11 +104,9 @@ const OfferDetails = (props) => {
     offerAsset,
     operationType,
   } = state;
-
   const handleTextChange = (name, value) => {
     setState((prev) => ({ ...prev, [name]: value }));
   };
-
   const actionSendAcceptance = async () => {
     setState((prev) => ({ ...prev, loading: true }));
     let currentStep;
@@ -126,7 +116,6 @@ const OfferDetails = (props) => {
       setState((prev) => ({ ...prev, enterPinScreen: true }));
       return;
     }
-
     // Check if validation is required based on operation type
     if (operationType === 'buy') {
       const validation = validateFormDetails(
@@ -139,7 +128,6 @@ const OfferDetails = (props) => {
         phone,
         paymentMethod,
       );
-
       if (!validation.isValid) {
         setState((prev) => ({ ...prev, errors: validation, loading: false }));
         return Alert.alert(
@@ -148,7 +136,6 @@ const OfferDetails = (props) => {
         );
       }
     }
-
     // Get recipientAddress
     const recipientData = await client.query({
       query: QUERIES.PUBLIC_KEY,
@@ -158,7 +145,6 @@ const OfferDetails = (props) => {
       },
     });
     const recipientAddress = recipientData.data.publicKeys.ksm;
-
     try {
       // Send acceptance
       currentStep = 'Acceptance';
@@ -167,7 +153,6 @@ const OfferDetails = (props) => {
         takerId,
         node: operationType === 'buy' ? 'takerBuyer' : 'takerSeller',
       });
-
       // [**Send resolution**]
       currentStep = 'Resolution';
       const sendResolutionMutation =
@@ -178,19 +163,15 @@ const OfferDetails = (props) => {
         recipientAddress,
         node: operationType === 'buy' ? 'makerSeller' : 'makerBuyer',
       };
-
       if (operationType === 'buy') delete sendResolutionVars.recipientAddress;
-
       await processMutation(sendResolutionMutation, sendResolutionVars);
       // [**Send resolution END**]
-
       // If this is a sell then finish the process (settlement and fulfillment relays on maker)
       if (operationType === 'sell') {
         setState((prev) => ({ ...prev, loading: false }));
         props.navigation.navigate('AcceptedSell', { ...props.route.params });
         return;
       }
-
       // If this is a buy then we continue ...
       currentStep = 'Settlement';
       await processMutation('sendSettlement', {
@@ -200,14 +181,12 @@ const OfferDetails = (props) => {
         pin,
         node: 'takerBuyer',
       });
-
       currentStep = 'Fulfillment';
       await processMutation('sendFulfillment', {
         proposalId: proposalId,
         takerId,
         node: 'takerBuyer',
       });
-
       currentStep = 'Add Payment Method';
       await processMutation('addPaymentMethod', {
         userId: takerId,
@@ -221,7 +200,6 @@ const OfferDetails = (props) => {
         accountNumber,
         paymentMethod,
       });
-
       props.navigation.navigate('AcceptedBuy', {
         body: {
           usernameMaker,
@@ -254,7 +232,6 @@ const OfferDetails = (props) => {
       );
     }
   };
-
   // Process mutation dynamically
   async function processMutation(mutation, variables) {
     const mutations = {
@@ -265,9 +242,7 @@ const OfferDetails = (props) => {
       sendSettlement: sendSettlement[0],
       sendFulfillment: sendFulfillment[0],
     };
-
     const m = mutations[mutation];
-
     return await m({
       variables,
       refetchQueries: [
@@ -286,7 +261,6 @@ const OfferDetails = (props) => {
       ],
     });
   }
-
   return (
     <OfferDetailContent
       enterPinScreen={enterPinScreen}
@@ -306,5 +280,15 @@ const OfferDetails = (props) => {
     />
   );
 };
-
 export default withContext(OfferDetails);
+
+
+
+
+
+
+
+
+
+
+

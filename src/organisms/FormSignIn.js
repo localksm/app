@@ -9,7 +9,6 @@ const FormSignIn = (props) => {
   const [password, setPassword] = useState('');
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorPass, setErrorPass] = useState(false);
-
   const [pin, setPin] = useState('');
   const [verifyPin, setVeriFyPin] = useState(false);
   const navigation = useNavigation();

@@ -19,7 +19,6 @@ import eye from '../../assets/eye.png';
 import eyeOff from '../../assets/eye-off.png';
 import { CreatePinSwitch, CreatePinLoader } from '../molecules';
 import { mapUser, handleSave } from '../utils/misc';
-
 const FormCreatePin = (props) => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -31,11 +30,10 @@ const FormCreatePin = (props) => {
   const [confirmPinValue, setConfirmPinValue] = useState('');
   const [secure, setSecure] = React.useState(true);
   const [secureConfirm, setSecureConfirm] = React.useState(true);
-
+ 
   useEffect(() => {
     setDisabled(!(valuePin !== '' && confirmPinValue !== '' && isSelected));
   });
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View>
@@ -98,12 +96,11 @@ const FormCreatePin = (props) => {
                   WARNING: Make sure to write down your pin and keep it in a
                   safe place, if you reinstall the application or delete your
                   phone cache you will be asked to enter your pin again. We
-                  don’t store your pin, and we’ll not be able to restore it in
+                  don't store your pin, and we'll not be able to restore it in
                   case you forget it, only you are able to unlock and decrypt
                   your wallet.
                 </Text>
               </View>
-
               <View style={{ flexDirection: 'row', marginBottom: 20 }}>
                 <CreatePinSwitch
                   platform={Platform.OS}
@@ -211,5 +208,4 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 });
-
 export default FormCreatePin;

@@ -18,7 +18,7 @@ function Dropdown(props) {
         style={{...styles.picker, inputIOS: {color: '#ffffff'}, fontFamily: "Poppins-Medium"}}
         inputIOS={styles.picker}
         items={props.items}
-        onValueChange={(itemValue) => props.action(itemValue)}
+        onValueChange={props.action}
         placeholderTextColor="#2D2D2D"
       />
       <Icon name='sort-down' type="FontAwesome" style={styles.icon} />

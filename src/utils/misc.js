@@ -1,4 +1,4 @@
-import { Clipboard } from 'react-native';
+import { Clipboard, Platform } from 'react-native';
 import Toast from 'react-native-root-toast';
 import RNFS from 'react-native-fs';
 import randomString from 'random-string';
@@ -14,6 +14,7 @@ import { sessionModel } from './config';
 import { getBalance, fetchBalacnce } from './ksm';
 import FormValidator from './validator';
 import { PinFormValidations, createPinValidations } from './validations';
+import {sessionModel as session} from './config'
 
 export function mapPaymentMethod(method) {
   const methods = {
@@ -425,7 +426,7 @@ const validateForm = (variables) => {
   return validation;
 };
 
-export const savePin = async (pinCode, setErrors, props) => {
+export const savePin = async (pinCode, setErrors, props, pinView) => {
   const { session } = await getSession();
 
   const validator = validateForm({
@@ -655,3 +656,46 @@ export async function myOfferNavigator(item, navigation, name) {
 }
 
 // MY OFFER REGION END
+export const getPayloadLogin =({email, password }) => ({
+  email: email,
+  password: password,
+  type: 'email',
+  platform: Platform.OS === 'ios' ? 'ios' : 'android',
+});
+
+export const mapUserTwitter = data => {
+  session['id'] = data.id;
+  session['token'] = data.token;
+  session['email'] = data.email;
+  session['name'] = data.name;
+  session['sessionType'] = 'twitter';
+  session['__typename'] = data.__typename;
+
+  return session;
+
+};
+
+export const mapUserFacebook = data => {
+  session['id'] = data.id;
+  session['token'] = data.token;
+  session['email'] = data.email;
+  session['name'] = data.email;
+  session['__typename'] = data.__typename;
+  session['sessionType'] = 'facebook';
+
+  return session;
+};
+
+export const mapDataDropdownPayment = data => {
+  const resp = [];
+  data.map((item, index) => {
+    const {id, value} = item;
+    return resp.push({
+      value: id,
+      label: `(${id}) - ${value}`,
+      key: index,
+      
+    });
+  });
+  return resp;
+};

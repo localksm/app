@@ -22,3 +22,4 @@ export { default as OnboardingImageItem } from './OnboardingImageItem';
 export { default as CreatePinSwitch } from './CreatePinSwitch';
 export { default as CreatePinLoader } from './CreatePinLoader';
 export { default as OfferItem } from './OfferItem';
+

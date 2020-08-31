@@ -1,20 +1,15 @@
 /**
  * @format
  */
-
 import 'react-native';
 import React from 'react';
 import { configure, shallow } from 'enzyme';
 import { fireEvent, render } from 'react-native-testing-library';
 import toJson from 'enzyme-to-json'
-
 import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
-
 import { OfferDetails, OfferDetailContent } from '../src/organisms';
-
 configure({ adapter: new Adapter() });
-
 const mockParams = {
   params: {
     body: {
@@ -36,7 +31,6 @@ const mockParams = {
     },
   },
 };
-
 it('renders correctly', async () => {
   jest.useFakeTimers();
   await renderer.act(async () => {
@@ -45,7 +39,6 @@ it('renders correctly', async () => {
     );
   });
 });
-
 it('renders paymentForm correctly', async () => {
   jest.useFakeTimers();
   await renderer.act(async () => {
@@ -62,7 +55,6 @@ it('renders paymentForm correctly', async () => {
     );
   });
 });
-
 it('renders PaymentForm empty correctly', async () => {
   jest.useFakeTimers();
   await renderer.act(async () => {
@@ -78,7 +70,6 @@ it('renders PaymentForm empty correctly', async () => {
     );
   });
 });
-
 it('renders enterPin correctly', async () => {
   jest.useFakeTimers();
   await renderer.act(async () => {
@@ -95,19 +86,15 @@ it('renders enterPin correctly', async () => {
     );
   });
 });
-
 it('test link on press', async () => {
   jest.useFakeTimers();
   const handler = jest.fn();
-
   const { getByTestId } = render(
     <OfferDetails navigation={{ navigate: () => {} }} route={mockParams} />,
   );
-
   fireEvent.press(getByTestId('link'));
   expect(handler).not.toHaveBeenCalled();
 });
-
 it('test on press', async () => {
   jest.useFakeTimers();
   const wrapper = shallow(
@@ -124,14 +111,12 @@ it('test on press', async () => {
   );
   wrapper.find('EnterPin').props().action();
 });
-
 it('renders correctly', async () => {
   jest.useFakeTimers();
   await renderer.act(async () => {
     const wrapper = shallow(
       <OfferDetails route={mockParams} navigation={{ navigate: () => {} }} />,
     );
-
     wrapper.props().setState;
     expect(wrapper.props().setState);
     expect(toJson(wrapper)).toMatchSnapshot();

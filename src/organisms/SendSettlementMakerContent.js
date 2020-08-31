@@ -6,12 +6,10 @@ import { Button, Link } from '../atoms';
 import { FormLayout } from '.';
 import { MUTATIONS } from '../apollo';
 import { processAction } from '../utils/misc';
-
 function SendSettlementMakerContent(props) {
   const navigation = useNavigation();
   const sendSettlement = useMutation(MUTATIONS.SEND_SETTLEMENT);
   const sendFulfillment = useMutation(MUTATIONS.SEND_FULFILLMENT);
-
   return (
     <FormLayout.Content>
       <FormLayout.Body>
@@ -43,7 +41,6 @@ function SendSettlementMakerContent(props) {
     </FormLayout.Content>
   );
 }
-
 const styles = StyleSheet.create({
   buttons: {
     paddingTop: '3%',
@@ -55,5 +52,4 @@ const styles = StyleSheet.create({
     marginHorizontal: '8%',
   },
 });
-
 export default SendSettlementMakerContent;

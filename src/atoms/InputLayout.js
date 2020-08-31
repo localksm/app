@@ -1,18 +1,8 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-
+import { isValidValue } from '../utils/hooks';
 const InputLayout = ( props ) => 
 {
-    const isValidValue=( element, payload) => {        
-        if (!payload) {
-            return false;
-        }
-        if (Object.keys(payload).length === 0 && payload.constructor === Object) {
-            return false;
-        }
-    
-        return payload.hasOwnProperty(element) && payload[element].isInvalid;
-    }
     
     return (
         <>

@@ -3,28 +3,21 @@ import { Text } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import Dropdown from './Dropdown';
 import { QUERIES } from '../apollo';
+import { mapDataCountries } from '../utils/hooks';
 
-const DropdownCountries = props => {
-  const mapData = data => {
-    const resp = [];
-    data.map((item, index) => {
-      const { id, value } = item;
-      return resp.push({
-        value: id,
-        label: `(${id}) - ${value}`,
-        key: index,
-      });
-    });
-    return resp;
-  };
+const DropdownCountries = (props) => {
+  
   const { loading, error, data } = useQuery(QUERIES.COUNTRIES);
-  if (loading) return <Dropdown items={[]} value="Country" />;
-  if (error) return <Text>{`Error! ${error}`}</Text>;
+  if (loading) {
+    return <Dropdown items={[]} value="Country" />
+  } else if (error) {
+    return <Text>Error de conexion</Text>
+  }
   return (
     <Dropdown
       action={props.action}
       value="Country"
-      items={mapData(data.countries)}
+      items={mapDataCountries(data.countries)}
     />
   );
 };

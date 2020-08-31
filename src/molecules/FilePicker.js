@@ -3,11 +3,9 @@ import { withContext } from '../apollo';
 import { FilePickerComponent } from '.';
 import { handlerSingleFilePicker } from '../utils/misc';
 import { useLoader } from '../utils/hooks';
-
 const FilePicker = (props) => {
   const [chosenItems, setChosenItems] = useState([]);
   const { load, setLoad } = useLoader();
-
   return (
     <FilePickerComponent
       loading={load}
@@ -18,5 +16,4 @@ const FilePicker = (props) => {
     />
   );
 };
-
 export default withContext(FilePicker);

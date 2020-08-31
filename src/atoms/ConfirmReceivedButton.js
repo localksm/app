@@ -5,20 +5,16 @@ import { MUTATIONS, QUERIES, getSession } from '../apollo';
 import Button from './Button';
 import { getPin } from '../utils/JWT';
 
-const ConfirmReceivedButton = (props) => {
+const ConfirmReceivedButton = props => {
   const sendDisbursementSeller = useMutation(
     MUTATIONS.SEND_DISBURSEMENT_SELLER,
   );
-  const sendDisbursementBuyer = useMutation(MUTATIONS.SEND_DISBURSEMENT_BUYER);
+  const sendDisbursementBuyer = useMutation(
+    MUTATIONS.SEND_DISBURSEMENT_BUYER,
+  );
   const [load, setLoad] = useState(false);
   const [id, setId] = useState(null);
-  const {
-    proposalId,
-    takerId,
-    operationType,
-    pin,
-    disbursed,
-  } = props.variables;
+  const { proposalId, takerId, operationType, pin, disbursed } = props.variables;
 
   useEffect(() => {
     set();
@@ -42,7 +38,7 @@ const ConfirmReceivedButton = (props) => {
         } 
         if(disbursed){
           setLoad(true);
-          await sendDisbursementSeller({
+          await sendDisbursementSeller[0]({
             variables: {
               proposalId: proposalId,
               takerId: takerId,
@@ -78,7 +74,7 @@ const ConfirmReceivedButton = (props) => {
           return;
         }
 
-        const response = await sendDisbursementBuyer({
+        const response = await sendDisbursementBuyer[0]({
           variables: {
             proposalId: proposalId,
             takerId: takerId,
@@ -97,7 +93,7 @@ const ConfirmReceivedButton = (props) => {
             },
           ],
         });
-        const { success } = response.data.sendDisbursementBuyer;
+        const { success } = response.data.[sendDisbursementBuyer];
         if (success) {
           setLoad(true);
           return props.actionConfirmSent();

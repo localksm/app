@@ -29,6 +29,7 @@ const FormCreateOfferSell = () => {
   const [currency, setCurrency] = useState('');
   const [other, setOther] = useState('');
   const [paymentVars, setPaymentVars] = useState({});
+  const [load, setLoad] = useState(false);
   const navigation = useNavigation();
   const variables = {
     offerAmount: offered,
@@ -115,6 +116,8 @@ const FormCreateOfferSell = () => {
             </Text>
           </View>
           <SellButton
+            load={load}
+            setLoad={setLoad}
             label="Send"
             variables={variables}
             paymentVars={paymentVars}
